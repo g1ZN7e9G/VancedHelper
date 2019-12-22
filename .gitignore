@@ -1,0 +1,8 @@
+**/node_modules/*
+config.json
+docker-compose.yml
+*.retry
+.vscode
+coverage
+build
+ansible

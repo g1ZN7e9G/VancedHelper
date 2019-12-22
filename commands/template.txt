@@ -1,0 +1,16 @@
+const Discord = require('discord.js');
+module.exports = {
+	name: 'PLACEHOLDER',
+    description: '',
+    usage: '',
+	execute(message, args) {
+        const output = new Discord.RichEmbed()
+        .setColor('e5460e')
+        //.addField('', '', false)
+        //.setThumbnail('')
+        .setTitle('')
+        //.setDescription('')
+
+        return message.channel.send(output)
+    },
+};
