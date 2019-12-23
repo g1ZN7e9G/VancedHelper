@@ -2,7 +2,7 @@ const { prefix } = require('../config.json');
 module.exports = {
     name: 'colourme',
     description: 'Gives the Booster a coloured role.',
-    usage: '[colour in hex] <custom role name (25 characters or less)>',
+    usage: '[colour in hex] <custom role name>',
     aliases: ['setcolor','colorme'],
     execute(message, args) {
         if(!args[0]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help colourme\` page.`)
