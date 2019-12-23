@@ -7,8 +7,7 @@ module.exports = {
     aliases: ['die', 'kys'],
     guildOnly: false,
 	execute(message, args) {
-        // Check if user is Owner
-        if(message.author.id != ownerID) return message.channel.send('Only the bot owner can use this command.');
+        if (!message.member.roles.some(r => r.name === "Admins")) return
 
         // Shut down
         message.channel.send('*dies*').then(() => {

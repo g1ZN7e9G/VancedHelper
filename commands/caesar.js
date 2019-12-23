@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { prefix } = require('../config.json');
 module.exports = {
 	name: 'caesar',
     description: 'A simple caesar cipher.',
@@ -6,7 +7,7 @@ module.exports = {
     aliases: ['cipher'],
 	execute(message, args) {
     // Check if 3 args are provided, if not, return
-    if(!args[2]) return message.channel.send('Missing input. Please refer to the `!help caesar` page.')
+    if(!args[2]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help caesar\` page.`)
 
     // Define array of alphabet for later use
     const alphabet = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'.split('');
