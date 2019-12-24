@@ -11,9 +11,9 @@ module.exports = {
         .addField('Switch to Black', 'Just download the black apk and install it as update.', false)
         .setThumbnail('https://i.imgur.com/aLAw00S.png')
         .setTitle('How to fix Vanced constantly crashing')
-        .setDescription(`You are not using the recommended (black) version.
-                        This is no big deal, but if you don't use Black, you have to install MicroG first or your Vanced will constantly crash. 
-                        Please follow either of the advice below to fix your issue!`)
+        .setDescription(`You are not using the recommended (black) version.\n` +
+                        `This is no big deal, but if you don't use Black, you have to install MicroG first or your Vanced will constantly crash.\n` + 
+                        `Please follow either of the advice below to fix your issue!`)
         .setTimestamp()
         return message.channel.send(output)
     },

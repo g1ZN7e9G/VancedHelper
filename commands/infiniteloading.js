@@ -14,8 +14,8 @@ module.exports = {
                   'Due to the many different Android Roms, this varies. [Visit this site](https://dontkillmyapp.com/), navigate to your vendor and follow the guide.',
                   false)
         .setTitle('Smartphones are turning back into dumbphones')
-        .setDescription(`To squeeze a little extra battery out of your phone, Vendors implement aggresive Battery savers that kill tasks.
-                        MicroG was killed by your battery saver. That's why Vanced is stuck. To solve this issue, follow the guide below.`)
+        .setDescription(`To squeeze a little extra battery out of your phone, Vendors implement aggresive Battery savers that kill tasks.\n` +
+                        `MicroG was killed by your battery saver. That's why Vanced is stuck. To solve this issue, follow the guide below.`)
         .setTimestamp()
         return message.channel.send(output)
     },
