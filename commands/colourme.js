@@ -16,7 +16,7 @@ module.exports = {
         name = name.slice(0, -1)
         if (message.guild.roles.some(r => r.name.toLowerCase() == name.toLocaleLowerCase()) &&
             !message.member.roles.some(r => r.name.toLowerCase() == name.toLocaleLowerCase())) {
-            return message.channel.send('Not funny, didn\'t laugh. Please don\'t impersonate staff, kthxbai.')
+            return message.channel.send('This role name is already taken. Please choose another one.')
         }
 
         try {
