@@ -9,9 +9,9 @@ module.exports = {
         .setColor('e5460e')
         .setThumbnail('https://i.imgur.com/NYmMUq5.png')
         .setTitle('Downloading Videos')
-        .setDescription(`Downloading videos has never been and will never be a feature of Vanced. It led to the closing of many Youtube Mods in the past.
-                        [In some regions](https://support.google.com/youtube/answer/6141269?co=GENIE.Platform%3DAndroid&hl=en) however, downloading is free.\n
-                        For downloading, use a third party tool like [Ymusic](https://ymusic.io).`)
+        .setDescription(`Downloading videos has never been and will never be a feature of Vanced. It led to the closing of many Youtube Mods in the past.\n` +
+                        `[In some regions](https://support.google.com/youtube/answer/6141269?co=GENIE.Platform%3DAndroid&hl=en) however, downloading is free.\n\n` +
+                        `For downloading, use a third party tool like [Ymusic](https://ymusic.io).`)
         .setTimestamp()
         return message.channel.send(output)
     },

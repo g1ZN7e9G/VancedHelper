@@ -17,9 +17,9 @@ module.exports = {
                   'There is no issues that aren\'t fixable. Additionally, the new youtube version has no new feature that would provide a good reason to even update.', 
                   false)
         .setTitle('Update when????')
-        .setDescription(`~~Everytime someone asks, you gotta wait one extra day until the next update comes out. We reached 169 extra days now.~~\n
-                        Jokes aside, there\'s many reasons for there not to be an update. If you can't deal with it, this is not the mod for you.
-                        You can find some reasons below, but please stop asking about an update.`)
+        .setDescription(`~~Everytime someone asks, you gotta wait one extra day until the next update comes out. We reached 169 extra days now.~~\n\n` +
+                        `Jokes aside, there\'s many reasons for there not to be an update. If you can't deal with it, this is not the mod for you.\n` +
+                        `You can find some reasons below, but please stop asking about an update.`)
         .setTimestamp()
         return message.channel.send(output)
     },
