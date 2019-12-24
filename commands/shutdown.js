@@ -9,7 +9,6 @@ module.exports = {
     execute(message, args) {
         if (!message.member.roles.some(r => r.id === adminid)) return
 
-        // Shut down
         message.channel.send('*dies*').then(() => {
             process.exit();
         })

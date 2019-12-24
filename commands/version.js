@@ -9,7 +9,6 @@ module.exports = {
         .setColor('e5460e')
         .addField('Youtube Vanced', '14.21.54', false)
         .addField('Vanced Microg', '0.2.6.17455-dirty', false)
-        //.setThumbnail('')
         .setTitle('Latest Versions')
         .setDescription('These are the latest versions. Please make sure you have these. For download links, type `!download`.')
         .setTimestamp()
