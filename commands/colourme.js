@@ -18,21 +18,20 @@ module.exports = {
         
         try {
             if(name.length > 25) return message.channel.send('Woah, calm down. Character limit is 25.')
-        if (message.member.roles.some(r => r.name === "Nitro Booster")) {
-            var CC = message.guild.roles.find(r => r.name == "CC")
-            if (message.member.roles.some(r => r.name == "CC")) {
-                message.member.colorRole.edit({color: args[0].toUpperCase(), name: name})
+            var booster = message.member.roles.find(r => r.name === "Nitro Booster")
+        if (booster) {
+            if (message.member.roles.some(r => r.name.endsWith("-CC"))) {
+                message.member.colorRole.edit({color: args[0].toUpperCase(), name: name + "-CC"})
                 message.channel.send("Colour changed")
                 return message.client.channels.get('658781799580827648').send(`${message.author.tag} just changed their custom role to \`${name}\`.`)
             } else {
                 message.guild.createRole({
-                    name: name,
+                    name: name + "-CC",
                     color: args[0].toUpperCase(),
-                    position: CC.position + 1,
+                    position: booster.position + 1,
                 })
                 .then(role => message.member.addRole(role))
                 .catch(console.error);
-                message.member.addRole(CC).catch(console.error)
                 message.channel.send("Colour added")
                 return message.client.channels.get('658781799580827648').send(`${message.author.username} just changed their custom role to \`${name}\`.`)
             }
