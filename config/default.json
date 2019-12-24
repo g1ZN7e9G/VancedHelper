@@ -1,0 +1,6 @@
+{
+	"prefix": "-",
+	"token": "<your-bot-token-here>",
+	"adminid": "<your-admin-role-id-here>",
+	"logchannel": "<your-log-channel-id-here>"
+}

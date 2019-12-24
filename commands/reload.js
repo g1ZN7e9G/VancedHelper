@@ -1,9 +1,10 @@
+const { adminid } = require('config');
 module.exports = {
     name: 'reload',
     description: 'Reloads a command. Bot Owner only.',
     usage: '[command]',
     execute(message, args) {
-        if (!message.member.roles.some(r => r.name === "Admins")) return
+        if (!message.member.roles.some(r => r.id === adminid)) return
         
         if (!args.length) return message.channel.send(`You didn't pass any command to reload, ${message.author}!`);
         const commandName = args[0].toLowerCase();
@@ -22,6 +23,5 @@ module.exports = {
             message.channel.send(`There was an error while reloading a command \`${commandName}\`:\n\`${error.message}\``);   
         }
         message.channel.send(`Command \`${commandName}\` was reloaded!`);
-
     },
 };

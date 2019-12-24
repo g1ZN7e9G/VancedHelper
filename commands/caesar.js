@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix } = require('../config.json');
+const { prefix } = require('config');
 module.exports = {
 	name: 'caesar',
     description: 'A simple caesar cipher.',

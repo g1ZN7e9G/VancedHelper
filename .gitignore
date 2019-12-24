@@ -6,3 +6,5 @@ docker-compose.yml
 coverage
 build
 ansible
+config/production.json
+config/development.json

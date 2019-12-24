@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "config": "^3.2.4",
     "discord.js": "^11.5.1"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "start": "export NODE_ENV=production && node index.js",
+    "dev": "export NODE_ENV=development && node index.js",
+    "prod-win": "set NODE_ENV=production&& node index.js",
+    "dev-win": "set NODE_ENV=development&& node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mattis6666",
