@@ -2,13 +2,13 @@ const { adminid } = require('config');
 module.exports = {
     name: 'shutdown',
     description: 'Shuts down the bot. Bot Owner only.',
-    args: false,
     usage: ' ',
     aliases: ['die', 'kys'],
-    guildOnly: false,
+    guildonly: false,
+    devonly: true,
+    args: false,
+    modCommand: false,
     execute(message, args) {
-        if (!message.member.roles.some(r => r.id === adminid)) return
-
         message.channel.send('*dies*').then(() => {
             process.exit();
         })

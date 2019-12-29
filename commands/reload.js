@@ -2,8 +2,11 @@ module.exports = {
     name: 'reload',
     description: 'Reloads a command. Bot Owner only.',
     usage: '[command]',
+    guildonly: false,
+    devonly: true,
+    args: true,
+    modCommand: false,
     execute(message, args) {
-        if (!message.member.roles.some(r => r.id === adminid) && message.author.id != '265560538937819137') return
         if (!args.length) return message.channel.send(`You didn't pass any command to reload, ${message.author}!`);
 
         if (args[0] == 'all') {

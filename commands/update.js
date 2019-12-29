@@ -4,6 +4,10 @@ module.exports = {
     description: 'Will there ever be an update? Why has it been so long?',
     aliases: ['newversion', 'dead', 'u'],
     usage: ' ',
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')

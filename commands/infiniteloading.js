@@ -4,11 +4,15 @@ module.exports = {
     description: 'Is your vanced stuck in a loading screen? This will help.',
     usage: ' ',
     aliases: ['stuck', 'loading', 'inf'],
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')
         .addField('Stock Android (or close to it)',
-                  `Open your settings app and navigate to \`\`\`Apps & Notifications > See all apps > Youtube Vanced > Battery > Battery Optimisation > Dropdown menu > All apps\`\`\`locate Vanced MicroG and Youtbe Vanced and set both to "Don't optimise".`,
+                  `Open your settings app and navigate to \`\`\`Apps & Notifications > See all apps > Vanced Microg > Battery > Battery Optimisation > Dropdown menu > All apps\`\`\`locate Vanced MicroG and set it to "Don't optimise", then reboot.\nIf the issue still persists, do the same for Youtube Vanced.`,
                   false)
         .addField('If the above doesn\'t work for you',
                   'Due to the many different Android Roms, this varies. [Visit this site](https://dontkillmyapp.com/), navigate to your vendor and follow the guide.',

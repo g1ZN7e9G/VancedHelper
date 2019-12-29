@@ -3,9 +3,12 @@ const { logchannel } = require('config')
 module.exports = {
 	name: 'attachmentban',
     description: 'Gives the mentioned user a role which will make them unable to attach files. Requires you to setup a role named "attachment-ban" with the right permissions.',
-    args: true,
     usage: '[@member] <reason>',
     aliases: ['fileban', 'ab'],
+    guildonly: true,
+    devonly: false,
+    args: true,
+    modCommand: true,
 	execute(message, args) {
         const mod = message.author.tag;
         if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('You require `Manage messages` permissions to use this command.');

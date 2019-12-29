@@ -2,10 +2,12 @@ const Dicsord = require('discord.js')
 module.exports = {
 	name: 'avatar',
     description: 'Sends the avatar of a @user or yourself.',
-    args: false,
     usage: '<@user>',
     aliases: ['icon', 'pfp', 'av'],
-    guildOnly: false,
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Dicsord.RichEmbed()
         .setColor('00ffff')
