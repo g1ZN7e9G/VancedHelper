@@ -4,6 +4,10 @@ module.exports = {
     description: 'Gives the Booster a coloured role.',
     usage: '[colour in hex] <custom role name>',
     aliases: ['setcolor', 'colorme'],
+    guildonly: true,
+    devonly: false,
+    args: true,
+    modCommand: false,
     execute(message, args) {
         if (!args[0]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help colourme\` page.`)
 

@@ -1,6 +1,6 @@
 {
 	"prefix": "-",
 	"token": "<your-bot-token-here>",
-	"adminid": "<your-admin-role-id-here>",
+	"devs": ["<dev-id-here>", "<dev-id-here>"],
 	"logchannel": "<your-log-channel-id-here>"
 }

@@ -4,6 +4,10 @@ module.exports = {
     description: 'Is your Vanced crashing when trying to open it? Try this!',
     usage: ' ',
     aliases: ['forceclose', 'close'],
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')

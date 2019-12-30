@@ -4,6 +4,10 @@ module.exports = {
     description: 'Sends all the official download mirrors.',
     usage: ' ',
     aliases: ['mirrors', 'links', 'sources', 'dl'],
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')

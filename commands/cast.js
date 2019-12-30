@@ -4,6 +4,10 @@ module.exports = {
     description: 'Get info on Casting to TV with Vanced.',
     usage: ' ',
     aliases: ['casting', 'tv'],
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')

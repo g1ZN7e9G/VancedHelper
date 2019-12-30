@@ -4,6 +4,10 @@ module.exports = {
     description: 'Are you getting weird home ads? This might help.',
     usage: ' ',
     aliases: ['ads', 'ha'],
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')

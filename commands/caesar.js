@@ -5,6 +5,10 @@ module.exports = {
     description: 'A simple caesar cipher.',
     usage: '[decrypt|encrypt] [shiftAmount] [text]',
     aliases: ['cipher'],
+    guildonly: false,
+    devonly: false,
+    args: true,
+    modCommand: false,
 	execute(message, args) {
     // Check if 3 args are provided, if not, return
     if(!args[2]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help caesar\` page.`)
