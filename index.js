@@ -54,7 +54,7 @@ function logCommand(message, command, args) {
         const output = new Discord.RichEmbed()
             .setColor(Math.random().toString(16).slice(2, 8).toUpperCase())
             .setAuthor(`${message.author.tag}`, message.author.avatarURL)
-            .setDescription(`**Issued the command \`${command.name}\` in ${message.guild.channel}**`)
+            .setDescription(`**Issued the command \`${command.name}\` in ${message.channel}**`)
             .setFooter(`Author: ${message.author.id} | Message ID: ${message.id}`)
             .setTimestamp()
   
