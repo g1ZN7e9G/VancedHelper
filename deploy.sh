@@ -1,0 +1,12 @@
+
+#!/bin/bash
+echo "***********[ Pulling latest images ]***********"
+ssh $SERVER_USERNAME@$SERVER_NAME "docker pull vancedhelper/backend:dev-$TRAVIS_BUILD_NUMBER"
+echo "***********[ Updating images]***********"
+BACKEND="docker service update --env-add VERSION='$TRAVIS_BUILD_NUMBER' --image vancedhelper/backend:dev-'${TRAVIS_BUILD_NUMBER}' vancedhelper_backend"
+ssh $SERVER_USERNAME@$SERVER_NAME $BACKEND
+echo "***********[ Cleanup ]***********"
+CLEANUP="docker system prune -f"
+IMAGE_CLEANUP="docker image prune --all -f"
+ssh $SERVER_USERNAME@$SERVER_NAME $CLEANUP
+ssh $SERVER_USERNAME@$SERVER_NAME $IMAGE_CLEANUP
