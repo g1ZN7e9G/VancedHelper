@@ -5,7 +5,7 @@ ssh $SERVER_USERNAME@$SERVER_NAME "echo Hidden" > /dev/null 2>&1
 echo "***********[ Pulling latest images ]***********"
 ssh $SERVER_USERNAME@$SERVER_NAME "docker pull vancedhelper/backend:dev-$TRAVIS_BUILD_NUMBER"
 echo "***********[ Updating images]***********"
-BACKEND="docker service update --env-add VERSION='$TRAVIS_BUILD_NUMBER' --image vancedhelper/backend:dev-'${TRAVIS_BUILD_NUMBER}' vancedhelper_backend"
+BACKEND="docker service update --env-add VERSION='$TRAVIS_BUILD_NUMBER' --env-add COMMIT='$TRAVIS_COMMIT' --env-add COMMIT_MESSAGE='$TRAVIS_COMMIT_MESSAGE' --image vancedhelper/backend:dev-'${TRAVIS_BUILD_NUMBER}' vancedhelper_backend"
 ssh $SERVER_USERNAME@$SERVER_NAME $BACKEND
 echo "***********[ Cleanup ]***********"
 CLEANUP="docker system prune -f"
