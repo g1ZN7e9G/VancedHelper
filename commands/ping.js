@@ -6,6 +6,7 @@ module.exports = {
     devonly: false,
     args: false,
     modCommand: false,
+    category: 'Dev',
 	execute(message, args) {
         return message.channel.send(`Ping: \`${Math.floor(message.client.ping)}ms\``)
     },

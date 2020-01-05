@@ -7,6 +7,7 @@ module.exports = {
     devonly: false,
     args: true,
     modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
         const responses = [ 'Totally!', 'Yes!', 'Definitely!', 'Probably.', 'Very likely.', 'Likely.', 'Unlikely.', 'I wouldn\'t count on it.', 'No!', 'Definitely not!', 'Nope!', 'No way!']   
         return message.channel.send(responses[Math.floor(Math.random() * responses.length)])

@@ -8,6 +8,7 @@ module.exports = {
     devonly: false,
     args: true,
     modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
         const choices = args.join(' ').split(' | ')
         if(choices.length == 1) return message.channel.send('You only gave me one choice, silly!')

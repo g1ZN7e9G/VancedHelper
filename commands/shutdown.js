@@ -8,6 +8,7 @@ module.exports = {
     devonly: true,
     args: false,
     modCommand: false,
+    category: 'Dev',
     execute(message, args) {
         message.channel.send('*dies*').then(() => {
             process.exit();

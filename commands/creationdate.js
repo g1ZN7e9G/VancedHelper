@@ -8,6 +8,7 @@ module.exports = {
     devonly: false,
     args: false,
     modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
         return message.channel.send(`This server was created on ${message.guild.createdAt}`)
     },

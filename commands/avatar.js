@@ -8,6 +8,7 @@ module.exports = {
     devonly: false,
     args: false,
     modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
         const output = new Dicsord.RichEmbed()
         .setColor('00ffff')

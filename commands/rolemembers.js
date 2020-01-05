@@ -8,6 +8,7 @@ module.exports = {
     devonly: true,
     args: true,
     modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
         const role = message.guild.roles.find(role => role.name.toLowerCase().substring(0, args.join(' ').length) === args.join(' ').toLowerCase())
         console.log(args)

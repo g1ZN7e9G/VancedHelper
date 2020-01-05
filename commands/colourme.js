@@ -8,6 +8,7 @@ module.exports = {
     devonly: false,
     args: true,
     modCommand: false,
+    category: 'Misc',
     execute(message, args) {
         if (!args[0]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help colourme\` page.`)
 

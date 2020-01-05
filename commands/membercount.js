@@ -6,7 +6,8 @@ module.exports = {
 	guildonly: true,
     devonly: false,
     args: false,
-    modCommand: false,
+	modCommand: false,
+	category: 'Misc',
 	execute(message, args) {
 		// Check whether command is used in guild, if not, return
 		if(!message.guild) return message.channel.send(`This command only works on servers.`);
