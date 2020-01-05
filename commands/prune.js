@@ -7,6 +7,7 @@ module.exports = {
     devonly: false,
     args: false,
     modCommand: true,
+    category: 'Mod',
 	execute(message, args) {
 	    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('You require `Manage messages` permissions to use this command.');
         var amount = parseInt(args[0]);

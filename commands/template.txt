@@ -3,6 +3,12 @@ module.exports = {
 	name: 'PLACEHOLDER',
     description: '',
     usage: '',
+    aliases: [],
+    guildonly: false,
+    devonly: false,
+    args: false,
+    modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')
@@ -10,6 +16,7 @@ module.exports = {
         //.setThumbnail('')
         .setTitle('')
         //.setDescription('')
+        .setTimestamp()
 
         return message.channel.send(output)
     },

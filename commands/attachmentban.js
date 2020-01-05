@@ -9,6 +9,7 @@ module.exports = {
     devonly: false,
     args: true,
     modCommand: true,
+    category: 'Mod',
 	execute(message, args) {
         const mod = message.author.tag;
         if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('You require `Manage messages` permissions to use this command.');

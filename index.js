@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token, logchannel, devs } = require('config');
+const { prefix, token, logchannel, devs, errorChannel } = require('config');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -42,6 +42,7 @@ client.on('message', message => {
         command.execute(message, args);
     } catch (error) {
         console.error(error);
+        message.client.channels.get(errorChannel).send(`<@${devs.join('> <@')}> An error occured!\n\`\`\`js\n${error.stack}\`\`\``)
         message.reply('Oops, something went wrong.').then(msg => msg.delete(3000));
 
     }
@@ -64,7 +65,8 @@ function logCommand(message, command, args) {
 
         return message.client.channels.get(logchannel).send(output)
     }
-    catch (exception) {
-        console.error(exception)
+    catch (error) {
+        console.error(error)
+        message.client.channels.get(errorChannel).send(`<@${devs.join('> <@')}> An error occured!\n\`\`\`js\n${error.stack}\`\`\``)
     }
 }

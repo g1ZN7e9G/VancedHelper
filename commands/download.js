@@ -8,6 +8,7 @@ module.exports = {
     devonly: false,
     args: false,
     modCommand: false,
+    category: 'Vanced',
 	execute(message, args) {
         const output = new Discord.RichEmbed()
         .setColor('e5460e')

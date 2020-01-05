@@ -9,6 +9,7 @@ module.exports = {
     devonly: false,
     args: true,
     modCommand: false,
+    category: 'Misc',
 	execute(message, args) {
     // Check if 3 args are provided, if not, return
     if(!args[2]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help caesar\` page.`)

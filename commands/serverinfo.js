@@ -8,6 +8,7 @@ module.exports = {
     adminonly: false,
     args: false,
     modCommand: false,
+    category: 'Misc',
     execute(message, args) {
         var roles = []
         var channelSize = 0
