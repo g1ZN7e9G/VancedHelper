@@ -12,7 +12,7 @@ for (const file of commandFiles) {
 
 const timer = setInterval(function () {
     uncolour()
-}, 1000 * 20);
+}, 1000 * 60 * 15);
 
 client.once('ready', () => {
     client.user.setPresence({
@@ -95,6 +95,6 @@ function uncolour() {
         client.channels.get(logchannel).send(output)
     }
     catch (err) {
-        console.err(err)
+        console.error(err)
     }
 }
