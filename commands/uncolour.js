@@ -20,11 +20,14 @@ module.exports = {
         colorRoles.forEach(role => {
             if (!role.members.size) return role.delete();
             role.members.forEach(member => {
-                if (!member.roles.find(r => r.name === "Nitro Booster")) role.delete(); victims.push(member.user.tag)
+                if (!member.roles.find(r => r.name === "Nitro Booster")) {
+                    role.delete();
+                    victims.push(member.user.tag)
+                }
             })
 
         })
-        const output = victims.lenth ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
+        const output = victims.length ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
         console.log(output)
         message.client.channels.get(logchannel).send(output)
         message.reply(output).then(message => message.delete(3000))

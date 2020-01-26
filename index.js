@@ -86,7 +86,10 @@ function uncolour() {
         colorRoles.forEach(role => {
             if (!role.members.size) return role.delete();
             role.members.forEach(member => {
-                if (!member.roles.find(r => r.name === "Nitro Booster")) role.delete(); victims.push(member.user.tag)
+                if (!member.roles.find(r => r.name === "Nitro Booster")) {
+                    role.delete();
+                    victims.push(member.user.tag)
+                }
             })
 
         })
