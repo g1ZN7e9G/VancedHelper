@@ -90,7 +90,7 @@ function uncolour() {
             })
 
         })
-        const output = victims.size ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
+        const output = victims.length ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
         console.log(output)
         client.channels.get(logchannel).send(output)
     }

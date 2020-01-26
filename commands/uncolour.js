@@ -24,7 +24,7 @@ module.exports = {
             })
 
         })
-        const output = victims.size ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
+        const output = victims.lenth ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
         console.log(output)
         message.client.channels.get(logchannel).send(output)
         message.reply(output).then(message => message.delete(3000))
