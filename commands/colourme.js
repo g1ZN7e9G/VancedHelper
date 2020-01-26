@@ -36,7 +36,7 @@ module.exports = {
                 return message.client.channels.get(logchannel).send(`${message.author.tag} just changed their custom role to \`${name}\`.`)
             }
             else {
-                const janitor = message.guild.roles.get('658799060802600966')
+                const janitor = message.guild.roles.get('653556355352756224')
                 let position = janitor.position - 1;
                 if (message.member.roles.has(janitor.id)) position += 2;
 
