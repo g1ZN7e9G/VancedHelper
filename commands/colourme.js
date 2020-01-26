@@ -24,28 +24,31 @@ module.exports = {
             return message.channel.send('This role name is already taken. Please choose another one.')
         }
 
-        try {
-            if (name.length > 25) return message.channel.send('Woah, calm down. Character limit is 25.')
-            var booster = message.member.roles.find(r => r.name === "Nitro Booster")
-            if (booster) {
-                if (message.member.roles.some(r => r.name.endsWith("-CC"))) {
-                    message.member.colorRole.edit({ color: args[0].toUpperCase(), name: name + "-CC" })
-                    message.channel.send("Colour changed")
-                    return message.client.channels.get(logchannel).send(`${message.author.tag} just changed their custom role to \`${name}\`.`)
-                } else {
-                    message.guild.createRole({
-                        name: name + "-CC",
-                        color: args[0].toUpperCase(),
-                        position: booster.position + 1,
-                    })
-                        .then(role => message.member.addRole(role))
-                        .catch(console.error);
-                    message.channel.send("Colour added")
-                    return message.client.channels.get(logchannel).send(`${message.author.username} just changed their custom role to \`${name}\`.`)
+        if (name.length > 25) return message.channel.send('Woah, calm down. Character limit is 25.')
 
-                }
-            } else {
-                return message.channel.send("You're not a booster smh")
+        const booster = message.member.roles.find(r => r.name === "Nitro Booster")
+        if (!booster) return message.channel.send("You're not a booster smh")
+
+        try {
+            if (message.member.roles.some(r => r.name.endsWith("-CC"))) {
+                message.member.colorRole.edit({ color: args[0].toUpperCase(), name: name + "-CC" })
+                message.channel.send("Colour changed")
+                return message.client.channels.get(logchannel).send(`${message.author.tag} just changed their custom role to \`${name}\`.`)
+            }
+            else {
+                const janitor = message.guild.roles.get('658799060802600966')
+                let position = janitor.position - 1;
+                if (message.member.roles.has(janitor.id)) position += 2;
+
+                message.guild.createRole({
+                    name: name + "-CC",
+                    color: args[0].toUpperCase(),
+                    position: position,
+                })
+                    .then(role => message.member.addRole(role))
+                    .catch(console.error);
+                message.channel.send("Colour added")
+                return message.client.channels.get(logchannel).send(`${message.author.username} just changed their custom role to \`${name}\`.`)
             }
         }
         catch (error) {
