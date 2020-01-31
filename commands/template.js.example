@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const functions = require('../functions.js')
 module.exports = {
 	name: 'PLACEHOLDER',
     description: '',
@@ -10,13 +10,11 @@ module.exports = {
     modCommand: false,
     category: 'Misc',
 	execute(message, args) {
-        const output = new Discord.RichEmbed()
-        .setColor('e5460e')
+        const output = functions.newEmbed()
         //.addField('', '', false)
         //.setThumbnail('')
         .setTitle('')
         //.setDescription('')
-        .setTimestamp()
 
         return message.channel.send(output)
     },

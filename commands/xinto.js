@@ -1,6 +1,6 @@
-const Discord = require('discord.js')
+const functions = require('../functions.js')
 module.exports = {
-	name: 'xinto',
+    name: 'xinto',
     description: 'Displays Quotes by famous philosopher and scientist Xinto aka MrKali.',
     usage: ' ',
     aliases: ['5iq', 'idiot'],
@@ -9,7 +9,7 @@ module.exports = {
     args: false,
     modCommand: false,
     category: 'Misc',
-	execute(message, args) {
+    execute(message, args) {
         const quotes = [
             'Yeah, YouTube refuses to recompile, did they add any security layers to apk or what is happening lol?',
             'Any Debian > arch',
@@ -24,15 +24,17 @@ module.exports = {
             `Does anyone use playonlinux?\nIt's not for games only\nIt's just name\nIt's actually better wine`,
             'You should have withdrawn that money',
             'Good thing git deletes junk automatically',
-            ''
+            'Bruh I thought YT detected microg and put ads because of it',
+            'Also you should be using magisk version of Vanced\nAnd not non root\nAs this ads appear on non root only',
+            "How can something that they don't have can be infected ?",
+            'For me 2 days of using python was enough\n<:sir:614849156934139908>\nOS is much easier',
+            "I didn't follow that tutoria\nInstead I used mix sign"
         ]
-        const output = new Discord.RichEmbed()
-        .setTimestamp()
-        .setAuthor('Xinto', 'https://i.imgur.com/81WXBaF.png')
-        .setColor('00ffff')
-        .setDescription(quotes[Math.floor((Math.random() * quotes.length))])
-        .setThumbnail('https://i.imgur.com/Bx9yapT.png')
-        
+        const output = functions.newEmbed()
+            .setAuthor('Xinto', 'https://i.imgur.com/81WXBaF.png')
+            .setDescription(quotes[Math.floor((Math.random() * quotes.length))])
+            .setThumbnail('https://i.imgur.com/Bx9yapT.png')
+
         return message.channel.send(output)
     },
 };
