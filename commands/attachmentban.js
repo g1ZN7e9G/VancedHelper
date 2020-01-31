@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const functions = require('../functions.js')
 const { logchannel } = require("config");
 module.exports = {
   name: "attachmentban",
@@ -24,9 +24,7 @@ module.exports = {
     var reason = [];
     if (args[1]) reason = args.slice(1).join(" ");
     else reason = "-";
-    const success = new Discord.RichEmbed()
-      .setColor("ff0000")
-      .setTimestamp()
+    const success = functions.newEmbed()
       .setAuthor("Attachment-Ban")
       .setDescription("User has successfully been attachment-banned!")
       .addField("User", member.user.tag, false)

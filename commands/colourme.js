@@ -1,4 +1,4 @@
-const { prefix, logchannel } = require('config');
+const functions = require('../functions.js')
 module.exports = {
     name: 'colourme',
     description: 'Gives the Booster a coloured role.',
@@ -10,7 +10,7 @@ module.exports = {
     modCommand: false,
     category: 'Misc',
     execute(message, args) {
-        if (!args[0]) return message.channel.send(`Missing input. Please refer to the \`${prefix}help colourme\` page.`)
+        if (!args[0]) return message.channel.send(`Missing input. Please refer to the \`${config.prefix}help colourme\` page.`)
 
         const validHex = /[0-9A-Fa-f]{6}/g;
         if (!validHex.test(args[0]) || args[0].length > 6) return message.channel.send('Woah, that\'s not a valid hex.')
@@ -33,7 +33,7 @@ module.exports = {
             if (message.member.roles.some(r => r.name.endsWith("-CC"))) {
                 message.member.colorRole.edit({ color: args[0].toUpperCase(), name: name + "-CC" })
                 message.channel.send("Colour changed")
-                return message.client.channels.get(logchannel).send(`${message.author.tag} just changed their custom role to \`${name}\`.`)
+                return message.client.channels.get(functions.logchannel).send(`${message.author.tag} just changed their custom role to \`${name}\`.`)
             }
             else {
                 const janitor = message.guild.roles.get('653556355352756224')
@@ -48,7 +48,7 @@ module.exports = {
                     .then(role => message.member.addRole(role))
                     .catch(console.error);
                 message.channel.send("Colour added")
-                return message.client.channels.get(logchannel).send(`${message.author.username} just changed their custom role to \`${name}\`.`)
+                return message.client.channels.get(functions.logchannel).send(`${message.author.username} just changed their custom role to \`${name}\`.`)
             }
         }
         catch (error) {
