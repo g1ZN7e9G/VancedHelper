@@ -56,3 +56,31 @@ exports.uncolour = (client) => {
         console.error(err)
     }
 };
+
+exports.getRole = (message, args, spot) => {
+    const roleInput = args[spot];
+    let role = message.guild.roles.get(roleInput);
+    if (!role) role = message.guild.roles.get(roleInput.substring(3, roleInput.length - 1));
+    if (!role) role = message.guild.roles.find(role => role.name.substring(0, roleInput.length).toLowerCase() === roleInput.toLowerCase());
+    return role ? role : false;
+};
+exports.noRole = (message) => {
+    message.reply('You did not provide a valid role. Please run the command again and this time provide a valid role! This can be a mention, its id or its name')
+        .then(message => message.delete(3000));
+};
+exports.getMember = (message, args, spot) => {
+    const memberInput = args[spot];
+    let member = message.guild.members.get(memberInput);
+    if (!member) member = message.guild.members.get(memberInput.substring(3, memberInput.length - 1));
+    if (!member) member = message.guild.members.find(member => member.user.username.substring(0, memberInput.length).toLowerCase() === memberInput.toLowerCase());
+    return member ? member : false;
+};
+exports.noMember = (message) => {
+    message.reply('You did not provide a valid member. Please run the command again and this time provide a valid member! This can be a mention, their id or their name')
+        .then(message => message.delete(3000));
+};
+
+exports.reply = (message, text) => {
+    message.reply(text)
+        .then(message => message.delete(3000));
+};
