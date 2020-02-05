@@ -1,8 +1,8 @@
 module.exports = {
     name: 'emoji',
-    description: 'Should be obvious.',
-    usage: '',
-    aliases: ['ms'],
+    description: 'Sends the URL of an Emoji the bot has access to.',
+    usage: '[emoji]',
+    aliases: ['e'],
     guildonly: false,
     devonly: false,
     args: true,
