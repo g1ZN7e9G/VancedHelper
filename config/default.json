@@ -1,7 +1,7 @@
 {
 	"prefix": "-",
-	"token":"Njc5NjcxMDU1ODM2Nzc0NDE4.Xk01eA.eSm6joffYWzWfiMSqcQjVnzNzRQ",
-	"devs": [423915768191647755],
-	"logchannel": "679678981058068480",
-	"errorChannel": "679679001073418272"
+	"token": "<your-bot-token-here>",
+	"devs": ["<dev-id-here>", "<dev-id-here>"],
+	"logchannel": "<your-log-channel-id-here>",
+	"errorChannel": "<your-error-channel-id-here>"
 }
