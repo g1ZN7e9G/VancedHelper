@@ -10,7 +10,7 @@ module.exports = {
     modCommand: false,
     category: 'Misc',
     execute(message, args) {
-        if (!args[0]) return message.channel.send(`Missing input. Please refer to the \`${config.prefix}help colourme\` page.`)
+        if (!args[0]) return message.channel.send(`Missing input. Please refer to the \`${functions.prefix}help colourme\` page.`)
 
         const validHex = /[0-9A-Fa-f]{6}/g;
         if (!validHex.test(args[0]) || args[0].length > 6) return message.channel.send('Woah, that\'s not a valid hex.')

@@ -48,8 +48,8 @@ exports.uncolour = (client) => {
             })
 
         })
-        const output = victims.length ? `Removed the Colour Role(s) from ${victims.join(', ')}` : 'Noone new removed their boost!'
-        console.log(output)
+        const output = victims.length ? `Removed the Colour Role(s) from ${victims.join(', ')}` : false;
+        if (!output) return;
         client.channels.get(config.logchannel).send(output)
     }
     catch (err) {
