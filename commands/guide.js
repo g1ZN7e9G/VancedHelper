@@ -2,7 +2,7 @@ const functions = require("../functions.js");
 module.exports = {
   name: "guide",
   description: "Learn how to install Vanced",
-  usage: " ",
+  usage: `Use ${functions.prefix}guide to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 7] `,
   aliases: ["install", "howtoinstall", "installguide", "ig"],
   guildonly: false,
   devonly: false,
@@ -11,13 +11,12 @@ module.exports = {
   category: "Vanced",
   async execute(message, args) {
     const pages = [];
-    let page = 0;
     pages.push(
       functions
         .newEmbed()
         .setTitle("Install Guide")
         .setDescription(
-          "Review the list of context below and jump to the page you need via reactions."
+          `Review the list of context below and jump to the page you need via reactions or type ${functions.prefix}guide [page number from 1 to 7].`
         )
         .addField(
           "Table of Contents",
@@ -33,7 +32,10 @@ module.exports = {
           `Because of how YouTube's new APK is being handled, We use Split APKS.\n` +
             `In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
             `\nDownload SAI from [here](https://play.google.com/store/apps/details?id=com.aefyr.sai)`
-        .addField("Note:", "It's still possible for us to merge those APKS into one, but it's not worth the effort")
+        )
+        .addField(
+          "Note:",
+          "It's still possible for devs to merge those APKS into one, but it's not worth the effort"
         )
         .setFooter("2/7")
     );
@@ -105,7 +107,14 @@ module.exports = {
         )
         .setFooter("7/7")
     );
-    const msg = await message.channel.send(pages[0]);
+    let page =
+      isNaN(parseInt(args[0])) ||
+      parseInt(args[0]) > pages.length ||
+      parseInt(args[0]) <= 0
+        ? 0
+        : parseInt(args[0]) - 1;
+    page = page > pages.length ? 0 : page;
+    const msg = await message.channel.send(pages[page]);
     await msg.react("⬅️");
     await msg.react("➡️");
 

@@ -29,7 +29,7 @@ module.exports = {
       )
       .setTitle("How to report Theme based bugs")
       .setDescription(
-        `We all know that Vanced is a good app, but nothing is perfect. \nSometimes bugs just slip into the code and that\'s pretty normal.\nThis guide will show you how to report Theme based bugs.\nIn order to report bugs, you will need [Developer Assistant](https://play.google.com/store/apps/details?id=com.appsisle.developerassistant)`
+        `We all know that Vanced is a good app, but nothing is perfect. Sometimes bugs just slip into the code and that\'s pretty normal. This guide will show you how to report Theme based bugs.\nIn order to report bugs, you will need [Developer Assistant](https://play.google.com/store/apps/details?id=com.appsisle.developerassistant)`
       );
 
     return message.channel.send(output);
