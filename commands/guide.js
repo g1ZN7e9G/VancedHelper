@@ -33,6 +33,7 @@ module.exports = {
           `Because of how YouTube's new APK is being handled, We use Split APKS.\n` +
             `In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
             `\nDownload SAI from [here](https://play.google.com/store/apps/details?id=com.aefyr.sai)`
+        .addField("Note:", "It's still possible for us to merge those APKS into one, but it's not worth the effort")
         )
         .setFooter("2/7")
     );
@@ -56,7 +57,7 @@ module.exports = {
         )
         .addField(
           "Using *Yellow Man* (Lucky Patcher)",
-          "In order to disable Signature Verification using Lucky Patcher, you need to follow the steps bellow:\n 1) Open Lucky Patcher\n 2) Navigate to `toolbox`\n 3) choose `Patch to Android`\n 4) select `Disable .apk signature verification`\n 5) press `Apply`\nNote: your device may suddenly reboot, this is normal and that' how patching dalvik-cache works",
+          "In order to disable Signature Verification using Lucky Patcher, you need to follow the steps bellow:\n 1) Open Lucky Patcher\n 2) Navigate to `toolbox`\n 3) choose `Patch to Android`\n 4) select `Disable .apk signature verification`\n 5) press `Apply`\nNote: your device may suddenly reboot, this is normal and that's how patching dalvik-cache works",
           false
         )
         .addField(
