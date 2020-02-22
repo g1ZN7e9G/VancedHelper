@@ -68,7 +68,7 @@ module.exports = {
     pages.push(
       functions
         .newEmbed()
-        .setTitle("Root Guide - Disable Signature Verification")
+        .setTitle("Root Guide - Disabling Signature Verification")
         .setDescription(
           "To be able to Install Vanced on rooted devices, first you need to have Signature Verification disabled.\nThis guide will show you 2 methods of disabling signature verification"
         )
