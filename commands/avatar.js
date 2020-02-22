@@ -1,37 +1,35 @@
-const functions = require('../functions.js')
+const functions = require('../functions.js');
 module.exports = {
     name: 'avatar',
     description: 'Sends the avatar of a @user or yourself.',
+    extended: '',
     usage: '<@user>',
     aliases: ['icon', 'pfp', 'av'],
     guildonly: false,
-    devonly: false,
+    developersOnly: false,
     args: false,
-    modCommand: false,
-    category: 'Misc',
+    category: 'Utility',
     execute(message, args) {
-        const output = functions.newEmbed()
+        const output = functions.newEmbed();
 
         if (args[0]) {
-            const user = message.mentions.users.first();
-            var username = user.username;
-            // If name ends with s/z, add ', else add 's
-            if (!username.endsWith('s') && !username.endsWith('z') && !username.endsWith('S') && !username.endsWith('Z')) username += `'s`; else username += `'`
+            const member = functions.getMember(message, args, 0);
+            if (!member) return functions.noMember(message);
 
-            // output if args (!user)
-            if (!user) {
-                output.setDescription('Please use a proper mention if you want to see someone else\'s avatar.');
+            let username = member.user.username;
+            if (!username.endsWith('s') && !username.endsWith('z') && !username.endsWith('S') && !username.endsWith('Z')) username += '\'s'; else username += '\'';
+
+            if (!member) {
+                output.setDescription('Please use a proper mention if you want to see someone elses avatar.');
                 return message.channel.send(output);
             }
 
-            // output if args (user)
             output
                 .setTitle(`${username} avatar`)
-                .setImage(user.displayAvatarURL)
+                .setImage(member.user.displayAvatarURL);
             return message.channel.send(output);
         }
 
-        // output if !args
         output
             .setTitle(`${message.author.username}, your avatar`)
             .setImage(message.author.displayAvatarURL);
