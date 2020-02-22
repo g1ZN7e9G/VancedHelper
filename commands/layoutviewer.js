@@ -14,8 +14,7 @@ module.exports = {
       .newEmbed()
       .addField(
         "Before you continue",
-        "Please read info in <#663348498389008384> to completely understand how to report a bug, otherwise your report won't be viewed." +
-          " Don't forget to check <#663158441879142410> to see if your bug has already been reported",
+        "Please read info in <#663348498389008384> to completely understand how to report a bug, otherwise your report won't be viewed. Don't forget to check <#663158441879142410> to see if your bug has already been reported",
         false
       )
       .addField(

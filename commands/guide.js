@@ -2,7 +2,7 @@ const functions = require("../functions.js");
 module.exports = {
   name: "guide",
   description: "Learn how to install Vanced",
-  usage: `Use ${functions.prefix}guide to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 7] `,
+  usage: `Use ${functions.prefix}guide to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 8] `,
   aliases: ["install", "howtoinstall", "installguide", "ig"],
   guildonly: false,
   devonly: false,
@@ -16,13 +16,13 @@ module.exports = {
         .newEmbed()
         .setTitle("Install Guide")
         .setDescription(
-          `Review the list of context below and jump to the page you need via reactions or type ${functions.prefix}guide [page number from 1 to 7].`
+          `Review the list of context below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number from 1 to 8].\``
         )
         .addField(
           "Table of Contents",
-          "**Page 1:** `Index`\n**Page 2:** `What in the world is an.apks file?`\n**Page 3:** `Non-Root Guide`\n**Page 4:** `Root Guide - Disabling Signature Verification`\n**Page 5:** `Root Guide - Installing Vanced`\n**Page 6:** `Alternative Installation Method`\n**Page 7:** `Important Notes`"
+          "**Page 1:** `Index`\n**Page 2:** `What in the world is an.apks file?`\n**Page 3:** `How to download Vanced`\n**Page 4:** `Non-Root Guide`\n**Page 5:** `Root Guide - Disabling Signature Verification`\n**Page 6:** `Root Guide - Installing Vanced`\n**Page 7:** `Alternative Installation Method`\n**Page 8:** `Important Notes - Troubleshooting SAI`"
         )
-        .setFooter("1/7")
+        .setFooter("1/8")
     );
     pages.push(
       functions
@@ -35,9 +35,24 @@ module.exports = {
         )
         .addField(
           "Note:",
-          "It's still possible for devs to merge those APKS into one, but it's not worth the effort"
+          "It's still possible for devs to merge those APKS into one, but it's not worth the effort",
+          false
         )
-        .setFooter("2/7")
+        .setFooter("2/8")
+    );
+    pages.push(
+      functions
+        .newEmbed()
+        .setTitle("How to Download Vanced")
+        .addField(
+          "Which one should I pick?\n",
+          "- First thing you'll see is an option to select either nonroot or root variants. if you didn't root your device, simply select the nonroot version\n - Now you'll have to select either default or legacy variant. Default is for newer devices with arm64 chips, which were released after 2016. Legacy variant is for older/slower devices with arm chips. (If your phone has an arm64 chip but kernel instructions are set to 32-bit, you'll have to download a Legacy version.)\n - Finally you'll have to select either dark or black variant. Dark variant has Dark theme like we've seen in stock YT app, while Black variant has an AMOLED Black theme.\nSelect your favorite one and download it.\n\n__IMPORTANT__\nTo BE able to sign in to your YT account on non-root version, You'll need to download microg from same website!\n\nNow follow instructions on next pages",
+          false
+        )
+        .setDescription(
+          `In order to install Vanced, you'll need to download it first.\nGo to [vanced.app](https://vanced.app) and scroll down. Here you'll see different buttons which you can select.`
+        )
+        .setFooter("3/8")
     );
     pages.push(
       functions
@@ -45,10 +60,10 @@ module.exports = {
         .setTitle("Non-Root Guide")
         .addField(
           "For non-root users:",
-          `First of all, you will need to download MicroG from [here](https://vanced.app) \nonce you install it, follow these steps:\n 1) Download SAI from Google Play Store\n 2) open SAI and press \`Install APKS\`\n 3) navigate to folder where you have Vanced.apks saved (by default It's Download/Downloads folder).\n 4) choose .apks file and wait till it prompts you to install, press 'install' button and wait until it's done`,
+          "Before continuing, make sure you have followed instructions on previous page\n 1) Download SAI from Google Play Store\n 2) open SAI and press `Install APKS`\n 3) navigate to folder where you have Vanced.apks saved (by default It's Download/Downloads folder).\n 4) choose .apks file and wait till it prompts you to install, press 'install' button and wait until it's done",
           false
         )
-        .setFooter("3/7")
+        .setFooter("4/8")
     );
     pages.push(
       functions
@@ -72,7 +87,7 @@ module.exports = {
           "After you've completed operation that required you to disable Signature Verification, Please re-enable it as it decreases your device's security.",
           false
         )
-        .setFooter("4/7")
+        .setFooter("5/8")
     );
     pages.push(
       functions
@@ -83,7 +98,7 @@ module.exports = {
           `For this method, you will need to disable Signature Verification (See previous page).\n 1) Download SAI from Google Play Store\n 2) open SAI and navigate to settings menu\n 3) Scroll down and under \'Installation Method\' and choose root method\n 4) Go to main menu and select 'Install apks' \n 5) navigate to a folder where you have Vanced.apks saved (by default It's Download/Downloads folder) and press install.`,
           false
         )
-        .setFooter("5/7")
+        .setFooter("6/8")
     );
     pages.push(
       functions
@@ -94,18 +109,23 @@ module.exports = {
           `You will need [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) for this method.\n 1) Download the apks file\n 2) Extract the .apks file (it's just a zip)\n 3) Rename the YouTube_15.05.54_API21(nodpi)(vBlack-v2.1.0)-vanced.apk to vanced.apk\n 4) Run this command while connected to your phone:\`\`\`adb install-multiple vanced.apk config.arm64_v8a.apk split_config.en.apk\`\`\`If you want to install a language other than english, add it at the end of the command (for example split_config.de.apk)\nIf you're on legacy, you have to adjust the second filename\n 5) Install MicroG manually on your phone`,
           false
         )
-        .setFooter("6/7")
+        .setFooter("7/8")
     );
     pages.push(
       functions
         .newEmbed()
-        .setTitle("Important Notes")
+        .setTitle("Important Notes - Troubleshooting SAI")
         .addField(
           "Notice for MiUI users!",
           `Due to some MiUI limitations, you may get errors while installing Vanced using SAI, in order to solve this problem, you have to:\n 1) Enable Developer Options\n 2) Scroll down until you see \`Turn on MiUI optimization\` and disable it\n 3) Use SAI to install Vanced`,
           false
         )
-        .setFooter("7/7")
+        .addField(
+          "App Compatibility issue",
+          `Some old devices still use old arm architecture, because of that you will get an error in SAI if you're using a default version for arm devices.\nIf you get an error that says: \`This app is incompatible with your device\`, download a \`legacy\` version from [vanced.app](https://vanced.app) and try again.`,
+          false
+        )
+        .setFooter("8/8")
     );
     let page =
       isNaN(parseInt(args[0])) ||
