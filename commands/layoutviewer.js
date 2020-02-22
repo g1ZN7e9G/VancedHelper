@@ -14,8 +14,7 @@ module.exports = {
       .newEmbed()
       .addField(
         "Before you continue",
-        "Please read info in <#663348498389008384> to completely understand how to report a bug, otherwise your report won't be viewed." +
-          "Don't forget to see <#663158441879142410> to see if your bug has already been reported",
+        "Please read info in <#663348498389008384> to completely understand how to report a bug, otherwise your report won't be viewed. Don't forget to check <#663158441879142410> to see if your bug has already been reported",
         false
       )
       .addField(
@@ -29,7 +28,7 @@ module.exports = {
       )
       .setTitle("How to report Theme based bugs")
       .setDescription(
-        `We all know that Vanced is a good app, but nothing is perfect. \nSometimes bugs just slip into the code and that\'s pretty normal.\nThis guide will show you how to report Theme based bugs.\nIn order to report bugs, you will need [Developer Assistant](https://play.google.com/store/apps/details?id=com.appsisle.developerassistant)`
+        `We all know that Vanced is a good app, but nothing is perfect. Sometimes bugs just slip into the code and that\'s pretty normal. This guide will show you how to report Theme based bugs.\nIn order to report bugs, you will need [Developer Assistant](https://play.google.com/store/apps/details?id=com.appsisle.developerassistant)`
       );
 
     return message.channel.send(output);
