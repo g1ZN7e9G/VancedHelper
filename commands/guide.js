@@ -14,13 +14,13 @@ module.exports = {
     pages.push(
       functions
         .newEmbed()
-        .setTitle("Install Guide")
+        .setTitle("Installation Guide")
         .setDescription(
           `Review the list of context below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number].\``
         )
         .addField(
           "Table of Contents",
-          "**Page 1:** `Index`\n**Page 2:** `What in the world is an.apks file?`\n**Page 3:** `How to download Vanced`\n**Page 4:** `Non-Root Guide`\n**Page 5:** `Root Guide - Disabling Signature Verification`\n**Page 6:** `Root Guide - Installing Vanced`\n**Page 7:** `Alternative Installation Method`\n**Page 8:** `Important Notes/Troubleshooting SAI`\n\n:arrow_down: - page indicator"
+          ":one: - `Index`\n:two: - `What in the world is an.apks file?`\n:three: - `How to download Vanced`\n:four: - `Non-Root Guide`\n:five: - `Root Guide - Disabling Signature Verification`\n:six: - `Root Guide - Installing Vanced`\n:seven: - `Alternative Installation Method`\n:eight: - `Troubleshooting`\n\n:arrow_down: - page indicator"
         )
         .setFooter("1/8")
     );
@@ -31,7 +31,7 @@ module.exports = {
         .setDescription(
           `Because of how YouTube's new APK is being handled, We use Split APKS.\n` +
             `In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
-            `\nDownload SAI from [here](https://play.google.com/store/apps/details?id=com.aefyr.sai)`
+            `\nDownload SAI from [here](https:/Important Notes/Troubleshooting SAI/play.google.com/store/apps/details?id=com.aefyr.sai)`
         )
         .addField(
           "Note:",
@@ -46,7 +46,7 @@ module.exports = {
         .setTitle("How to Download Vanced")
         .addField(
           "Which one should I pick?\n",
-          "- First thing you'll see is an option to select either nonroot or root variants. if you didn't root your device, simply select the nonroot version\n - Now you'll have to select either default or legacy variant. Default is for newer devices with arm64 chips, which were released after 2016. Legacy variant is for older/slower devices with arm chips. (If your phone has an arm64 chip but kernel instructions are set to 32-bit, you'll have to download a Legacy version.)\n - Finally you'll have to select either dark or black variant. Dark variant has Dark theme like we've seen in stock YT app, while Black variant has an AMOLED Black theme.\nSelect your favorite one and download it.\n\n__IMPORTANT__\nYou'll need to download microg as well because Vanced will crash without it!\n\nNow follow instructions on next pages",
+          "- First thing you'll see is an option to select either nonroot or root variants. if you didn't root your device, simply select the nonroot version\n - Now you'll have to select either default or legacy variant. Default is for newer devices with arm64 chips, which were released after 2016. Legacy variant is for older/slower devices with arm chips. (If your phone has an arm64 chip but kernel instructions are set to 32-bit, you'll have to download a Legacy version.)\n - Finally you'll have to select either dark or black variant. Dark variant has Dark theme like we've seen in stock YT app, while Black variant has an AMOLED Black theme.\nSelect your favorite one and download it.\n\n__IMPORTANT__\nTo be able to use Vanced on nonroot devices, you'll need to download and install Microg from the same website.\n\nNow follow instructions on next pages",
           false
         )
         .setDescription(
@@ -114,7 +114,7 @@ module.exports = {
     pages.push(
       functions
         .newEmbed()
-        .setTitle("Important Notes/Troubleshooting SAI")
+        .setTitle("Troubleshooting")
         .addField(
           "Notice for MiUI users!",
           `Due to some MiUI limitations, you may get errors while installing Vanced using SAI, in order to solve this problem, you have to:\n 1) Enable Developer Options\n 2) Scroll down until you see \`Turn on MiUI optimization\` and disable it\n 3) Use SAI to install Vanced`,
@@ -135,6 +135,11 @@ module.exports = {
           "In order to disable 60fps playback, you need to enable hidden menu in vanced settings, to do that go to vanced settings and tap on `About` field for about 6-7 times, then go to Codec menu and override model to `SM-T520`",
           false
         )
+        .addField(
+          "What to do if I don't get any notifications?",
+          `Sometimes you may not get any notifications from your favorite YouTubers, in order to solve this problem you need to adjust some settings.\nGo to Vanced Settings, tap on Microg settings and go to \`Google Cloud Messaging\`, here set ping to 60 seconds and voilla.\nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}stuck\` for detailed guide)`,
+          false
+         )
         .setFooter("8/8")
     );
     let page =
@@ -145,8 +150,10 @@ module.exports = {
         : parseInt(args[0]) - 1;
     page = page > pages.length ? 0 : page;
     const msg = await message.channel.send(pages[page]);
+    await msg.react("⏪")
     await msg.react("⬅️");
     await msg.react("➡️");
+    await msg.react("⏩");
 
     const collector = msg.createReactionCollector(
       (reaction, user) => user.id === message.author.id,
@@ -167,6 +174,11 @@ module.exports = {
         .filter(user => user.id !== message.client.user.id)
         .forEach(user => r.remove(user));
       switch (r.emoji.name) {
+        case "⏪":
+          if (page === 0) return;
+          page = 0;
+          msg.edit(pages[page]);
+          break;
         case "⬅️":
           if (page === 0) return;
           page--;
@@ -175,6 +187,11 @@ module.exports = {
         case "➡️":
           if (page + 1 === pages.length) return;
           page++;
+          msg.edit(pages[page]);
+          break;
+        case "⏩":
+          if (page + 1 === pages.length) return;
+          page = pages.length - 1;
           msg.edit(pages[page]);
           break;
         default:
