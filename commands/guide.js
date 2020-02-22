@@ -16,11 +16,11 @@ module.exports = {
         .newEmbed()
         .setTitle("Install Guide")
         .setDescription(
-          `Review the list of context below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number from 1 to 8].\``
+          `Review the list of context below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number].\``
         )
         .addField(
           "Table of Contents",
-          "**Page 1:** `Index`\n**Page 2:** `What in the world is an.apks file?`\n**Page 3:** `How to download Vanced`\n**Page 4:** `Non-Root Guide`\n**Page 5:** `Root Guide - Disabling Signature Verification`\n**Page 6:** `Root Guide - Installing Vanced`\n**Page 7:** `Alternative Installation Method`\n**Page 8:** `Important Notes - Troubleshooting SAI`"
+          "**Page 1:** `Index`\n**Page 2:** `What in the world is an.apks file?`\n**Page 3:** `How to download Vanced`\n**Page 4:** `Non-Root Guide`\n**Page 5:** `Root Guide - Disabling Signature Verification`\n**Page 6:** `Root Guide - Installing Vanced`\n**Page 7:** `Alternative Installation Method`\n**Page 8:** `Important Notes/Troubleshooting SAI`\n\n:arrow_down: - page indicator"
         )
         .setFooter("1/8")
     );
@@ -114,7 +114,7 @@ module.exports = {
     pages.push(
       functions
         .newEmbed()
-        .setTitle("Important Notes - Troubleshooting SAI")
+        .setTitle("Important Notes/Troubleshooting SAI")
         .addField(
           "Notice for MiUI users!",
           `Due to some MiUI limitations, you may get errors while installing Vanced using SAI, in order to solve this problem, you have to:\n 1) Enable Developer Options\n 2) Scroll down until you see \`Turn on MiUI optimization\` and disable it\n 3) Use SAI to install Vanced`,
@@ -123,6 +123,16 @@ module.exports = {
         .addField(
           "App Compatibility issue",
           `Some old devices still use old arm architecture, because of that you will get an error in SAI if you're using a default version for arm devices.\nIf you get an error that says: \`This app is incompatible with your device\`, download a \`legacy\` version from [vanced.app](https://vanced.app) and try again.`,
+          false
+        )
+        .addField(
+          "How to enable a dark splash screen?",
+          "In order to enable a dark splash screen, you need to enable a system-wide dark theme in device settings, then you'll have a dark splash screen",
+          false
+        )
+        .addField(
+          "Disable 60fps playback",
+          "In order to disable 60fps playback, you need to enable hidden menu in vanced settings, to do that go to vanced settings and tap on `About` field for about 6-7 times, then go to Codec menu and override model to `SM-T520`",
           false
         )
         .setFooter("8/8")
