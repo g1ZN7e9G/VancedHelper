@@ -31,7 +31,7 @@ module.exports = {
         .setDescription(
           `Because of how YouTube's new APK is being handled, We use Split APKS.\n` +
             `In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
-            `\nDownload SAI from [here](https:/Important Notes/Troubleshooting SAI/play.google.com/store/apps/details?id=com.aefyr.sai)`
+            `\nDownload SAI from [here](https://play.google.com/store/apps/details?id=com.aefyr.sai)`
         )
         .addField(
           "Note:",
