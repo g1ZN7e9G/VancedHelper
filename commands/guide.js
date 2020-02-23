@@ -142,7 +142,7 @@ module.exports = {
          )
         .addField(
           "I changed password of my Google account, now I can't use Vanced, help!",
-          `If you changed your Google account password, go to \`Device Settings > Accounts\` and remove an account with blue looking "g" icon, then go to Vanced and re-add that account.\n\nIf you couldn't find your problem here, simply ask for help in <#358967876193091584>`,
+          `If you changed your Google account password, go to \`Device Settings > Accounts\` and remove an account with <:oldgacc:679434987560370188> icon, then go to Vanced and re-add that account.\n\nIf you couldn't find your problem here, simply ask for help in <#358967876193091584>`,
           false
          )
         .setFooter("8/8")
