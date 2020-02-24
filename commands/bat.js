@@ -29,6 +29,8 @@ module.exports = {
                 return `<:stinks:639524149361901576> ${percentage}%`
         }
         function handleData(data) {
+            if (args.length && !isNaN(parseInt(args[0])))
+                return message.channel.send((args[0] * data.price).toString().substring(0, 5) + ' EUR')
             const output = functions.newEmbed()
                 .setTitle(data.name)
                 .addField('EUR', data.price.substring(0, 6) + "€", true)
