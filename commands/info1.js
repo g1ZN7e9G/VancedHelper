@@ -6,7 +6,7 @@ module.exports = {
     usage: '',
     aliases: [],
     guildonly: false,
-    devonly: false,
+    devonly: true,
     args: false,
     modCommand: false,
     category: 'Dev',
@@ -38,7 +38,7 @@ module.exports = {
 
         const output3 = new Discord.RichEmbed()
             .setTitle('Get Help')
-            .setDescription('Answering the same question 20 times a day is annoying.\nBefore asking for support or sending a bug report, please check out our bot <@573583516638380032> as it has a lot of info and bugfixes. Simply head over to <#361807727531393026> and type `-help` to get a list of all available commands.')
+            .setDescription('Answering the same question 20 times a day is annoying.\nBefore asking for support or sending a bug report, please check out our bot <@658352336787472386> as it has a lot of info and bugfixes. Simply head over to <#361807727531393026> and type `-help` to get a list of all available commands.')
             .addField('Get Support', 'Describe your issue as detailed as possible in <#358967876193091584>. Also attach a screenshot.\nPlease refrain from pinging or dming random users.')
             .addField('Provide Feedback', 'To get instructions on how to report a bug or send a suggestion, read <#663348498389008384> closely.')
             .addField('Are you an advanced user?', "[Apply for tester!](https://discordapp.com/channels/328493314485518336/677250253484720141/677250820722393088) (If the link doesn't work for you, just go to the last pinned message in <#677250253484720141>.")

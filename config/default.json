@@ -1,7 +1,8 @@
 {
-	"prefix": "-",
-	"token": "<your-bot-token-here>",
-	"devs": ["<dev-id-here>", "<dev-id-here>"],
-	"logchannel": "<your-log-channel-id-here>",
-	"errorChannel": "<your-error-channel-id-here>"
+  "prefix": "-",
+  "token": "<your-bot-token-here>",
+  "devs": ["<dev-id-here>", "<dev-id-here>"],
+  "logchannel": "<your-log-channel-id-here>",
+  "errorChannel": "<your-error-channel-id-here>",
+  "coinlibToken": "<coinlib-token-here>"
 }
