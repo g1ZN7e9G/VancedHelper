@@ -10,33 +10,19 @@ module.exports = {
     modCommand: false,
     category: 'Misc',
     execute(message, args) {
-        var roles = []
-        var channelSize = 0
-        var channels = []
         const g = message.guild
-        var description = `**Owner:** \`${g.owner.user.tag}\`\n**Guild Name:** \`${g.name}\`\n**ID:** \`${g.id}\`\n**Region:** \`${g.region}\`\n**Creation Date:** \`${g.createdAt.toString().split(' ').slice(-20, 4).join(' ')}\`\n**Member Count:** \`${g.memberCount}\`\n**Emoji Count:** \`${g.emojis.size}\``
-
-        for (const [placeholder, k] of g.roles) {
-            if (k != '@everyone') roles.push(k)
-        }
-
-        for (const [placeholder, k] of g.channels) {
-            if (k.type == 'text') {
-                channels.push(k)
-                channelSize++
-            }
-        }
+        const roles = []
+        const channels = []
+        g.channels.filter(chan => chan.type === 'text').forEach(chan => channels.push(chan))
+        g.roles.filter(role => role.name !== '@everyone').forEach(role => roles.push(role))
 
         const output = functions.newEmbed()
             .setAuthor('Guild Info', 'https://i.imgur.com/KS0cnM6.png')
             .setThumbnail(g.iconURL)
             .setFooter(message.author.tag, message.author.avatarURL)
-            .setDescription(description)
-        if (roles.join(' ').length < 1024) output.addField(`Roles [${g.roles.size - 1}]`, roles.join(', '), false);
-        else output.addField(`Roles [${g.roles.size - 1}]`, 'Too many roles, can\'t display.', false);
-        if (channels.join(' ').length < 1024) output.addField(`Channels [${channelSize}]`, channels.join(', '), false);
-        else output.addField(`Channels [${g.channels.size - 1}]`, 'Too many channels, can\'t display.', false);
-        if (g.splashURL) output.setImage(g.splashURL)
+            .setDescription(`**Owner:** \`${g.owner.user.tag}\`\n**Guild Name:** \`${g.name}\`\n**ID:** \`${g.id}\`\n**Region:** \`${g.region}\`\n**Creation Date:** \`${g.createdAt.toString().split(' ').slice(-20, 4).join(' ')}\`\n**Member Count:** \`${g.memberCount}\`\n**Emoji Count:** \`${g.emojis.size}\``)
+            .addField(`Channels [${channels.length}]`, channels.join(', ').length > 1024 ? "Too many channels, can't display." : channels.join(', '))
+            .addField(`Roles [${roles.length}]`, roles.join(', ').length > 1024 ? "Too many channels, can't display." : roles.join(', '))
 
         return message.channel.send(output)
     },

@@ -1,8 +1,8 @@
 const functions = require("../functions.js");
 module.exports = {
   name: "guide",
-  description: "Learn everything about Vanced",
-  usage: `to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 8] `,
+  description: "Learn how to install and use Vanced",
+  usage: `to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 6] `,
   aliases: ["install", "howtoinstall", "installguide", "ig"],
   guildonly: false,
   devonly: false,
@@ -16,43 +16,28 @@ module.exports = {
         .newEmbed()
         .setTitle("Installation Guide")
         .setDescription(
-          `Review the list of context below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number].\``
+          `Review the table of contents below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number].\``
         )
         .addField(
           "Table of Contents",
-          ":one: - `Index`\n:two: - `What in the world is an.apks file?`\n:three: - `How to download Vanced`\n:four: - `Non-Root Guide`\n:five: - `Root Guide - Disabling Signature Verification`\n:six: - `Root Guide - Installing Vanced`\n:seven: - `Alternative Installation Method`\n:eight: - `Troubleshooting`\n\n:arrow_down: - page indicator"
+          ":one: - `Index`\n:two: - `How to download Vanced`\n:three: - `Non-Root Guide`\n:four: - `Root Guide - Disabling Signature Verification`\n:five: - `Root Guide - Installing Vanced`\n:six: - `Alternative Installation Method`\n\n:arrow_down: - Page Indicator"
         )
-        .setFooter("1/8")
+        .setFooter("1/6")
     );
-    pages.push(
-      functions
-        .newEmbed()
-        .setTitle("Why do we use new .apks format?")
-        .setDescription(
-          `~~What if, you wanted to go to heaven, but [vanced.app](https://vanced.app) said: \`YoU NeeD SaI To InsTAll VaNcED\`~~` +  
-          `\nJokes aside, because of how YouTube's new APK is being handled, We use Split APKS. In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
-          `\nDownload SAI from [here](https://play.google.com/store/apps/details?id=com.aefyr.sai)`
-        )
-        .addField(
-          "Note:",
-          "It's still possible for devs to merge those APKS into one, but it's not worth the effort",
-          false
-        )
-        .setFooter("2/8")
-    );
+
     pages.push(
       functions
         .newEmbed()
         .setTitle("How to Download Vanced")
         .addField(
           "Which one should I pick?\n",
-          "- First thing you'll see is an option to select either nonroot or root variants. if you didn't root your device, simply select the nonroot version\n - Now you'll have to select either default or legacy variant. Default is for newer devices with arm64 chips, which were released after 2016. Legacy variant is for older/slower devices with arm chips. (If your phone has an arm64 chip but kernel instructions are set to 32-bit, you'll have to download a Legacy version.)\n - Finally you'll have to select either dark or black variant. Dark variant has Dark theme like we've seen in stock YT app, while Black variant has an AMOLED Black theme.\nSelect your favorite one and download it.\n\n__IMPORTANT__\nTo be able to use Vanced on nonroot devices, you'll need to download and install Microg from the same website.\n\nNow follow instructions on next pages",
+          "- First thing you'll see is an option to select either nonroot or root variants. if you didn't root your device, simply select the nonroot version\n - Now you'll have to select either default or legacy variant. Default is for newer devices with arm64 chips, which were released after 2016. Legacy variant is for older/slower devices with arm chips. (If your phone has an arm64 chip but kernel instructions are set to 32-bit, you'll have to download a Legacy version.)\n - Finally you'll have to select either dark or black variant. Dark variant has Dark theme like we've seen in stock YT app, while Black variant has an AMOLED Black theme.\nSelect your favorite one and download it.\n\n__IMPORTANT__\nTo be able to use Vanced on nonroot devices, you'll need to download and install Microg from the same website.\n\nNow follow the instructions on next pages",
           false
         )
         .setDescription(
           `In order to install Vanced, you'll need to download it first.\nGo to [vanced.app](https://vanced.app) and scroll down. Here you'll see different buttons which you can select.`
         )
-        .setFooter("3/8")
+        .setFooter("2/6")
     );
     pages.push(
       functions
@@ -60,10 +45,10 @@ module.exports = {
         .setTitle("Non-Root Guide")
         .addField(
           "For non-root users:",
-          "Before continuing, make sure you have followed instructions on previous page\n 1) Download SAI from Google Play Store\n 2) open SAI and press `Install APKS`\n 3) navigate to folder where you have Vanced.apks saved (by default It's Download/Downloads folder).\n 4) choose .apks file and wait till it prompts you to install, press 'install' button and wait until it's done",
+          "Before continuing, make sure you have followed instructions on previous page\n :one: Download SAI from Google Play Store\n :two: Open SAI and press `Install APKS`\n :three: Navigate to folder where you have Vanced.apks saved (by default this is Download/Downloads folder).\n :four: Choose .apks file and wait till it prompts you to install, press 'install' button and wait until it's done",
           false
         )
-        .setFooter("4/8")
+        .setFooter("3/6")
     );
     pages.push(
       functions
@@ -74,20 +59,20 @@ module.exports = {
         )
         .addField(
           "Using *Yellow Man* (Lucky Patcher)",
-          "In order to disable Signature Verification using Lucky Patcher, you need to follow the steps bellow:\n 1) Open Lucky Patcher\n 2) Navigate to `toolbox`\n 3) choose `Patch to Android`\n 4) select `Disable .apk signature verification`\n 5) press `Apply`\nNote: your device may suddenly reboot, this is normal and that's how patching dalvik-cache works",
+          "In order to disable Signature Verification using Lucky Patcher, you need to follow the steps bellow:\n :one: Open Lucky Patcher\n :two: Navigate to `toolbox`\n :three: Choose `Patch to Android`\n :four: Select `Disable .apk signature verification`\n :five: Press `Apply`\nNote: Your device may suddenly reboot, this is normal and that's how patching dalvik-cache works",
           false
         )
         .addField(
           "Using an (Ed)Xposed module",
-          "Use this if LP method doesn't work.\n 1) Open (Ed)Xposed Installer\n 2) Navigate to `Download` section\n 3) Download and Install `DSV` module\n 4) Activate module and Restart",
+          "Use this if LP method doesn't work.\n :one: Open (Ed)Xposed Installer\n :two: Navigate to `Download` section\n :three: Download and Install `DSV` module\n :four: Activate module and Restart",
           false
         )
         .addField(
           "Warning",
-          "After you've completed operation that required you to disable Signature Verification, Please re-enable it as it decreases your device's security.",
+          "After you're done installing Vanced, we highly recommend you re-enable signature verification as having it disabled is a security risk",
           false
         )
-        .setFooter("5/8")
+        .setFooter("4/6")
     );
     pages.push(
       functions
@@ -95,10 +80,10 @@ module.exports = {
         .setTitle("Root Guide - Installing Vanced")
         .addField(
           "Installation",
-          `For this method, you will need to disable Signature Verification (See previous page).\n 1) Download SAI from Google Play Store\n 2) open SAI and navigate to settings menu\n 3) Scroll down and under \'Installation Method\' and choose root method\n 4) Go to main menu and select 'Install apks' \n 5) navigate to a folder where you have Vanced.apks saved (by default It's Download/Downloads folder) and press install.`,
+          `For this method, you will need to disable Signature Verification (See previous page).\n :one: Download SAI from Google Play Store\n :two: Open SAI and navigate to settings menu\n :three: Scroll down and under \'Installation Method\' choose root method\n :four: Go to main menu and select 'Install apks' \n :five: Navigate to the folder where you have Vanced.apks saved (by default this is Download/Downloads folder) and press install.`,
           false
         )
-        .setFooter("6/8")
+        .setFooter("5/6")
     );
     pages.push(
       functions
@@ -106,46 +91,10 @@ module.exports = {
         .setTitle("Alternative Installation Method")
         .addField(
           "You can install Vanced using ADB too",
-          `You will need [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) for this method.\n 1) Download the apks file\n 2) Extract the .apks file (it's just a zip)\n 3) Rename the YouTube_15.05.54_API21(nodpi)(vBlack-v2.1.0)-vanced.apk to vanced.apk\n 4) Run this command while connected to your phone:\`\`\`adb install-multiple vanced.apk config.arm64_v8a.apk split_config.en.apk\`\`\`If you want to install a language other than english, add it at the end of the command (for example split_config.de.apk)\nIf you're on legacy, you have to adjust the second filename\n 5) Install MicroG manually on your phone`,
+          `You will need [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools) for this method.\n :one: Download the apks file\n :two: Extract the .apks file (it's just a zip)\n :three: Rename the YouTube_15.05.54_API21(nodpi)(vBlack-v2.1.0)-vanced.apk to vanced.apk\n :four: Run this command while connected to your phone:\`\`\`adb install-multiple vanced.apk config.arm64_v8a.apk split_config.en.apk\`\`\`If you want to install a language other than english, add it at the end of the command (for example split_config.de.apk)\nIf you're on legacy, you have to adjust the second filename\n :five: Install MicroG manually on your phone`,
           false
         )
-        .setFooter("7/8")
-    );
-    pages.push(
-      functions
-        .newEmbed()
-        .setTitle("Troubleshooting")
-        .addField(
-          "Notice for MiUI users!",
-          `Due to some MiUI limitations, you may get errors while installing Vanced using SAI, in order to solve this problem, you have to:\n 1) Enable Developer Options\n 2) Scroll down until you see \`Turn on MiUI optimization\` and disable it\n 3) Use SAI to install Vanced`,
-          false
-        )
-        .addField(
-          "App Compatibility issue",
-          `Some old devices still use old arm architecture, because of that you will get an error in SAI if you're using a default version for arm devices.\nIf you get an error that says: \`This app is incompatible with your device\`, download a \`legacy\` version from [vanced.app](https://vanced.app) and try again.`,
-          false
-        )
-        .addField(
-          "How to enable a dark splash screen?",
-          "In order to enable a dark splash screen, you need to enable a system-wide dark theme in device settings, then you'll have a dark splash screen",
-          false
-        )
-        .addField(
-          "Disable 60fps playback",
-          "In order to disable 60fps playback, you need to enable hidden menu in vanced settings, to do that go to vanced settings and tap on `About` field for about 6-7 times, then go to Codec menu and set `Override Model` to `sm-t520` and `Override Manufacturer` to `Samsung`",
-          false
-        )
-        .addField(
-          "What to do if I don't get any notifications?",
-          `Sometimes you may not get any notifications from your favorite YouTubers, in order to solve this problem you need to adjust some settings.\nGo to Vanced Settings, tap on Microg settings and go to \`Google Cloud Messaging\`, now set ping to 60 seconds and voilla. If you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}stuck\` for detailed guide)`,
-          false
-         )
-        .addField(
-          "I changed password of my Google account, now I can't use Vanced, help!",
-          `If you changed your Google account password, go to \`Device Settings > Accounts\` and remove an account with <:oldgacc:679434987560370188> icon, then go to Vanced and re-add that account.\n\nIf you couldn't find your problem here, simply ask for help in <#358967876193091584>`,
-          false
-         )
-        .setFooter("8/8")
+        .setFooter("6/6")
     );
     let page =
       isNaN(parseInt(args[0])) ||
@@ -154,8 +103,10 @@ module.exports = {
         ? 0
         : parseInt(args[0]) - 1;
     page = page > pages.length ? 0 : page;
+    if (page > 0) return message.channel.send(pages[page]);
     const msg = await message.channel.send(pages[page]);
-    await msg.react("⏪")
+    
+    await msg.react("⏪");
     await msg.react("⬅️");
     await msg.react("➡️");
     await msg.react("⏩");
