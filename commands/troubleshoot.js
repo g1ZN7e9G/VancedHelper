@@ -76,7 +76,7 @@ module.exports = {
           "I changed the password of my Google account, now I can't use Vanced, help!"
         )
         .setDescription(
-          `If you changed your Google account password, go to \`Device Settings > Accounts\` and remove an account with <:oldgacc:679434987560370188> icon, then go to Vanced and re-add that account.`
+          `go to \`Device Settings > Account\`, select the account with the <:oldgacc:679434987560370188> logo and remove it. Then simply add it back via Vanced.`
         )
         .setFooter("7/10")
     );
