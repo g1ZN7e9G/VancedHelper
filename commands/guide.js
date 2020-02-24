@@ -1,8 +1,8 @@
 const functions = require("../functions.js");
 module.exports = {
   name: "guide",
-  description: "Learn how to install Vanced",
-  usage: `Use ${functions.prefix}guide to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 8] `,
+  description: "Learn everything about Vanced",
+  usage: `to view index or jump directly to specific page via ${functions.prefix}guide [page number from 1 to 8] `,
   aliases: ["install", "howtoinstall", "installguide", "ig"],
   guildonly: false,
   devonly: false,
@@ -29,9 +29,9 @@ module.exports = {
         .newEmbed()
         .setTitle("Why do we use new .apks format?")
         .setDescription(
-          `Because of how YouTube's new APK is being handled, We use Split APKS.\n` +
-            `In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
-            `\nDownload SAI from [here](https:/Important Notes/Troubleshooting SAI/play.google.com/store/apps/details?id=com.aefyr.sai)`
+          `~~What if, you wanted to go to heaven, but [vanced.app](https://vanced.app) said: \`YoU NeeD SaI To InsTAll VaNcED\`~~` +  
+          `\nJokes aside, because of how YouTube's new APK is being handled, We use Split APKS. In order to install Vanced, you'll need to use SAI (Split Apks Installer).` +
+          `\nDownload SAI from [here](https://play.google.com/store/apps/details?id=com.aefyr.sai)`
         )
         .addField(
           "Note:",
@@ -132,12 +132,17 @@ module.exports = {
         )
         .addField(
           "Disable 60fps playback",
-          "In order to disable 60fps playback, you need to enable hidden menu in vanced settings, to do that go to vanced settings and tap on `About` field for about 6-7 times, then go to Codec menu and override model to `SM-T520`",
+          "In order to disable 60fps playback, you need to enable hidden menu in vanced settings, to do that go to vanced settings and tap on `About` field for about 6-7 times, then go to Codec menu and set `Override Model` to `sm-t520` and `Override Manufacturer` to `Samsung`",
           false
         )
         .addField(
           "What to do if I don't get any notifications?",
-          `Sometimes you may not get any notifications from your favorite YouTubers, in order to solve this problem you need to adjust some settings.\nGo to Vanced Settings, tap on Microg settings and go to \`Google Cloud Messaging\`, here set ping to 60 seconds and voilla.\nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}stuck\` for detailed guide)`,
+          `Sometimes you may not get any notifications from your favorite YouTubers, in order to solve this problem you need to adjust some settings.\nGo to Vanced Settings, tap on Microg settings and go to \`Google Cloud Messaging\`, now set ping to 60 seconds and voilla. If you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}stuck\` for detailed guide)`,
+          false
+         )
+        .addField(
+          "I changed password of my Google account, now I can't use Vanced, help!",
+          `If you changed your Google account password, go to \`Device Settings > Accounts\` and remove an account with <:oldgacc:679434987560370188> icon, then go to Vanced and re-add that account.\n\nIf you couldn't find your problem here, simply ask for help in <#358967876193091584>`,
           false
          )
         .setFooter("8/8")
