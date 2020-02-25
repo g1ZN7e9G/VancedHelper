@@ -21,10 +21,16 @@ module.exports = {
             console.error(error);
         }
         function stonkify(percentage) {
-            if (parseInt(percentage) >= 5)
+            if (parseInt(percentage) >= 25)
+                return `<:relaxV:672074572132122624> ${percentage}%`
+            else if (parseInt(percentage) >= 5)
                 return `<:Merchant:681301737034088482> ${percentage}%`
             else if (Math.sign(percentage) == 1)
                 return `<:stonks:635003250759958569> ${percentage}%`
+            else if (parseInt(percentage) <= -25) 
+                return `<:sadboi:661600420678074398> ${percentage}%`
+            else if (parseInt(percentage) <= -5)
+                return `<:feels:622146675095371776> ${percentage}%`
             else
                 return `<:stinks:639524149361901576> ${percentage}%`
         }
