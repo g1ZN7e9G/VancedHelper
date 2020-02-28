@@ -139,7 +139,7 @@ module.exports = {
         .newEmbed()
         .setTitle("My issue isn't listed here")
         .setDescription(
-          `If you couldn't find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for that exact problem will be added here too.`
+          `If you couldn't find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for this very problem will be added here too.`
         )
         .setFooter("*")
     );
