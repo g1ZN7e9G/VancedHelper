@@ -65,7 +65,7 @@ module.exports = {
         .newEmbed()
         .setTitle("What to do if I don't get any notifications?")
         .setDescription(
-          `Sometimes you may not get notifications from your favorite YouTubers.\nin order to solve this, you need to adjust some settings.\n:one: Go to Vanced Settings\n:two: tap on Microg settings\n:three: go to \`Google Cloud Messaging\` and set \`ping\` to 60 seconds. \nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}troubleshoot 8\` for detailed guide)`
+          `Sometimes you may not get notifications from your favorite YouTubers.\nin order to solve this, you need to adjust some settings.\n:one: Go to Vanced Settings\n:two: tap on Microg settings\n:three: go to \`Google Cloud Messaging > YouTube Vanced\` and set \`ping\` to 60 seconds. \nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}troubleshoot 8\` for detailed guide)`
         )
         .setFooter("6/10")
     );
