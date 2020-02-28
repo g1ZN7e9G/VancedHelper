@@ -20,7 +20,7 @@ module.exports = {
         )
         .addField(
           "Table of Contents",
-          ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Your issue isn't listed here?`\n\n:arrow_down: - Page Indicator"
+          ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Picture-In-Picture doesn't work`\n:asterisk: - `Your issue isn't listed here?`\n\n:arrow_down: - Page Indicator"
         )
         .setFooter("1/10")
     );
@@ -128,11 +128,20 @@ module.exports = {
     pages.push(
       functions
         .newEmbed()
+        .setTitle("Picture-in-Picture is not working")
+        .setDescription(
+          "The way PiP works is controlled by your operating system. If it's broken, there's nothing we can do, so please don't report PiP related issues."
+        )
+        .setFooter("10/10")
+    );
+    pages.push(
+      functions
+        .newEmbed()
         .setTitle("My issue isn't listed here")
         .setDescription(
           `If you couldn't find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for that exact problem will be added here too.`
         )
-        .setFooter("10/10")
+        .setFooter("*")
     );
     let page =
       isNaN(parseInt(args[0])) ||
