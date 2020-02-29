@@ -20,7 +20,7 @@ module.exports = {
         )
         .addField(
           "Table of Contents",
-          ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Your issue isn't listed here?`\n\n:arrow_down: - Page Indicator"
+          ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Picture-In-Picture doesn't work`\n:asterisk: - `Your issue isn't listed here?`\n\n:arrow_down: - Page Indicator"
         )
         .setFooter("1/10")
     );
@@ -65,7 +65,7 @@ module.exports = {
         .newEmbed()
         .setTitle("What to do if I don't get any notifications?")
         .setDescription(
-          `Sometimes you may not get notifications from your favorite YouTubers.\nin order to solve this, you need to adjust some settings.\n:one: Go to Vanced Settings\n:two: tap on Microg settings\n:three: go to \`Google Cloud Messaging\` and set \`ping\` to 60 seconds. \nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}troubleshoot 8\` for detailed guide)`
+          `Sometimes you may not get notifications from your favorite YouTubers.\nin order to solve this, you need to adjust some settings.\n:one: Go to Vanced Settings\n:two: tap on Microg settings\n:three: go to \`Google Cloud Messaging > YouTube Vanced\` and set \`ping\` to 60 seconds. \nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}troubleshoot 8\` for detailed guide)`
         )
         .setFooter("6/10")
     );
@@ -128,11 +128,20 @@ module.exports = {
     pages.push(
       functions
         .newEmbed()
-        .setTitle("My issue isn't listed here")
+        .setTitle("Picture-in-Picture is not working")
         .setDescription(
-          `If you couldn't find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for that exact problem will be added here too.`
+          "The way PiP works is controlled by your operating system. If it's broken, there's nothing we can do, so please don't report PiP related issues."
         )
         .setFooter("10/10")
+    );
+    pages.push(
+      functions
+        .newEmbed()
+        .setTitle("My issue isn't listed here")
+        .setDescription(
+          `If you couldn't find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for this very problem will be added here too.`
+        )
+        .setFooter("*")
     );
     let page =
       isNaN(parseInt(args[0])) ||
