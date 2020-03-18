@@ -5,8 +5,11 @@
   "main": "index.js",
   "dependencies": {
     "config": "^3.2.4",
-    "discord.js": "^11.5.1",
-    "node-fetch": "^2.6.0"
+    "discord.js": "^12.0.2",
+    "discord.js-minesweeper": "^1.0.5",
+    "eslint": "^6.8.0",
+    "node-fetch": "^2.6.0",
+    "tictactoejs": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {
@@ -14,6 +17,7 @@
     "dev": "export NODE_ENV=development && node index.js",
     "prod-win": "set NODE_ENV=production&& node index.js",
     "dev-win": "set NODE_ENV=development&& node index.js",
+    "lint": "eslint . --ext .js --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mattis6666",
