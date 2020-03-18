@@ -1,0 +1,15 @@
+// const functions = require('../../utils/functions.js');
+// const config = require('config');
+module.exports = {
+    name: '',
+    description: '',
+    extended: '',
+    usage: '',
+    aliases: [],
+    guildonly: false,
+    developersOnly: false,
+    args: false,
+    category: 'Vanced',
+    execute(message, args) {
+    }
+};
