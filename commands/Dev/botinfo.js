@@ -5,7 +5,7 @@ module.exports = {
     usage: ' ',
     aliases: ['binfo'],
     guildonly: false,
-    devonly: true,
+    developersOnly: true,
     args: false,
     modCommand: false,
     category: 'Dev',

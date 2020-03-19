@@ -5,7 +5,7 @@ module.exports = {
     usage: ' ',
     aliases: ['5iq', 'idiot'],
     guildonly: false,
-    devonly: false,
+    developersOnly: false,
     args: false,
     modCommand: false,
     category: 'Misc',

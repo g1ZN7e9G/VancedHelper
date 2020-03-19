@@ -6,7 +6,7 @@ module.exports = {
   usage: `to view index or jump directly to specific page via ${config.prefix}guide [page number from 1 to 6] `,
   aliases: ['install', 'howtoinstall', 'installguide', 'ig'],
   guildonly: false,
-  devonly: false,
+  developersOnly: false,
   args: false,
   modCommand: false,
   category: 'Vanced',
