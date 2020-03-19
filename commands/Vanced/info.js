@@ -15,7 +15,7 @@ module.exports = {
     pages.push(
       functions.newEmbed()
         .setTitle('Information about Vanced')
-        .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${functions.prefix}info [page number].\``)
+        .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${config.prefix}info [page number].\``)
         .addField('Table of Contents', ":one: - `Index`\n:two: - `What in the world is an.apks file?`\n:three: - `What's the latest Vanced version?`\n:four: - `Why I can't download videos?`\n:five: - `Will I get banned for using Vanced?`\n:six: - `Casting to TV`\n:seven: - `When will new update release??!`\n\n:arrow_down: - Page Indicator")
         .setFooter('1/6')
     );
@@ -32,7 +32,7 @@ module.exports = {
         .addField('Youtube Vanced', '15.05.54')
         .addField('Vanced Microg', '0.2.6.17455-dirty')
         .setTitle('Latest Versions')
-        .setDescription(`These are the latest versions. Please make sure you have these. For download links, type ${functions.prefix}download.`)
+        .setDescription(`These are the latest versions. Please make sure you have these. For download links, type ${config.prefix}download.`)
         .setFooter('3/6')
     );
     pages.push(
