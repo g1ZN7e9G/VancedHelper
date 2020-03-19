@@ -15,7 +15,7 @@ module.exports = {
     pages.push(
       functions.newEmbed()
         .setTitle('Installation Guide')
-        .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${functions.prefix}guide [page number].\``)
+        .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${config.prefix}guide [page number].\``)
         .addField('Table of Contents', ':one: - `Index`\n:two: - `How to download Vanced`\n:three: - `Non-Root Guide`\n:four: - `Root Guide - Disabling Signature Verification`\n:five: - `Root Guide - Installing Vanced`\n:six: - `Alternative Installation Method`\n\n:arrow_down: - Page Indicator')
         .setFooter('1/6')
     );
