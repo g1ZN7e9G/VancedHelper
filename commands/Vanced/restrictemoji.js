@@ -5,7 +5,7 @@ module.exports = {
     usage: '[Role] [Emoji1] <Emoji2> ...',
     aliases: ['restrict', 'res'],
     guildonly: true,
-    devonly: true,
+    developersOnly: true,
     args: true,
     modCommand: true,
     category: 'Dev',

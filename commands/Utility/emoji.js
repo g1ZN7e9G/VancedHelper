@@ -5,7 +5,7 @@ module.exports = {
     usage: '[emoji]',
     aliases: ['e'],
     guildonly: false,
-    devonly: false,
+    developersOnly: false,
     args: true,
     modCommand: false,
     category: 'Utility',

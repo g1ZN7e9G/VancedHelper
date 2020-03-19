@@ -6,7 +6,7 @@ module.exports = {
   usage: `to view index or jump directly to specific page via ${config.prefix}bugreport [from 1 to 3] `,
   aliases: ['bug', 'report', 'br'],
   guildonly: false,
-  devonly: false,
+  developersOnly: false,
   args: false,
   modCommand: false,
   category: 'Vanced',

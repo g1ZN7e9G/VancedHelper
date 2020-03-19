@@ -6,7 +6,7 @@ module.exports = {
   usage: `to view index or jump directly to specific page via ${config.prefix}info [page number] `,
   aliases: ['informatin'],
   guildonly: false,
-  devonly: false,
+  developersOnly: false,
   args: false,
   modCommand: false,
   category: 'Vanced',
