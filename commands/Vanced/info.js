@@ -103,7 +103,7 @@ module.exports = {
       }
     });
     collector.on('end', () => {
-      msg.reactions.forEach(r => r.users.forEach(user => r.remove(user)));
+      msg.reactions.removeAll();
     });
   }
 };

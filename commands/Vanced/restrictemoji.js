@@ -16,7 +16,6 @@ module.exports = {
         if (!action) return functions.reply(message, 'You did not provide any action, silly!');
         if (action.toLowerCase() !== 'add' && action.toLowerCase() !== 'remove') return functions.reply(message, 'You did not provide a valid action (add/remove)!');
         args.splice(0, 2);
-        console.log(args);
         if (!args.length) return functions.reply(message, 'You did not provide any emojis, silly!');
 
         const success = [];

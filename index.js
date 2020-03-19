@@ -27,13 +27,18 @@ client.once('ready', () => {
     if (process.env.BOT_TOKEN) client.channels.cache.get(config.errorChannel).send(`${config.devs.map(id => client.users.cache.get(id)).join(' ')}I successfully rebooted!`);
 
     // Fetch message for Reaction Roles to make sure it's being watched
-    client.channels.cache.get('677222279813398529').messages.fetch('677222645292597266');
+    for (const i in config.reactionRoles) {
+        const entry = config.reactionRoles[i];
+        const channel = client.channels.cache.get(entry.channelId);
+        for (const j in entry.messages)
+            channel.messages.fetch(entry.messages[j].messageId);
+    }
 
 });
 
 client.on('message', message => {
-    if (message.guild)
-        if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
+    if (message.guild && !message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES'))
+        return;
     if (message.author.bot)
         return;
     if (config.blockedChannels.includes(message.channel.id))
@@ -67,41 +72,47 @@ client.on('message', message => {
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
-    if (reaction.message.channel.id !== '677222279813398529' || reaction.message.id !== '677222645292597266')
+    const entry = config.reactionRoles.filter(channel => channel.channelId === reaction.message.channel.id);
+    if (!entry.length)
         return;
-    let role;
-    // Weeber
-    if (reaction.emoji.id === '651054603793858561')
-        role = '650741600846217217';
-    // Mc Gamer
-    else if (reaction.emoji.id === '361948780926337036')
-        role = '682204644268703746';
+    const msgEntry = entry[0].messages.filter(msg => msg.messageId === reaction.message.id);
+    if (!msgEntry.length)
+        return;
+    const reactionEntry = msgEntry[0].reactions.filter(react => react.emojiId === reaction.emoji.id);
+    if (!reactionEntry.length)
+        return;
+    const role = reaction.message.guild.roles.cache.get(reactionEntry[0].roleId);
     if (!role)
         return;
-
     const member = reaction.message.guild.members.cache.get(user.id);
-    if (member.roles.cache.has.role)
-        return;
     member.roles.add(role);
-    user.send(`Successfully added the role \`${role.name}\``);
+    user.send(`Successfully added the \`${role.name}\` Role on ${reaction.message.guild.name}!`)
+        .catch(() => {
+            // This error is due to the user not allowing private messages, no reason to do anything with it.
+            return;
+        });
 });
 
 client.on('messageReactionRemove', (reaction, user) => {
-    if (reaction.message.channel.id !== '677222279813398529' || reaction.message.id !== '677222645292597266')
+    const entry = config.reactionRoles.filter(channel => channel.channelId === reaction.message.channel.id);
+    if (!entry.length)
         return;
-    let role;
-    if (reaction.emoji.id === '651054603793858561')
-        role = '650741600846217217';
-    else if (reaction.emoji.id === '361948780926337036')
-        role = '682204644268703746';
+    const msgEntry = entry[0].messages.filter(msg => msg.messageId === reaction.message.id);
+    if (!msgEntry.length)
+        return;
+    const reactionEntry = msgEntry[0].reactions.filter(react => react.emojiId === reaction.emoji.id);
+    if (!reactionEntry.length)
+        return;
+    const role = reaction.message.guild.roles.cache.get(reactionEntry[0].roleId);
     if (!role)
         return;
-
     const member = reaction.message.guild.members.cache.get(user.id);
-    if (!member.roles.cache.has.role)
-        return;
     member.roles.remove(role);
-    user.send(`Successfully removed the role \`${role.name}\``);
+    user.send(`Successfully removed the \`${role.name}\` Role on ${reaction.message.guild.name}!`)
+        .catch(() => {
+            // This error is due to the user not allowing private messages, no reason to do anything with it.
+            return;
+        });
 });
 
 client.on('error', error => {
