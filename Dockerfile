@@ -4,7 +4,6 @@ WORKDIR /src
 
 COPY package.json /src/package.json
 RUN npm install --loglevel error
-RUN apt-get update
 
 COPY . /src
 
