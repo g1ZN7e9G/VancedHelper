@@ -57,7 +57,7 @@ module.exports = {
             || false;
     },
     uncolour(client) {
-        const guild = client.guilds.cache.get('328493314485518336');
+        const guild = client.guilds.cache.get(config.guildId);
         guild.roles.cache.filter(role => role.name.endsWith('-CC')).forEach(role => {
             if (!role.members.size)
                 return role.delete();

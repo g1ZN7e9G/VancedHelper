@@ -1,9 +1,30 @@
 {
   "prefix": "",
   "token": "",
+  "guildId": "328493314485518336",
   "developers": [],
   "logChannel": "",
   "errorChannel": "",
   "blockedChannels": [],
-  "coinlibToken": ""
+  "coinlibToken": "",
+  "reactionRoles": [
+    {
+      "channelId": "677222279813398529",
+      "messages": [
+        {
+          "messageId": "677222645292597266",
+          "reactions": [
+            {
+              "emojiId": "651054603793858561",
+              "roleId": "650741600846217217"
+            },
+            {
+              "emojiId": "361948780926337036",
+              "roleId": "682204644268703746"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

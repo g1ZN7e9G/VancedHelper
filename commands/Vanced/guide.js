@@ -23,7 +23,7 @@ module.exports = {
     pages.push(
       functions.newEmbed()
         .setTitle('How to Download Vanced')
-        .addField([
+        .addFields([
           {
             name: 'Which one should I pick?',
             value: "- First thing you'll see is an option to select either nonroot or root variants. if you didn't root your device, simply select the nonroot version\n - Now you'll have to select either default or legacy variant. Default is for newer devices with arm64 chips, which were released after 2016. Legacy variant is for older/slower devices with arm chips. (If your phone has an arm64 chip but kernel instructions are set to 32-bit, you'll have to download a Legacy version.)\n - Finally you'll have to select either dark or black variant. Dark variant has Dark theme like we've seen in stock YT app, while Black variant has an AMOLED Black theme.\nSelect your favorite one and download it.\n\n__IMPORTANT__\nTo be able to use Vanced on nonroot devices, you'll need to download and install Microg from the same website.\n\nNow follow the instructions on next pages"
@@ -115,7 +115,7 @@ module.exports = {
       }
     });
     collector.on('end', () => {
-      msg.reactions.forEach(r => r.users.forEach(user => r.remove(user)));
+      msg.reactions.removeAll();
     });
   }
 };
