@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:13.10-stretch-slim
 MAINTAINER xfileFIN
 
 COPY package.json /src/package.json
