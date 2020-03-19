@@ -5,7 +5,7 @@ module.exports = {
     usage: '[colour in hex] <custom role name>',
     aliases: ['setcolor', 'colorme'],
     guildonly: true,
-    devonly: false,
+    developersOnly: false,
     args: true,
     modCommand: false,
     botPermission: 'MANAGE_ROLES',

@@ -5,7 +5,7 @@ module.exports = {
     usage: ' ',
     aliases: ['mirrors', 'links', 'sources', 'dl'],
     guildonly: false,
-    devonly: false,
+    developersOnly: false,
     args: false,
     modCommand: false,
     category: 'Vanced',
