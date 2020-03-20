@@ -4,8 +4,8 @@ const Discord = require('discord.js');
 module.exports = {
     async errorMessage(message, text) {
         const msg = await message.reply(text);
-        msg.delete({ timeout: 3000 });
-        message.delete({ timeout: 3000 });
+        msg.delete({ timeout: 5000 });
+        message.delete({ timeout: 5000 });
     },
     logError(err, client) {
         client.channels.cache.get(config.errorChannel).send(config.developers.map(id => client.users.cache.get(id)).join(' ') + '\n```' + err.stack + '```');
