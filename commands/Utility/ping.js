@@ -3,7 +3,7 @@ module.exports = {
     description: 'Returns the client ping/heartbeat',
     extended: '',
     usage: '',
-    aliases: ['p', 'f', 'areyouokay', 'areyoufine', 'areyoustillalive'],
+    aliases: ['areyouok', 'areyoustillthere', 'p', 'f', 'youfinebro'],
     guildonly: false,
     developersOnly: false,
     args: false,

@@ -21,7 +21,7 @@ module.exports = {
 
         const member = functions.getMember(message, args, 0);
         if (!member)
-            return functions.noMember(message);
+            return functions.errorMessage(message, 'You did not provide a valid member. Please use the command again and provide a valid member.');
 
         const name = member.user.username.toUpperCase();
         const username = name.endsWith('Z') || name.endsWith('S') ? member.user.username + "'" : member.user.username + "'s";

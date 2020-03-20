@@ -15,7 +15,7 @@ module.exports = {
     pages.push(
       functions.newEmbed()
         .setTitle('Troubleshooting')
-        .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${functions.prefix}troubleshoot [page number].\``)
+        .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${config.prefix}troubleshoot [page number].\``)
         .addField('Table of Contents', ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Picture-In-Picture doesn't work`\n:asterisk: - `Your issue isn't listed here?`\n\n:arrow_down: - Page Indicator"
         )
         .setFooter('1/10')
@@ -49,7 +49,7 @@ module.exports = {
     pages.push(
       functions.newEmbed()
         .setTitle("What to do if I don't get any notifications?")
-        .setDescription(`Sometimes you may not get notifications from your favorite YouTubers.\nin order to solve this, you need to adjust some settings.\n:one: Go to Vanced Settings\n:two: tap on Microg settings\n:three: go to \`Google Cloud Messaging > YouTube Vanced\` and set \`ping\` to 60 seconds. \nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${functions.prefix}troubleshoot 8\` for detailed guide)`)
+        .setDescription(`Sometimes you may not get notifications from your favorite YouTubers.\nin order to solve this, you need to adjust some settings.\n:one: Go to Vanced Settings\n:two: tap on Microg settings\n:three: go to \`Google Cloud Messaging > YouTube Vanced\` and set \`ping\` to 60 seconds. \nIf you still don't get any notifications, disable battery optimisation for both Microg and Vanced (see \`${config.prefix}troubleshoot 8\` for detailed guide)`)
         .setFooter('6/10')
     );
     pages.push(
