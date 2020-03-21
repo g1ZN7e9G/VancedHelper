@@ -6,7 +6,7 @@ module.exports = {
   usage: `to view index or jump directly to specific page via ${config.prefix}bugreport [from 1 to 3] `,
   aliases: ['bug', 'report', 'br'],
   guildonly: false,
-  devonly: false,
+  developersOnly: false,
   args: false,
   modCommand: false,
   category: 'Vanced',
@@ -16,7 +16,7 @@ module.exports = {
       functions.newEmbed()
         .setTitle('How to report bugs')
         .setDescription(
-          `Review the table of contents below and jump to the page you need via reactions or by typing \`${functions.prefix}bugreport [page number].\``
+          `Review the table of contents below and jump to the page you need via reactions or by typing \`${config.prefix}bugreport [page number].\``
         )
         .addField('Table of Contents', ':one: - `Index`\n:two: - `Report a regular bug`\n:three: - `Report a theme bug`\n\n\n:arrow_down: - Page Indicator'
         )

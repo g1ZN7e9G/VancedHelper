@@ -1,11 +1,12 @@
 const functions = require('../../utils/functions.js');
+const config = require('config');
 module.exports = {
     name: 'supportus',
     description: 'Find out ways to support us.',
     usage: '',
     aliases: ['donate'],
     guildonly: false,
-    devonly: false,
+    developersOnly: false,
     args: false,
     modCommand: false,
     category: 'Vanced',
@@ -14,7 +15,7 @@ module.exports = {
             .addFields([
                 {
                     name: 'Nitro Boost',
-                    value: `If you own a [Discord Nitro Subscription](https://discordapp.com/nitro), you can boost our Server, which will give us Perks like a custom invite link [(discord.gg/vanced)](https://discord.gg/vanced), a custom server banner, more emotes etc.\nYou yourself will also get some Perks: Boosters get access to the latest Beta Version and can use the \`${functions.prefix}colorme\` command, to select a custom role.`
+                    value: `If you own a [Discord Nitro Subscription](https://discordapp.com/nitro), you can boost our Server, which will give us Perks like a custom invite link [(discord.gg/vanced)](https://discord.gg/vanced), a custom server banner, more emotes etc.\nYou yourself will also get some Perks: Boosters get access to the latest Beta Version and can use the \`${config.prefix}colorme\` command, to select a custom role.`
                 },
                 {
                     name: 'Brave Referral Link',
@@ -22,7 +23,7 @@ module.exports = {
                 },
                 {
                     name: 'Do not ask unnecessary questions',
-                    value: `Before asking for support or reporting a bug, please see if your problem has a solution on our bot (${functions.prefix}help) and use the discord search tool.\nThis way, 95% of the problems can be solved without us having to waste time on explaining the same thing over and over.`
+                    value: `Before asking for support or reporting a bug, please see if your problem has a solution on our bot (${config.prefix}help) and use the discord search tool.\nThis way, 95% of the problems can be solved without us having to waste time on explaining the same thing over and over.`
                 },
                 {
                     name: 'Be a nice member of our community',
