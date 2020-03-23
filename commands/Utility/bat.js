@@ -16,7 +16,7 @@ module.exports = {
             if (parseInt(percentage) >= 25)
                 return `<:relaxV:672074572132122624> ${percentage}%`;
             else if (parseInt(percentage) >= 5)
-                return `<:Merchant:681301737034088482> ${percentage}%`;
+                return `<:merchant:690826716448292865> ${percentage}%`;
             else if (Math.sign(percentage) === 1)
                 return `<:stonks:635003250759958569> ${percentage}%`;
             else if (parseInt(percentage) <= -25)
