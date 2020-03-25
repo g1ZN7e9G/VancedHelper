@@ -16,7 +16,7 @@ module.exports = {
       functions.newEmbed()
         .setTitle('Troubleshooting')
         .setDescription(`Review the table of contents below and jump to the page you need via reactions or by typing \`${config.prefix}troubleshoot [page number].\``)
-        .addField('Table of Contents', ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Picture-In-Picture doesn't work\n\nIf you couldn\'t find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for this very problem will be added here.\n\n:arrow_down: - Page Indicator")
+        .addField('Table of Contents', ":one: - `Index`\n:two: - `Notice for MiUI users`\n:three: - `About App Compatibility`\n:four: - `Enable dark splash screen`\n:five: - `How to disable 60fps playback`\n:six: - `Notification issues`\n:seven: - `Vanced broken after password change`\n:eight: - `Vanced doesn't want to load`\n:nine: - `Why do I get ads on Home page?`\n:keycap_ten: - `Picture-In-Picture doesn't work`\n\nIf you couldn\'t find your problem here, simply ask for help in <#358967876193091584>\nOnce the issue is solved, a solution for this very problem will be added here.\n\n:arrow_down: - Page Indicator")
         .setFooter('1/10')
     );
     pages.push(
