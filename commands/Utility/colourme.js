@@ -36,7 +36,7 @@ module.exports = {
             return message.channel.send('Colour changed!');
         }
         else {
-            const janitor = message.guild.roles.cache.get('658799060802600966');
+            const janitor = message.guild.roles.cache.get('653556355352756224');
             const role = await message.guild.roles.create({
                 data: {
                     name: name + '-CC',
