@@ -24,7 +24,7 @@ module.exports = {
             return functions.errorMessage(message, 'Woah, calm down. Character limit is 25.');
 
         const colourRole = message.guild.roles.cache.find(role => role.name.toLowerCase() === name.toLowerCase());
-        if (colourRole && !message.member.roles.cache.has(colourRole))
+        if (colourRole && !message.member.roles.cache.has(colourRole.id))
             return functions.errorMessage(message, 'This role name is already taken. Please choose another one.');
 
         const oldColourRole = message.member.roles.cache.find(role => role.name.endsWith('-CC'));
