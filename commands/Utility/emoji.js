@@ -14,10 +14,10 @@ module.exports = {
         const emoji = args.join(' ').match(regex);
         if (emoji === null)
             return functions.errorMessage(message, 'You did not provide any emoji!');
-        const emojiId = emoji[0].replace(/\D/g, '');
-        const url = message.client.emojis.cache.get(emojiId);
-        if (url)
-            return message.channel.send(url);
+        const emojiId = emoji[0].substring(emoji[0].lastIndexOf(':') + 1, emoji[0].length - 1);
+        const emojiObj = message.client.emojis.cache.get(emojiId);
+        if (emojiObj)
+            return message.channel.send(emojiObj.url);
         const extension = emoji[0].slice(1).startsWith('a') ? 'gif' : 'png';
         return message.channel.send(`https://cdn.discordapp.com/emojis/${emojiId}.${extension}`);
     },

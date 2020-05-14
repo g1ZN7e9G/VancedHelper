@@ -24,7 +24,7 @@ module.exports = {
             return functions.errorMessage(message, 'Woah, calm down. Character limit is 25.');
 
         const colourRole = message.guild.roles.cache.find(role => role.name.toLowerCase() === name.toLowerCase());
-        if (message.guild.roles.cache.has(colourRole) && !message.member.roles.cache.has(colourRole))
+        if (colourRole && !message.member.roles.cache.has(colourRole.id))
             return functions.errorMessage(message, 'This role name is already taken. Please choose another one.');
 
         const oldColourRole = message.member.roles.cache.find(role => role.name.endsWith('-CC'));
@@ -36,7 +36,7 @@ module.exports = {
             return message.channel.send('Colour changed!');
         }
         else {
-            const janitor = message.guild.roles.cache.get('658799060802600966');
+            const janitor = message.guild.roles.cache.get('653556355352756224');
             const role = await message.guild.roles.create({
                 data: {
                     name: name + '-CC',
