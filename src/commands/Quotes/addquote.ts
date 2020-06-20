@@ -1,5 +1,6 @@
 import { Command, Message } from '../../Client';
 import { VoiceChannel, TextChannel } from 'discord.js';
+import { join } from 'path';
 
 const callback = async (msg: Message, args: string[]) => {
 	let messageID, channelID;
@@ -24,7 +25,7 @@ const callback = async (msg: Message, args: string[]) => {
 	if (message.author.bot)
 		return msg.channel.send(`${msg.client.constants.emojis.bot} Beep Boop. Do not bully robots`).then(() =>
 			msg.author
-				.send('<https://www.youtube.com/watch?v=Yy3dIicSI_0>')
+				.send({ files: [join(__dirname, '../../../Assets/00738fe81e420d9d.mp3')] })
 				.then(() => void 0)
 				.catch(() => void 0)
 		);

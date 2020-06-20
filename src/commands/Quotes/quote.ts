@@ -3,8 +3,8 @@ import { Quotes } from '../../database/Schemas/Quotes';
 
 const callback = async (msg: Message, args: string[]) => {
 	if (args[0] === 'add') {
-		args.pop();
-		return msg.client.getCommand('addquote')!.callback(msg, args.slice(1));
+		args.shift();
+		return msg.client.getCommand('addquote')!.callback(msg, args);
 	}
 
 	const member = args.length ? await msg.client.helpers.getMember(msg, args) : null;
