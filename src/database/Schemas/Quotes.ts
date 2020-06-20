@@ -9,6 +9,7 @@ export interface Quotes extends Document {
 		name: string;
 		avatar: string;
 	};
+	attachment?: string;
 }
 
 const QuoteSchema = new Schema({
@@ -19,7 +20,8 @@ const QuoteSchema = new Schema({
 	author: {
 		name: String,
 		avatar: String
-	}
+	},
+	attachment: String
 });
 
 export default model<Quotes>('Quotes', QuoteSchema);

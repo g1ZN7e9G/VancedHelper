@@ -14,11 +14,12 @@ export default (client: Client) => {
 		{ key: 'Database', val: Object.keys(client.database.quotes.db.collections).join(', ') }
 	];
 
+	// Debug useful information
 	console.info(`Connected to Discord as ${client.user.tag} - ${client.user.id}\n` + info.map(obj => `${obj.key}: ${obj.val}`).join('\n'));
 	channel.send(
 		client
 			.newEmbed('INFO')
-			.setTitle("I'M ALIIIIIVEEEEEE d-(^_^)-b")
+			.setTitle('I just started!')
 			.setDescription(info.map(obj => `**${obj.key}:** \`${obj.val}\``).join('\n'))
 	);
 };

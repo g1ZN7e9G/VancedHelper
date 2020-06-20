@@ -1,6 +1,15 @@
 interface Date {
+	/**
+	 * Formats to Feb 30th 2020
+	 */
 	formatDate(): string;
+	/**
+	 * Formats to 04:20:18
+	 */
 	formatTime(): string;
+	/**
+	 * How long ago this timestamp was, human readable, e.g. 31 days or 17 minutes
+	 */
 	age(): string;
 }
 
@@ -25,8 +34,8 @@ const msToHuman = (ms: number) => {
 		hours = Math.round(ms / (1000 * 60 * 60)),
 		days = Math.round(ms / (1000 * 60 * 60 * 24));
 
-	if (seconds < 60) return seconds + ' Seconds';
-	else if (minutes < 60) return minutes + ' Minutes';
-	else if (hours < 24) return hours + ' Hours';
-	else return days + ' Days';
+	if (seconds < 60) return seconds + ' seconds';
+	else if (minutes < 60) return minutes + ' minutes';
+	else if (hours < 24) return hours + ' hours';
+	else return days + ' days';
 };

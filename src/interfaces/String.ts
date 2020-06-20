@@ -10,11 +10,21 @@ interface String {
 	 */
 	toCodeblock(language?: string): string;
 
+	/**
+	 * Capitalises the first letter of each word, e.g. lOgAn PAUL => Logan Paul
+	 */
 	toTitleCase(): string;
 
+	/**
+	 * Escape all sorts of markdown
+	 */
 	escapeMarkdown(): string;
 
-	substitute(obj: { [key: string]: string }): string;
+	/**
+	 * Replaces all `{KEYS}` with the values provided in the object
+	 * @param obj an object containing all key value pairs
+	 */
+	substitute(obj: Record<string, string>): string;
 }
 
 String.prototype.shorten = function (length: number) {
@@ -35,7 +45,7 @@ String.prototype.escapeMarkdown = function () {
 	return this.replace(/\\(\*|_|`|~|\\)/g, '$1').replace(/(\*|_|`|~|\\)/g, '\\$1');
 };
 
-String.prototype.substitute = function (obj: { [key: string]: string }) {
+String.prototype.substitute = function (obj: Record<string, string>) {
 	let str = this.toString();
 	for (const prop in obj) {
 		str = str.replace(new RegExp('{' + prop + '}', 'g'), obj[prop]);

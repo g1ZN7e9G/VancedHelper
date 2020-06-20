@@ -5,7 +5,7 @@ import { FullCommand, ClientOptions, Message, ClientEvents } from './Interfaces'
 import { stripIndents } from 'common-tags';
 import { config } from '../config';
 import { database } from '../database/';
-import { Pagination, PromptManager, Util } from './Helpers';
+import { Pagination, PromptManager, Util, Cooldowns } from './Helpers';
 import constants from '../constants';
 export * from './Interfaces';
 
@@ -16,8 +16,10 @@ export class Client extends BaseClient {
 	emit = <K extends keyof ClientEvents>(event: K, ...args: ClientEvents[K]): boolean => this._emit(event, ...args);
 
 	commands: Collection<string, FullCommand> = new Collection();
+	activeCommands: Set<string> = new Set();
 	pages = Pagination;
 	prompt = PromptManager;
+	cooldowns = Cooldowns;
 	helpers = new Util(this);
 	config = config;
 	constants = constants;
@@ -50,6 +52,9 @@ export class Client extends BaseClient {
 		this.login(this.config.token);
 	}
 
+	/**
+	 * Get a random emote in the case of a bruh moment
+	 */
 	get bruh() {
 		return this.constants.emojis.bruh.random();
 	}

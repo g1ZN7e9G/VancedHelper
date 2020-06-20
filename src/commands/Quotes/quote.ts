@@ -2,7 +2,10 @@ import { Command, Message } from '../../Client';
 import { Quotes } from '../../database/Schemas/Quotes';
 
 const callback = async (msg: Message, args: string[]) => {
-	if (args[0] === 'add') return msg.client.getCommand('addquote')!.callback(msg, args.slice(1));
+	if (args[0] === 'add') {
+		args.pop();
+		return msg.client.getCommand('addquote')!.callback(msg, args.slice(1));
+	}
 
 	const member = args.length ? await msg.client.helpers.getMember(msg, args) : null;
 
@@ -19,6 +22,7 @@ const callback = async (msg: Message, args: string[]) => {
 	const embed = msg.client
 		.newEmbed()
 		.setThumbnail(user?.displayAvatarURL({ dynamic: true }) || quote.author.avatar)
+		.setImage(quote.attachment!)
 		.setTitle(user?.tag || quote.author.name)
 		.setDescription(`${quote.content}\n\n[Jump to message](https://discordapp.com/channels/${msg.guild!.id}/${quote.channelID}/${quote.messageID})`)
 		.setFooter(quote.messageID);
