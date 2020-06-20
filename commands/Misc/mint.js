@@ -31,7 +31,7 @@ module.exports = {
             'Make malware that uninstalls microsoft edge pls'
         ];
         const output = functions.newEmbed()
-            .setAuthor('Xinto', 'https://cdn.discordapp.com/avatars/714767524243439738/2cdc91ae9f66ccf062a37967d6a24806.png')
+            .setAuthor('Mint', 'https://cdn.discordapp.com/avatars/714767524243439738/2cdc91ae9f66ccf062a37967d6a24806.png')
             .setDescription(quotes[Math.floor((Math.random() * quotes.length))])
             .setThumbnail('https://i.imgur.com/bUde1EU.png');
 
