@@ -2,9 +2,10 @@ import { Document, Schema, model } from 'mongoose';
 
 export interface Quotes extends Document {
 	messageID: string;
+	channelID: string;
+	authorID: string;
 	content: string;
 	author: {
-		id: string;
 		name: string;
 		avatar: string;
 	};
@@ -12,9 +13,10 @@ export interface Quotes extends Document {
 
 const QuoteSchema = new Schema({
 	messageID: String,
+	channelID: String,
+	authorID: String,
 	content: String,
 	author: {
-		id: String,
 		name: String,
 		avatar: String
 	}

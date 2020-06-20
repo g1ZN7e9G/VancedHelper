@@ -7,7 +7,7 @@ interface Array<T> {
 	random(n: number): T[];
 }
 
-Array.prototype.random = function (n = 1) {
-	const res = this.sort(() => 0.5 - Math.random()).slice(0, n);
-	return res.length === 1 ? res[0] : res;
+Array.prototype.random = function (n?: number) {
+	const res = this.sort(() => 0.5 - Math.random()).slice(0, n || 1);
+	return n ? res : res[0];
 };

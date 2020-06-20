@@ -5,6 +5,8 @@ import { FullCommand, ClientOptions, Message, ClientEvents } from './Interfaces'
 import { stripIndents } from 'common-tags';
 import { config } from '../config';
 import { database } from '../database/';
+import { Pagination, PromptManager, Util } from './Helpers';
+import constants from '../constants';
 export * from './Interfaces';
 
 export class Client extends BaseClient {
@@ -14,7 +16,11 @@ export class Client extends BaseClient {
 	emit = <K extends keyof ClientEvents>(event: K, ...args: ClientEvents[K]): boolean => this._emit(event, ...args);
 
 	commands: Collection<string, FullCommand> = new Collection();
+	pages = Pagination;
+	prompt = PromptManager;
+	helpers = new Util(this);
 	config = config;
+	constants = constants;
 	database = database;
 	paths = {
 		listeners: join(__dirname, '../events'),
@@ -42,6 +48,14 @@ export class Client extends BaseClient {
 		this.initCommands();
 		this.initListeners();
 		this.login(this.config.token);
+	}
+
+	get bruh() {
+		return this.constants.emojis.bruh.random();
+	}
+
+	newEmbed(type?: 'INFO' | 'ERROR' | 'BASIC') {
+		return new MessageEmbed().setTimestamp().setColor(type ? this.settings.colours[type] : 'RANDOM');
 	}
 
 	initCommands() {

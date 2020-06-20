@@ -8,7 +8,6 @@ export interface Command {
 	usage: string;
 	devOnly: boolean;
 	guildOnly: boolean;
-	nsfw: boolean;
 	memberPermission: PermissionString[];
 	botPermission: PermissionString[];
 	callback(message: Message, args: string[]): Promise<BaseMessage | void>;
@@ -26,4 +25,4 @@ export interface RecentCommand {
 	res: Message;
 }
 
-export type CommandCategories = 'Dev' | 'Fun' | 'Utility' | 'Settings' | 'NSFW';
+export type CommandCategories = 'Dev' | 'Fun' | 'Utility' | 'Settings';
