@@ -1,9 +1,10 @@
-import { Client as BaseClient, ClientEvents, Collection, MessageEmbed, TextChannel } from 'discord.js';
+import { Client as BaseClient, Collection, MessageEmbed, TextChannel } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import { Command, FullCommand, ClientOptions, Message } from './Interfaces';
+import { FullCommand, ClientOptions, Message, ClientEvents } from './Interfaces';
 import { stripIndents } from 'common-tags';
 import { config } from '../config';
+import { database } from '../database/';
 export * from './Interfaces';
 
 export class Client extends BaseClient {
@@ -12,8 +13,9 @@ export class Client extends BaseClient {
 	on = <K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void): this => this._on(event, listener);
 	emit = <K extends keyof ClientEvents>(event: K, ...args: ClientEvents[K]): boolean => this._emit(event, ...args);
 
-	commands: Collection<string, Command> = new Collection();
+	commands: Collection<string, FullCommand> = new Collection();
 	config = config;
+	database = database;
 	paths = {
 		listeners: join(__dirname, '../events'),
 		commands: join(__dirname, '../commands')
@@ -64,7 +66,7 @@ export class Client extends BaseClient {
 		let amount = 0;
 		readdirSync(this.paths.listeners).forEach(file => {
 			const path = join(this.paths.listeners, file);
-			const listener = require(path).listener;
+			const listener = require(path).default;
 			const listenerName = file.replace('.js', '');
 			this.on(listenerName as any, listener.bind(null, this));
 			delete require.cache[path];
@@ -74,6 +76,9 @@ export class Client extends BaseClient {
 		console.log(`Loaded ${amount} listeners!`);
 	}
 
+	getCommand(commandName: string) {
+		return this.commands.get(commandName) || this.commands.find(cmd => cmd.name === commandName);
+	}
 	getChannel(channelType: 'info' | 'errors') {
 		const channel = this.channels.cache.get(this.config.channels[channelType]);
 		if (!channel || !(channel instanceof TextChannel)) {
