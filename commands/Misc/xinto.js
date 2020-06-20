@@ -15,7 +15,7 @@ module.exports = {
             'Any Debian > arch',
             'Kali Linux best Linux distro',
             'Install Kali',
-            'The switched to OPENGL2.0',
+            'They switched to OPENGL2.0',
             'He wants Ira to become new Syria',
             'that\'s the meaning of making hentai\nlike if you had sex than it\'s pointless to make hentai because you can just have sex\neasy',
             'change package name via android studio or something else\nI believe apk editor will work too',
