@@ -1,21 +1,29 @@
 import { Command, Message } from '../../Client';
-import { Quotes } from '../../database/Schemas/Quotes';
 
 const callback = async (msg: Message, args: string[]) => {
-	if (args[0] === 'add') {
-		args.shift();
-		return msg.client.getCommand('addquote')!.callback(msg, args);
+	const arg = args.shift()?.toLowerCase();
+	switch (arg) {
+		case 'add':
+			return msg.client.getCommand('addquote')!.callback(msg, args);
+		case 'star':
+			return msg.client.getCommand('starquote')!.callback(msg, args);
+		case undefined:
+			return msg.client.getCommand('randomquote')?.callback(msg, args);
+		default:
+			break;
 	}
 
-	const member = args.length ? await msg.client.helpers.getMember(msg, args) : null;
+	let quote;
 
-	const quote: Quotes = member
-		? (await msg.client.database.quotes.find({ authorID: member.id })).random()
-		: (await msg.client.database.quotes.find()).random();
+	if (/^\d{1,17}$/.test(arg)) {
+		quote = await msg.client.database.quotes.findOne({ case: parseInt(arg) });
+		if (!quote) return msg.channel.send(`That's not a valid quote bro ${msg.client.bruh} Try adding it`);
+	} else {
+		const member = await msg.client.helpers.getMember(msg, [arg, ...args]);
+		if (!member) return;
 
-	if (!quote) {
-		if (member) return msg.channel.send(`That member doesn't have any quotes. Try adding one via \`${msg.client.config.defaultPrefix}addquote\`!`);
-		return msg.channel.send(`No quote found. Try adding one via \`${msg.client.config.defaultPrefix}addquote\`!`);
+		quote = (await msg.client.database.quotes.find({ authorID: member.id })).random();
+		if (!quote) return msg.channel.send(`That member has no quotes ${msg.client.bruh}`);
 	}
 
 	const user = await msg.client.users.fetch(quote.authorID).catch(() => null);
@@ -24,19 +32,18 @@ const callback = async (msg: Message, args: string[]) => {
 		.setThumbnail(user?.displayAvatarURL({ dynamic: true }) || quote.author.avatar)
 		.setImage(quote.attachment!)
 		.setTitle(user?.tag || quote.author.name)
-		.setDescription(`${quote.content}\n\n[Jump to message](https://discordapp.com/channels/${msg.guild!.id}/${quote.channelID}/${quote.messageID})`)
-		.setFooter(quote.messageID);
+		.setDescription(`${quote.content}\n\n[Jump to message](${quote.link})`)
+		.setFooter(`${msg.client.constants.emojis.star} ${quote.stars.length} | ID: ${quote.case}`);
 
 	return msg.channel.send(embed);
 };
 
 export const command: Command = {
-	cooldown: 5,
 	aliases: [],
-	description: '',
-	usage: '',
+	description: 'Display a quote',
+	usage: '<MemberResolvable | ID>',
 	devOnly: false,
-	guildOnly: true,
+	guildOnly: false,
 	args: 0,
 	memberPermission: [],
 	botPermission: [],

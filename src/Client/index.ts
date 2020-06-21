@@ -96,7 +96,7 @@ export class Client extends BaseClient {
 	}
 
 	getCommand(commandName: string) {
-		return this.commands.get(commandName) || this.commands.find(cmd => cmd.name === commandName);
+		return this.commands.get(commandName) || this.commands.find(cmd => cmd.aliases.includes(commandName));
 	}
 	getChannel(channelType: 'info' | 'errors') {
 		const channel = this.channels.cache.get(this.config.channels[channelType]);

@@ -1,6 +1,7 @@
 import { PermissionString, Message, Message as BaseMessage } from 'discord.js';
 
 export interface Command {
+	hidden?: boolean;
 	cooldown?: number;
 	aliases: string[];
 	description: string;

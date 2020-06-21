@@ -34,6 +34,7 @@ export default {
 	clipboard: '📋',
 	thumbsUp: '👍',
 	thumbsDown: '👎',
+	star: '⭐',
 	bruh: [
 		'<a:kekswatching:723995629122224191>',
 		'<a:kekwatching:723995641092505633>',
