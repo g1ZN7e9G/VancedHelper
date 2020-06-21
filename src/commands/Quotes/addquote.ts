@@ -40,7 +40,7 @@ const callback = async (msg: Message, args: string[]) => {
 		messageID: message.id,
 		channelID: message.channel.id,
 		guildID: message.guild!.id,
-		link: `https://discordapp.com/channels/${message.guild!.id}/${message.channel.id}/${message.id}`,
+		link: message.url,
 		authorID: message.author.id,
 		content: message.content,
 		author: {

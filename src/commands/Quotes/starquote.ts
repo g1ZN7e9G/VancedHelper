@@ -16,7 +16,7 @@ const callback = async (msg: Message, args: string[]) => {
 	const id = parseInt(arg);
 	if (!id) return msg.channel.send(`That ain't a number chief ${msg.client.bruh}`);
 
-	const quote = (await msg.client.database.quotes.findOne({ case: id })) || (await msg.client.database.quotes.findOne({ messageID: id.toString() }));
+	const quote = (await msg.client.database.quotes.findOne({ case: id })) || (await msg.client.database.quotes.findOne({ messageID: arg }));
 
 	if (!quote) return msg.channel.send(`That isn't a valid quote ${msg.client.bruh} Try adding it`);
 
