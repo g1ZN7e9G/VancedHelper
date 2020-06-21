@@ -1,4 +1,4 @@
-FROM node:13.10-stretch-slim
+FROM node:13.6.0-stretch-slim
 LABEL maintainer="xfileFIN"
 WORKDIR /src
 
