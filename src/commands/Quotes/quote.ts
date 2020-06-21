@@ -39,7 +39,7 @@ const callback = async (msg: Message, args: string[]) => {
 };
 
 export const command: Command = {
-	aliases: [],
+	aliases: ['q'],
 	description: 'Display a quote',
 	usage: '<MemberResolvable | ID>',
 	devOnly: false,

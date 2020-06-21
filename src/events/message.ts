@@ -75,7 +75,7 @@ export default async (client: Client, msg: Message) => {
 		if (msg.client.activeCommands.has(msg.author.id)) return msg.channel.send('Please complete your current command before using a new one!');
 
 		// Check whether we're on a guild if command is guild only
-		if (command.guildOnly && !msg.guild) return msg.channel.send(`\`${prefix}${command.name}\` can only be used on a server!`);
+		if (command.guildOnly && !msg.guild) return msg.channel.send(`\`${client.config.defaultPrefix}${command.name}\` can only be used on a server!`);
 
 		// Get missing permisisons of bots and members and output an error if some are missing
 		const memberMissing = command.memberPermission ? msg.client.helpers.missingPermissions(msg, command.memberPermission) : null;
@@ -90,7 +90,7 @@ export default async (client: Client, msg: Message) => {
 		// Make sure enough args are provided
 		if (args.length < command.args)
 			return msg.channel.send(
-				`This command requires ${command.args} arguments, but you only provided ${args.length}.\nPlease try again: \`${prefix}${command.name} ${command.usage}\``
+				`This command requires ${command.args} arguments, but you only provided ${args.length}.\nPlease try again: \`${client.config.defaultPrefix}${command.name} ${command.usage}\``
 			);
 
 		// Rate limiting
