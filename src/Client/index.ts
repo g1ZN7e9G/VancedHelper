@@ -71,6 +71,19 @@ export class Client extends BaseClient {
 				const command: FullCommand = require(path).command;
 				command.name = file.replace('.js', '');
 				command.category = dir as any;
+
+				const alreadyTaken = this.commands.find(
+					cmd =>
+						cmd.name === command.name ||
+						cmd.aliases.includes(command.name) ||
+						command.aliases.includes(cmd.name) ||
+						command.aliases.some(alias => cmd.aliases.includes(alias))
+				);
+				if (alreadyTaken) {
+					console.error(`A name or alias in file ${path} is already taken by the ${alreadyTaken.name} command!`);
+					process.exit(1);
+				}
+
 				if (!command.cooldown) command.cooldown = this.settings.commandCooldown;
 
 				this.commands.set(command.name, command);
@@ -98,7 +111,7 @@ export class Client extends BaseClient {
 	getCommand(commandName: string) {
 		return this.commands.get(commandName) || this.commands.find(cmd => cmd.aliases.includes(commandName));
 	}
-	getChannel(channelType: 'info' | 'errors') {
+	getChannel(channelType: 'info' | 'errors' | 'boosters' | 'testers') {
 		const channel = this.channels.cache.get(this.config.channels[channelType]);
 		if (!channel || !(channel instanceof TextChannel)) {
 			console.log(`Invalid ${channelType}-channel provided or not reachable.`);

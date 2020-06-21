@@ -55,7 +55,7 @@ const callback = async (msg: Message, args: string[]) => {
 };
 
 export const command: Command = {
-	aliases: ['h', 'helpme', 'info'],
+	aliases: ['h', 'helpme'],
 	description: '',
 	usage: 'You are here ;)',
 	devOnly: false,

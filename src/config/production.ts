@@ -8,7 +8,9 @@ const config: Config = {
 	developers: ['265560538937819137'],
 	channels: {
 		info: '',
-		errors: ''
+		errors: '',
+		boosters: '',
+		testers: ''
 	}
 };
 

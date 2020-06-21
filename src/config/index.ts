@@ -9,5 +9,7 @@ export interface Config {
 	channels: {
 		info: string;
 		errors: string;
+		boosters: string;
+		testers: string;
 	};
 }

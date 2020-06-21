@@ -101,7 +101,7 @@ export class Pagination {
 					this.delete(msg);
 					break;
 				case '➡️':
-					if (pagination.currentPage === pagination.pages.length) return;
+					if (pagination.currentPage === pagination.pages.length - 1) return;
 					pagination.currentPage += 1;
 					break;
 				case '⏭️':
