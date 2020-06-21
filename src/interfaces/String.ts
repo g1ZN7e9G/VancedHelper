@@ -31,8 +31,8 @@ String.prototype.shorten = function (length: number) {
 	return (this.length > length ? this.substring(0, length - 3) + '...' : this).toString();
 };
 
-String.prototype.toCodeblock = function (language = 'ts') {
-	return '```' + language + '\n' + this + '```';
+String.prototype.toCodeblock = function (language?: string) {
+	return '```' + (language || '') + '\n' + this + '```';
 };
 
 String.prototype.toTitleCase = function () {

@@ -62,6 +62,10 @@ export default {
 		'<:linusstare:723995637334671431>',
 		'<:really:724027926915448853>'
 	],
-	stonks: ['<:stonks:723997779298484325>', '<:stonksfeels:723997777872289824>'].random(),
+	stonks: '<:stonks:723997779298484325>',
+	stinks: '<:stinks:723995625326379110>',
+	merchant: '<:merchant:724079138981412885>',
+	relax: '<:relax:724079772375842868>',
+	feels: '<:feels:724079319877681202>',
 	sad: '<:sadcatApproves:723998555945041982>'
 };
