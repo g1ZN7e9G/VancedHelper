@@ -1,10 +1,10 @@
-**/node_modules/*
-config.json
 docker-compose.yml
 *.retry
-.vscode
 coverage
 build
 ansible
-config/production.json
-config/development.json
+node_modules
+
+dist
+old
+src/config/development.ts
