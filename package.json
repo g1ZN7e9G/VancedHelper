@@ -13,6 +13,7 @@
 		".vscode"
 	],
 	"scripts": {
+		"start": "npm run build && export NODE_ENV=production && node .",
 		"dev": "npm run build && export NODE_ENV=development && node .",
 		"prod": "npm run build && export NODE_ENV=production && node .",
 		"test": "tsc -p tsconfig.test.json && npm run lint",
