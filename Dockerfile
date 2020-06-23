@@ -7,4 +7,4 @@ RUN npm install --loglevel error
 
 COPY . /src
 
-CMD npm run start
+CMD npm script prod
