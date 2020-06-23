@@ -25,11 +25,6 @@ const callback = async (msg: Message, args: string[]) => {
 				inline: true
 			},
 			{
-				name: 'USD',
-				value: parseFloat(data.markets.find((ele: Record<string, string>) => ele.symbol === 'USD').price).toFixed(2) + '$',
-				inline: true
-			},
-			{
 				name: 'Price Change',
 				value: stripIndents`
 				\`1h\` - ${stonkify(data.delta_1h)}
