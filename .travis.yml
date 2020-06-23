@@ -3,7 +3,7 @@ sudo: required
 services:
 - docker
 node_js:
-- 12.13.0
+- 13.6.0
 before_install:
 - chmod a+x deploy.sh
 - chmod a+x docker_push.sh
