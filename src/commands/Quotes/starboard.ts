@@ -36,8 +36,7 @@ const callback = async (msg: Message, args: string[]) => {
 				})
 			)
 	);
-	msg.client.pages.create(msg, embeds, 0, false, emojis.slice(0, embeds.length));
-	return;
+	return msg.client.pages.create(msg, embeds, 0, false, emojis.slice(0, embeds.length));
 };
 
 export const command: Command = {
