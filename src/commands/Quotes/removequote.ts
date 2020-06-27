@@ -22,8 +22,8 @@ const callback = async (msg: Message, args: string[]) => {
 
 export const command: Command = {
 	aliases: ['deletequote', 'dq', 'rq', 'rmquote', 'rmq', 'delquote'],
-	description: '',
-	usage: '',
+	description: 'Remove a quote',
+	usage: '[QuoteID | MessageID]',
 	devOnly: false,
 	guildOnly: true,
 	args: 1,

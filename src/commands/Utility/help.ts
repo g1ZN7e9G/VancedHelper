@@ -12,7 +12,7 @@ const callback = async (msg: Message, args: string[]) => {
 			if ((cmd.devOnly && !dev) || cmd.hidden) return;
 
 			if (!commands[cmd.category]) commands[cmd.category] = [];
-			commands[cmd.category].push(`\`${prefix}${cmd.name}\` - ${cmd.description || 'This command has no description.'}`);
+			commands[cmd.category].push(`\`${prefix}${cmd.name}\` - ${cmd.description || 'No description provided'}`);
 		});
 
 		const output = msg.client
@@ -34,7 +34,7 @@ const callback = async (msg: Message, args: string[]) => {
 			.newEmbed('INFO')
 			.setTitle(prefix + command.name)
 			.addFields([
-				{ name: 'Description', value: command.description },
+				{ name: 'Description', value: command.description || 'No description provided' },
 				{
 					name: 'Usage',
 					value: `${prefix}${command.name}${command.usage ? ' ' + command.usage : ''}`.toCodeblock('css')
