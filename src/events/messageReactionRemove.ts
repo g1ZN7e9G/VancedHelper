@@ -5,8 +5,6 @@ export default async (client: Client, reaction: MessageReaction, user: User) => 
 	if (reaction.partial) reaction = (await reaction.fetch().catch(() => null)) as MessageReaction;
 	if (!reaction) return;
 
-	client.pages.browse(reaction, user);
-
 	if (!client.helpers.isGuild(reaction.message)) return;
 
 	const reactionRoleEntry = await client.database.reactionRoles.findOne({ messageID: reaction.message.id });
@@ -21,9 +19,9 @@ export default async (client: Client, reaction: MessageReaction, user: User) => 
 	if (!role) return;
 
 	const member = reaction.message.guild.member(user);
-	if (!member || member.roles.cache.has(role.id)) return;
+	if (!member || !member.roles.cache.has(role.id)) return;
 
-	const success = await member.roles.add(role).catch(() => undefined);
+	const success = await member.roles.remove(role).catch(() => undefined);
 
-	if (success) user.send(`Successfully gave you the role \`${role.name}\`!`).catch(() => null);
+	if (success) user.send(`Successfully took away your role \`${role.name}\`!`).catch(() => null);
 };

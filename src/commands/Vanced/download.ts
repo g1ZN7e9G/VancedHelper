@@ -4,10 +4,10 @@ const callback = async (msg: Message, _args: string[]) => {
 	const output = msg.client
 		.newEmbed('INFO')
 		.setThumbnail('https://i.imgur.com/mFkZnUB.png')
-		.setTitle('Official Mirrors')
+		.setTitle('Official Downloads')
 		.addFields([
 			{ name: 'Discord', value: 'Just download from <#517803059821281280>' },
-			{ name: 'Official Website', value: '[Vanced.app](https://vanced.app/nonroot)' },
+			{ name: 'Official Website', value: '[Vanced.app](https://vanced.app)' },
 			{
 				name: 'AndroidFileHost',
 				value: '[Youtube Vanced](https://androidfilehost.com/?w=files&flid=294874) | [Vanced MicroG](https://androidfilehost.com/?w=files&flid=294875)'
