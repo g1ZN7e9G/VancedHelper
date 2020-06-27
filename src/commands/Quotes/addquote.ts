@@ -48,6 +48,7 @@ const callback = async (msg: Message, args: string[]) => {
 			name: message.author.tag
 		},
 		attachment: message.attachments.first()?.url,
+		timestamp: message.createdTimestamp,
 		case: (cases.length ? Math.max(...cases) : 0) + 1,
 		stars: []
 	});
@@ -56,7 +57,7 @@ const callback = async (msg: Message, args: string[]) => {
 };
 
 export const command: Command = {
-	aliases: ['aq', 'quoteadd'],
+	aliases: ['aq', 'quoteadd', 'qa'],
 	description: 'Add a quote',
 	usage: '<Message Link> OR <#Channel> <Message ID>',
 	devOnly: false,

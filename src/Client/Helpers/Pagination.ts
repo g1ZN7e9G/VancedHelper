@@ -15,23 +15,28 @@ export class Pagination {
 	 * @param initPage If this is supplied, send this page instead of the first page
 	 * @param customEmojis If this is supplied, use these emojis for pagination instead. Must have same length as the embed array! **Must be only the id (or name for unicode)!**
 	 */
-	static async create(message: Message, embeds: Array<MessageEmbed>, initPage = 0, customEmojis?: Array<string>) {
+	static async create(message: Message, embeds: Array<MessageEmbed>, initPage = 0, addIndex = true, customEmojis?: Array<string>) {
 		// Make a copy of the array so we don't overwrite the original one
 		embeds = [...embeds];
 		if (embeds.length < 2) throw new Error('Too little pages provided!');
 		if (embeds.length < initPage) throw new Error('InitPage out of range!');
 		if (customEmojis && customEmojis.length !== embeds.length) throw new Error(`${customEmojis.length} emojis but ${embeds.length} pages provided!`);
 
-		embeds.unshift(
-			new MessageEmbed().setTitle('Index').setDescription(
-				stripIndents`
+		if (addIndex)
+			embeds.unshift(
+				new MessageEmbed().setTitle('Index').setDescription(
+					stripIndents`
 						Review the table of contents below and jump to the page you need via reactions
-						${('1 | You are here ;)\n' + embeds.map((e, i) => `${i + 2} | ${e.title}`).join('\n')).toCodeblock()}`
-			)
-		);
+						${(
+							(customEmojis ? customEmojis[0] : 1) +
+							' | You are here ;)\n' +
+							embeds.map((e, i) => `${customEmojis ? customEmojis[i + 1] : i + 2} | ${e.title}`).join('\n')
+						).toCodeblock()}`
+				)
+			);
 		embeds.forEach((e, i) => e.setFooter(`Page ${i + 1}/${embeds.length}`));
 
-		const msg = (await message.channel.send(`${message.client.constants.emojis.loading} Please wait while I initialise this menu`)) as Message;
+		const msg = (await message.channel.send(`${message.client.constants.emojis.loading}`, embeds[initPage])) as Message;
 		const success = await Promise.all((customEmojis || this.defaultEmojis).map(r => msg.react(r)))
 			.then(() => msg.edit(embeds[initPage]))
 			.catch(() => null);

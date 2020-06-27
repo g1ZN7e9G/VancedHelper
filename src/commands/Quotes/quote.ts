@@ -4,9 +4,20 @@ const callback = async (msg: Message, args: string[]) => {
 	const arg = args.shift()?.toLowerCase();
 	switch (arg) {
 		case 'add':
-			return msg.client.getCommand('addquote')!.callback(msg, args);
+		case 'a':
+			return msg.client.getCommand('addquote')?.callback(msg, args);
+		case 's':
+		case 'like':
+		case 'upvote':
+		case 'vote':
 		case 'star':
-			return msg.client.getCommand('starquote')!.callback(msg, args);
+			return msg.client.getCommand('starquote')?.callback(msg, args);
+		case 'delete':
+		case 'remove':
+		case 'rm':
+		case 'del':
+			return msg.client.getCommand('removequote')?.callback(msg, args);
+		case 'random':
 		case undefined:
 			return msg.client.getCommand('randomquote')?.callback(msg, args);
 		default:
@@ -15,7 +26,7 @@ const callback = async (msg: Message, args: string[]) => {
 
 	let quote;
 
-	if (/^\d{1,17}$/.test(arg)) {
+	if (/^\d{1,16}$/.test(arg)) {
 		quote = await msg.client.database.quotes.findOne({ case: parseInt(arg) });
 		if (!quote) return msg.channel.send(`That's not a valid quote bro ${msg.client.bruh} Try adding it`);
 	} else {
@@ -29,6 +40,7 @@ const callback = async (msg: Message, args: string[]) => {
 	const user = await msg.client.users.fetch(quote.authorID).catch(() => null);
 	const embed = msg.client
 		.newEmbed()
+		.setTimestamp(quote.timestamp || undefined)
 		.setThumbnail(user?.displayAvatarURL({ dynamic: true }) || quote.author.avatar)
 		.setImage(quote.attachment!)
 		.setTitle(user?.tag || quote.author.name)

@@ -12,6 +12,7 @@ export interface Quotes extends Document {
 		avatar: string;
 	};
 	attachment?: string;
+	timestamp: number;
 	case: number;
 	stars: string[];
 }
@@ -28,6 +29,7 @@ const QuoteSchema = new Schema({
 		avatar: String
 	},
 	attachment: String,
+	timestamp: Number,
 	case: Number,
 	stars: Array
 });

@@ -9,6 +9,7 @@ const callback = async (msg: Message, _args: string[]) => {
 	const embed = msg.client
 		.newEmbed()
 		.setThumbnail(user?.displayAvatarURL({ dynamic: true }) || quote.author.avatar)
+		.setTimestamp(quote.timestamp || undefined)
 		.setImage(quote.attachment!)
 		.setTitle(user?.tag || quote.author.name)
 		.setDescription(`${quote.content}\n\n[Jump to message](${quote.link})`)
@@ -18,7 +19,7 @@ const callback = async (msg: Message, _args: string[]) => {
 };
 
 export const command: Command = {
-	aliases: ['rq'],
+	aliases: [],
 	description: 'Display a random quote',
 	usage: '',
 	devOnly: false,

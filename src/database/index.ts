@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { config } from '../config';
 import quotes from './Schemas/Quotes';
 import colourRoles from './Schemas/ColourRoles';
+import reactionRoles from './Schemas/ReactionRoles';
 
 mongoose.connect(config.mongoString, {
 	useCreateIndex: true,
@@ -17,5 +18,6 @@ db.once('open', () => console.log(`Connected to MongoDB Atlas at ${db.name}!`));
 
 export const database = {
 	quotes,
-	colourRoles
+	colourRoles,
+	reactionRoles
 };
