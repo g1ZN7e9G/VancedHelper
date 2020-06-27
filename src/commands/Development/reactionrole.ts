@@ -41,7 +41,7 @@ const callback = async (msg: Message, args: string[]) => {
 
 export const command: Command = {
 	aliases: ['rr'],
-	description: '',
+	description: 'Add reaction roles',
 	usage: '<MessageID> <Emoji> <Role> [#Channel (defaults to current channel)]',
 	devOnly: true,
 	guildOnly: true,
