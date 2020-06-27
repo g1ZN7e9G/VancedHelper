@@ -32,7 +32,7 @@ const callback = async (msg: Message, args: string[]) => {
 			.setDescription(`See the most upvoted quotes below! For more information, jump to the page via reactions.`)
 			.addFields(
 				topTen.map((q, i) => {
-					return { name: `${emojis[i + 1]} Quote #${q.case} by ${q.author.name} (${q.stars.length}⭐)`, value: q.content.shorten(200).toCodeblock() };
+					return { name: `${emojis[i + 1]} Quote #${q.case} by ${q.author.name} (${q.stars.length}⭐)`, value: q.content.shorten(200) };
 				})
 			)
 	);

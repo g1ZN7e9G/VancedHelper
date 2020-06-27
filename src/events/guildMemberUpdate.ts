@@ -2,23 +2,24 @@ import { Client } from '../Client';
 import { GuildMember } from 'discord.js';
 
 export default async (client: Client, oldMember: GuildMember, newMember: GuildMember) => {
-	if (newMember.partial) newMember = await newMember.fetch();
+	if (oldMember.partial) return;
 
-	const boosterRole = newMember.roles.cache.find(r => r.name === 'Nitro Booster');
+	const boosterRole = newMember.guild.roles.cache.find(r => r.name === 'Nitro Booster');
+	if (!boosterRole) return;
 
-	if (!boosterRole) {
+	// Uh Oh, unbooster
+	if (oldMember.roles.cache.has(boosterRole.id) && !newMember.roles.cache.has(boosterRole.id)) {
+		client.getChannel('info').send(`${newMember} (${newMember.user.tag}) just unboosted ${client.constants.emojis.stinks}`);
+
 		const entry = await client.database.colourRoles.findOne({ userID: newMember.id });
-		// BRUH THEY UNBOOSTED
 		if (entry) {
 			const role = newMember.guild.roles.cache.get(entry.roleID);
 			if (role && !role.deleted) role.delete().catch(() => null);
-			client.getChannel('info').send(`${newMember} (${newMember.user.tag}) just unboosted :/`);
 		}
 	}
 
 	// POGGERS NEW BOOSTER
-	if (boosterRole && !oldMember.roles.cache.has(boosterRole.id)) {
-		// Log to info channel
+	else if (!oldMember.roles.cache.has(boosterRole.id) && newMember.roles.cache.has(boosterRole.id)) {
 		client.getChannel('info').send(`${newMember} (${newMember.user.tag}) just boosted ${client.constants.emojis.stonks}`);
 
 		const dbEntry = await client.database.colourRoles.findOne({ userID: newMember.id });
@@ -38,7 +39,7 @@ export default async (client: Client, oldMember: GuildMember, newMember: GuildMe
 		}
 
 		const text = dbEntry
-			? `Hello ${newMember}, thank you for re-boosting! I restored your colour role.`
+			? `Hello ${newMember}, thank you for re-boosting! I restored your colour role :)`
 			: `Hello ${newMember}, thank you for boosting! Make sure to pick up the beta apk in ${client.getChannel(
 					'testers'
 			  )} and consider creating a custom role. See \`${client.config.defaultPrefix}help colourme\` for more info`;
