@@ -41,6 +41,7 @@ const callback = async (msg: Message, args: string[]) => {
 };
 
 export const command: Command = {
+	cooldown: 30,
 	aliases: ['sb', 'topquotes', 'tq', 'quotelb'],
 	description: 'See the top 10 quotes',
 	usage: '[self] (if supplied, only show quotes you starred)',
