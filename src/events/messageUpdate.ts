@@ -6,5 +6,9 @@ export default async (client: Client, oldMsg: Message, newMsg: Message) => {
 	if (newMsg.partial) newMsg = (await newMsg.fetch()) as Message;
 
 	// Update message content in quote
-	client.database.quotes.findOneAndUpdate({ messageID: newMsg.id }, { content: newMsg.content });
+	const quote = await client.database.quotes.findOne({ messageID: newMsg.id });
+	if (!quote) return;
+
+	quote.content = newMsg.content;
+	quote.save();
 };

@@ -47,7 +47,7 @@ const pages = [
 						:four: \`Shift + Rightclick\` the background of the extracted folder and select \`Run command prompt / powershell here\`.
 						:five: Plug your phone into your PC, unlock it and grant USB-Debugging Permission.
 						:six: Type \`adb devices\`. If your phone is shown, proceed. If not, google for \`[yourBrandHere] usb drivers\` and install them.
-						:seven: Type \`adb logcat - c\`, then \`adb logcat *: W > logcat.txt\`.
+						:seven: Type \`adb logcat -c\`, then \`adb logcat *:W > logcat.txt\`.
 						:eight: Open your Vanced, reproduce your bug and then close the command prompt.
 						:nine: Now you will find a new file \`logcat.txt\` in the folder. Open it, scan it quickly to remove confidential info.
 						Press \`CTRL + A\` => \`CTRL + C\`, open https://hastebin.com/, paste it and save. Use the output link for your bug report.`
