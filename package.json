@@ -13,9 +13,9 @@
 		".vscode"
 	],
 	"scripts": {
-		"start": "npm run clean && npm run build && export NODE_ENV=production && node .",
+		"start": "npm run clean & npm run build && export NODE_ENV=production && node .",
 		"dev": "npm run build && export NODE_ENV=development && node .",
-		"prod": "npm run clean && npm run build && export NODE_ENV=production && node .",
+		"prod": "npm run clean & npm run build && export NODE_ENV=production && node .",
 		"test": "tsc -p tsconfig.test.json && npm run lint",
 		"lint": "eslint ./src/**/*.ts --fix",
 		"clean": "rm -rf dist/*",
