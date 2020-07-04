@@ -13,7 +13,7 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!colour.isValid()) return msg.channel.send(`That's not a valid colour. Please try again!`);
 	else colour = colour.toHex() === '000000' ? '#000001' : colour.toHexString();
 
-	const roleName = (roleRaw.join(' ') || colour) + '-cc';
+	const roleName = (roleRaw.join(' ') || colour) + '-CC';
 
 	const existingRole = msg.guild.roles.cache.find(r => r.name.toLowerCase() === roleName.toLowerCase());
 
