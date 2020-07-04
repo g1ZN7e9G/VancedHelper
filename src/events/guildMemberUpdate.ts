@@ -15,6 +15,9 @@ export default async (client: Client, oldMember: GuildMember, newMember: GuildMe
 		if (entry) {
 			const role = newMember.guild.roles.cache.get(entry.roleID);
 			if (role && !role.deleted) role.delete().catch(() => null);
+		} else {
+			const legacyRole = oldMember.roles.cache.find(r => r.name.endsWith('-cc'));
+			if (legacyRole) legacyRole.delete().catch(() => null);
 		}
 	}
 
