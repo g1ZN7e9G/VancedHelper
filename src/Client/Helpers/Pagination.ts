@@ -115,7 +115,10 @@ export class Pagination {
 					break;
 			}
 
-		pagination.msg.edit(pagination.pages[pagination.currentPage]).catch(() => this.handleError(pagination, msg.id));
+		pagination.msg
+			.edit(pagination.pages[pagination.currentPage])
+			.catch(() => this.handleError(pagination, msg.id))
+			.catch(() => null);
 	}
 
 	static handleError(page: Page, id: string) {

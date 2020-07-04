@@ -23,7 +23,7 @@ export class PromptManager {
 
 	private async sendQuestion(question: string) {
 		if (!this.msg) this.msg = (await this.channel.send(this.embed.setDescription(question))) as Message;
-		else this.msg.edit(this.embed.setDescription(question));
+		else this.msg.edit(this.embed.setDescription(question)).catch(() => null);
 	}
 
 	/**
