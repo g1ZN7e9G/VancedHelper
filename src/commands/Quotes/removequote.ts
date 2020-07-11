@@ -12,8 +12,7 @@ const callback = async (msg: Message, args: string[]) => {
 
 	if (!quote) return msg.channel.send(`That ain't a valid quote, chief ${msg.client.bruh}`);
 
-	if (quote.authorID !== msg.author.id && !msg.member.permissions.has('MANAGE_MESSAGES'))
-		return msg.channel.send(`Only the quote author or a Moderator can do this ${msg.client.bruh}`);
+	if (!msg.member.permissions.has('MANAGE_MESSAGES')) return msg.channel.send(`Only a Moderator can do this ${msg.client.bruh}`);
 
 	quote.remove();
 

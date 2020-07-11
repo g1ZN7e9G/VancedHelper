@@ -4,18 +4,16 @@ const callback = async (msg: Message, args: string[]) => {
 	const user =
 		msg.mentions.users.first()?.username || (await msg.client.users.fetch(args[0]).catch(() => null))?.username || args.join(' ') || msg.author.username;
 
-	const percentage = Math.floor(Math.random() * 101);
-	const barAmount = Math.round(percentage / 10);
-	const bar = '▰'.repeat(barAmount) + '▱'.repeat(10 - barAmount);
+	const iq = user.toLowerCase().includes('xinto') || user.toLowerCase().includes('x1nto') ? 5 : Math.floor(Math.random() * 301);
 
-	const embed = msg.client.newEmbed('BASIC').setTitle('Gay rater 100™️').setDescription(`${user} is ${percentage}% gay\n${bar}`);
+	const embed = msg.client.newEmbed('BASIC').setTitle('IQ Machine').setDescription(`${user} has an IQ of **${iq}**`);
 
 	return msg.channel.send(embed);
 };
 
 export const command: Command = {
-	aliases: ['gay'],
-	description: 'Find out how gay you are',
+	aliases: ['intelligence', 'howsmart'],
+	description: 'Find out your IQ',
 	usage: '[User]',
 	devOnly: false,
 	guildOnly: false,
