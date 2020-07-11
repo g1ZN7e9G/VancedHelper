@@ -5,8 +5,6 @@ const callback = async (msg: Message, args: string[]) => {
 	switch (arg) {
 		case 'board':
 			return msg.client.getCommand('starboard')?.callback(msg, args);
-		case 'list':
-			return msg.client.getCommand('quotes')?.callback(msg, args);
 		case undefined:
 			return msg.channel.send(`You did not provide an ID bro ${msg.client.bruh}`);
 		default:

@@ -32,6 +32,12 @@ const callback = async (msg: Message, args: string[]) => {
 
 	if (!message.content) return msg.channel.send(`That's an empty message pal ${msg.client.bruh}`);
 
+	[...message.mentions.users, ...(message.mentions.members || [])].forEach(
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		u => (message.content = message.content.replace(new RegExp(`<@!?${u[0]}>`), `@` + (u[1].tag || u[1].user.tag)))
+	);
+
 	const entry = await msg.client.database.quotes.findOne({ messageID: message.id });
 	if (entry) return msg.channel.send(`Pog, that quote is already added ${msg.client.constants.emojis.stonks}`);
 
