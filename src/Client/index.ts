@@ -5,7 +5,7 @@ import { FullCommand, ClientOptions, Message, ClientEvents } from './Interfaces'
 import { stripIndents } from 'common-tags';
 import { config } from '../config';
 import { database } from '../database/';
-import { Pagination, PromptManager, Util, Cooldowns } from './Helpers';
+import { Pagination, PromptManager, Util, Cooldowns, Music } from './Helpers';
 import constants from '../constants';
 export * from './Interfaces';
 
@@ -17,6 +17,7 @@ export class Client extends BaseClient {
 
 	commands: Collection<string, FullCommand> = new Collection();
 	activeCommands: Set<string> = new Set();
+	music = new Music(this);
 	pages = Pagination;
 	prompt = PromptManager;
 	cooldowns = Cooldowns;
