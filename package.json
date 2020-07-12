@@ -36,6 +36,7 @@
 		"mongoose": "^5.9.19",
 		"node-fetch": "^2.6.0",
 		"ordinal": "^1.0.3",
+		"sodium": "^3.0.2",
 		"tinycolor2": "^1.4.1",
 		"ytdl-core-discord": "^1.2.1"
 	},
