@@ -3,7 +3,7 @@ import { Command, Message } from '../../Client';
 const callback = async (msg: Message, args: string[]) => {
 	if (!args.length) {
 		const res = msg.client.music.resume();
-		if (res === false) return msg.channel.send(`The queue is empty`);
+		if (!res) return msg.channel.send(`The queue is empty`);
 		else return msg.channel.send(`Continuing playback!`);
 	}
 
@@ -31,10 +31,10 @@ const callback = async (msg: Message, args: string[]) => {
 				msg.client.music.currentSong = 0;
 				break;
 			case 0:
-				return msg.channel.send(`Now playing ${song.snippet.title}`);
+				return msg.channel.send(`Successfully added \`${song.title}\` to the queue!`, msg.client.music.songEmbed(song));
 		}
 		return msg.channel.send(output);
-	} else return msg.channel.send(`${song.snippet.title} successfully added to the queue!`);
+	} else return msg.channel.send(`Successfully added \`${song.title}\` to the queue!`, msg.client.music.songEmbed(song));
 };
 
 export const command: Command = {

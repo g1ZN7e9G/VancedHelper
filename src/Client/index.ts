@@ -61,7 +61,7 @@ export class Client extends BaseClient {
 	}
 
 	newEmbed(type?: 'INFO' | 'ERROR' | 'BASIC') {
-		return new MessageEmbed().setTimestamp().setColor(type ? this.settings.colours[type] : 'RANDOM');
+		return new MessageEmbed().setColor(type ? this.settings.colours[type] : 'RANDOM');
 	}
 
 	initCommands() {

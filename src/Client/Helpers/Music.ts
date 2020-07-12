@@ -1,12 +1,16 @@
-import { Client, Message } from '..';
+import { Message, Client } from '..';
 import ytdl from 'ytdl-core-discord';
-import { StreamDispatcher, VoiceConnection } from 'discord.js';
+import { videoInfo } from 'ytdl-core';
+import { StreamDispatcher, VoiceConnection, TextChannel } from 'discord.js';
 
 export class Music {
 	private client: Client;
-	queue: Record<string, any>[] = [];
+	queue: videoInfo[] = [];
 	streamDispatcher?: StreamDispatcher = undefined;
 	voiceConnection?: VoiceConnection = undefined;
+	textChannel?: TextChannel = undefined;
+	leaveTimeout?: ReturnType<typeof setTimeout> = undefined;
+	paused = false;
 	currentSong = 0;
 	skips = 0;
 	prev = 0;
@@ -24,6 +28,26 @@ export class Music {
 		return this.queue[this.currentSong];
 	}
 
+	secondsToTime(seconds: number | string) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		//@ts-ignore
+		const date = new Date(null);
+		seconds = typeof seconds === 'number' ? seconds : parseInt(seconds);
+		date.setSeconds(seconds);
+		return seconds > 3600 ? date.toISOString().substr(11, 8) : date.toISOString().substr(14, 5);
+	}
+
+	songEmbed(song: videoInfo) {
+		return this.client
+			.newEmbed(`INFO`)
+			.setImage(song.player_response.videoDetails.thumbnail.thumbnails.last()?.url)
+			.setAuthor(song.author.name, song.author.avatar)
+			.setTitle(song.title)
+			.setURL(song.video_url)
+			.setTimestamp(new Date(song.timestamp))
+			.setDescription(`Duration: \`${this.secondsToTime(song.length_seconds)}\``);
+	}
+
 	async start(msg: Message) {
 		if (this.streamDispatcher) return 1;
 		if (!msg.member?.voice?.channel) return 2;
@@ -32,10 +56,12 @@ export class Music {
 		const currentSong = this.queue[this.currentSong];
 		if (!currentSong) return 4;
 
+		this.textChannel = msg.channel as TextChannel;
 		if (!this.voiceConnection) this.voiceConnection = await msg.member.voice.channel.join();
-		this.streamDispatcher = this.voiceConnection.play(await ytdl(currentSong.id.videoId || currentSong.id), { type: 'opus' }).on('speaking', async s => {
-			if (!s) {
-				const res = await this.next();
+
+		this.streamDispatcher = this.voiceConnection.play(await ytdl(currentSong.video_url), { type: 'opus' }).on('speaking', async s => {
+			if (!s && !this.paused) {
+				const res = await this.next(true);
 				if (!res) {
 					this.streamDispatcher?.destroy();
 					this.streamDispatcher = undefined;
@@ -46,36 +72,38 @@ export class Music {
 	}
 
 	async add(query: string) {
-		const url = query.match(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/);
-		const res = url
-			? await this.client.helpers
-					.fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&key=${this.client.config.youtubeToken}&id=${url[1]}`)
-					.catch(() => null)
-			: await this.client.helpers
-					.fetch(
-						`https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=video&key=${this.client.config.youtubeToken}&q=${query}`
-					)
-					.catch(() => null);
+		const url =
+			query.match(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/)?.[0] ||
+			(await this.client.helpers
+				.fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=video&key=${this.client.config.youtubeToken}&q=${query}`)
+				.then(res => res.items[0].id.videoId)
+				.catch(() => null));
 
-		if (!res || !res.items || !res.items.length) return null;
+		if (!url) return null;
+		const res = await ytdl.getInfo(url).catch(() => null);
 
-		const song = res.items[0];
-		this.queue.push(song);
+		if (!res) return null;
 
-		return song;
+		this.queue.push(res);
+
+		return res;
 	}
 
-	pause() {
+	pause = () => {
 		if (!this.streamDispatcher) return false;
+
+		this.paused = true;
 
 		return this.streamDispatcher.pause();
-	}
+	};
 
-	resume() {
+	resume = () => {
 		if (!this.streamDispatcher) return false;
 
+		this.paused = false;
+
 		return this.streamDispatcher.resume();
-	}
+	};
 
 	clear() {
 		this.queue = [];
@@ -112,7 +140,7 @@ export class Music {
 		return this.previous();
 	}
 
-	async next() {
+	async next(auto = false) {
 		if (!this.voiceConnection || !this.streamDispatcher) return;
 
 		this.skips = 0;
@@ -127,19 +155,21 @@ export class Music {
 			return true;
 		}
 
-		this.streamDispatcher = this.voiceConnection.play(await ytdl(nextSong.id.videoId || nextSong.id), { type: 'opus' }).on('speaking', async s => {
-			if (!s) {
-				const res = await this.next();
+		this.streamDispatcher = this.voiceConnection.play(await ytdl(nextSong.video_url), { type: 'opus' }).on('speaking', async s => {
+			if (!s && !this.paused) {
+				const res = await this.next(true);
 				if (!res) {
 					this.streamDispatcher?.destroy();
 					this.streamDispatcher = undefined;
 				}
 			}
 		});
+
+		if (auto) this.textChannel?.send(`Now playing \`${nextSong.title}\``);
 		return true;
 	}
 
-	async previous() {
+	async previous(auto = false) {
 		if (!this.voiceConnection || !this.streamDispatcher) return;
 
 		this.skips = 0;
@@ -150,15 +180,16 @@ export class Music {
 		if (!prevSong) return false;
 
 		this.streamDispatcher.destroy();
-		this.streamDispatcher = this.voiceConnection.play(await ytdl(prevSong.id.videoId || prevSong.id), { type: 'opus' }).on('speaking', async s => {
-			if (!s) {
-				const res = await this.next();
+		this.streamDispatcher = this.voiceConnection.play(await ytdl(prevSong.video_url), { type: 'opus' }).on('speaking', async s => {
+			if (!s && !this.paused) {
+				const res = await this.next(true);
 				if (!res) {
 					this.streamDispatcher?.destroy();
 					this.streamDispatcher = undefined;
 				}
 			}
 		});
+		if (auto) this.textChannel?.send(`Now playing \`${prevSong.title}\``);
 		return true;
 	}
 }

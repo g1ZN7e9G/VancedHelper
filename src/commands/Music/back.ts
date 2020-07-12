@@ -12,7 +12,7 @@ const callback = async (msg: Message, _args: string[]) => {
 
 	const nowPlaying = msg.client.music.nowPlaying;
 	if (!nowPlaying) return msg.channel.send(`Successfully went back!`);
-	return msg.channel.send(`Successfully went back! Now playing \`${nowPlaying.snippet.title}\``);
+	return msg.channel.send(`Successfully went back! Now playing ${nowPlaying.title}`);
 };
 
 export const command: Command = {
