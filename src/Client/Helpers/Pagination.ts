@@ -38,7 +38,7 @@ export class Pagination {
 
 		const msg = (await message.channel.send(`${message.client.constants.emojis.loading}`, embeds[initPage])) as Message;
 		const success = await Promise.all((customEmojis || this.defaultEmojis).map(r => msg.react(r)))
-			.then(() => msg.edit(embeds[initPage]))
+			.then(() => msg.edit(embeds[initPage]).catch(() => null))
 			.catch(() => null);
 
 		if (!success) {
