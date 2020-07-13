@@ -33,7 +33,7 @@ const callback = async (msg: Message, args: string[]) => {
 export const command: Command = {
 	aliases: ['s', 'next'],
 	description: 'Skip the current song',
-	usage: '[Number of the song to skip (defaults to current song)]',
+	usage: '[Number of song to remove from queue]',
 	devOnly: false,
 	guildOnly: true,
 	args: 0,

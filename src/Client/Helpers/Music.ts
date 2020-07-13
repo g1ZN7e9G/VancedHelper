@@ -75,7 +75,7 @@ export class Music {
 					Duration: \`${this.secondsToTime(song.length)}\`
 					Playing in: \`${this.secondsToTime(
 						this.queue.slice(this.currentSong, this.queue.indexOf(song)).reduce((x, y) => x + parseInt(y.length), 0) -
-							this.streamDispatcher!.streamTime / 1000
+							(this.streamDispatcher?.streamTime || 0) / 1000
 					)}\`
 					Spot in queue: ${this.queue.indexOf(song) + 1}
 					Added by: ${song.addedBy.name}`

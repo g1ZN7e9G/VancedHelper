@@ -6,19 +6,19 @@ const callback = async (msg: Message, _args: string[]) => {
 	if (msg.member.voice.channel.id !== msg.client.music.voiceConnection?.channel.id)
 		return msg.channel.send(`You're not even in this vc smh ${msg.client.bruh}`);
 
-	if (msg.client.music.currentSong === 0) return msg.channel.send(`This is the first song in the queue. Cannot go back.`);
+	if (msg.client.music.currentSong === 0) return msg.channel.send(`This is the first song in the queue. Cannot rewind.`);
 
 	const res = await msg.client.music.back(msg.member.hasPermission('MANAGE_MESSAGES') || msg.member.voice.channel?.members.size === 2);
 	if (res === false) return msg.channel.send(`The queue is empty ${msg.client.bruh}`);
-	if (typeof res === 'string') return msg.channel.send(`Back request sent! ${res}`);
+	if (typeof res === 'string') return msg.channel.send(`Rewind request sent! ${res}`);
 
 	const nowPlaying = msg.client.music.nowPlaying;
-	if (!nowPlaying) return msg.channel.send(`Successfully went back!`);
-	return msg.channel.send(`Successfully went back! Now playing ${nowPlaying.title}`);
+	if (!nowPlaying) return msg.channel.send(`Successfully went rewinded!`);
+	return msg.channel.send(`Successfully rewinded! Now playing ${nowPlaying.title}`);
 };
 
 export const command: Command = {
-	aliases: ['b', 'previous'],
+	aliases: ['b', 'previous', 'rewind'],
 	description: 'Go to the previous song',
 	usage: '',
 	devOnly: false,
