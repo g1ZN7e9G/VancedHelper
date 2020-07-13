@@ -14,7 +14,7 @@ const callback = async (msg: Message, args: string[]) => {
 	const song = await msg.client.music.add(args.join(' '), msg);
 	if (!song) return msg.channel.send(`I was unable to find a song matching your search.`);
 
-	if (!msg.client.music.playing) {
+	if (!msg.client.music.playing || !msg.client.music.streamDispatcher) {
 		let output = 'Something went wrong. ';
 		switch (await msg.client.music.start(msg)) {
 			case 1:
