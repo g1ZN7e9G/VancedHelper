@@ -25,5 +25,6 @@ export default (client: Client, oldState: VoiceState, newState: VoiceState) => {
 		client.music.resume();
 
 		clearTimeout(client.music.leaveTimeout);
+		client.music.leaveTimeout = undefined;
 	}
 };
