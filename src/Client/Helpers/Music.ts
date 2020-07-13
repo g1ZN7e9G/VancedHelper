@@ -46,7 +46,7 @@ export class Music {
 	}
 
 	get playing() {
-		return !!this.streamDispatcher && !!this.voiceConnection;
+		return !!this.voiceConnection && !!this.queue.length;
 	}
 
 	get nowPlaying() {
