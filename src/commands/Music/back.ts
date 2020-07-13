@@ -13,7 +13,7 @@ const callback = async (msg: Message, _args: string[]) => {
 	if (typeof res === 'string') return msg.channel.send(`Rewind request sent! ${res}`);
 
 	const nowPlaying = msg.client.music.nowPlaying;
-	if (!nowPlaying) return msg.channel.send(`Successfully went rewinded!`);
+	if (!nowPlaying) return msg.channel.send(`Successfully rewinded!`);
 	return msg.channel.send(`Successfully rewinded! Now playing ${nowPlaying.title}`);
 };
 
