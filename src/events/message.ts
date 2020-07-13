@@ -71,8 +71,13 @@ export default async (client: Client, msg: Message) => {
 		// Prohibit dev only commands from members
 		if (command.devOnly && !msg.client.config.developers.includes(msg.author.id)) return;
 
-		// Make sure they don't have an active command already
-		if (msg.client.activeCommands.has(msg.author.id)) return msg.channel.send('Please complete your current command before using a new one!');
+		const s = await msg.client.database.guildSettings.findOne({ guild: msg.guild?.id });
+		if (s?.musicChannel && command.category === 'Music' && !msg.member?.permissions.has('MANAGE_MESSAGES') && msg.channel.id !== s.musicChannel)
+			return msg.channel.send(`This command can only be used in <#${s.musicChannel}>`);
+
+		if (msg.client.activeCommands.has(msg.author.id))
+			// Make sure they don't have an active command already
+			return msg.channel.send('Please complete your current command before using a new one!');
 
 		// Check whether we're on a guild if command is guild only
 		if (command.guildOnly && !msg.guild) return msg.channel.send(`\`${client.config.defaultPrefix}${command.name}\` can only be used on a server!`);

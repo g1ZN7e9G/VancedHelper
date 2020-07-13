@@ -5,7 +5,7 @@ import { FullCommand, ClientOptions, Message, ClientEvents } from './Interfaces'
 import { stripIndents } from 'common-tags';
 import { config } from '../config';
 import { database } from '../database/';
-import { Pagination, PromptManager, Util, Cooldowns } from './Helpers';
+import { Pagination, PromptManager, Util, Cooldowns, Music } from './Helpers';
 import constants from '../constants';
 export * from './Interfaces';
 
@@ -17,6 +17,7 @@ export class Client extends BaseClient {
 
 	commands: Collection<string, FullCommand> = new Collection();
 	activeCommands: Set<string> = new Set();
+	music = new Music(this);
 	pages = Pagination;
 	prompt = PromptManager;
 	cooldowns = Cooldowns;
@@ -60,7 +61,7 @@ export class Client extends BaseClient {
 	}
 
 	newEmbed(type?: 'INFO' | 'ERROR' | 'BASIC') {
-		return new MessageEmbed().setTimestamp().setColor(type ? this.settings.colours[type] : 'RANDOM');
+		return new MessageEmbed().setColor(type ? this.settings.colours[type] : 'RANDOM');
 	}
 
 	initCommands() {
@@ -146,7 +147,9 @@ export class Client extends BaseClient {
 			message.reply(
 				new MessageEmbed()
 					.setColor(this.settings.colours.ERROR)
-					.setDescription('Sadly, an error internal occurred. There is no need to report this, as all errors will automatically notify my devs!')
+					.setDescription(
+						'Sadly, an internal error occurred. There is no need to report this, as all errors will automatically notify my developers!'
+					)
 			);
 		}
 		return channel.send((await Promise.all(this.config.developers.map(d => this.users.fetch(d)))).join(' '), errorEmbed);

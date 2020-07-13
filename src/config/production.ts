@@ -4,6 +4,7 @@ const config: Config = {
 	token: process.env.BOT_TOKEN!,
 	mongoString: process.env.MONGO_STRING!,
 	coinlibToken: process.env.COINLIB_TOKEN!,
+	youtubeToken: process.env.YOUTUBE_TOKEN!,
 	defaultPrefix: '-',
 	developers: ['265560538937819137', '256143257472335872', '202115709231300617'],
 	channels: {
