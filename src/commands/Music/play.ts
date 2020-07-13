@@ -11,7 +11,7 @@ const callback = async (msg: Message, args: string[]) => {
 	if (msg.client.music.voiceConnection && msg.member.voice.channel.id !== msg.client.music.voiceConnection.channel.id)
 		return msg.channel.send(`I am already playing in another voice chat ${msg.client.bruh}`);
 
-	const song = await msg.client.music.add(args.join('+'));
+	const song = await msg.client.music.add(args.join(' '), msg);
 	if (!song) return msg.channel.send(`I was unable to find a song matching your search.`);
 
 	if (!msg.client.music.playing) {
@@ -30,7 +30,7 @@ const callback = async (msg: Message, args: string[]) => {
 				output += 'The current song is higher than the queue length. Resetting to 0.';
 				msg.client.music.currentSong = 0;
 				break;
-			case 0:
+			case true:
 				return msg.channel.send(`Successfully added \`${song.title}\` to the queue!`, msg.client.music.songEmbed(song));
 		}
 		return msg.channel.send(output);
@@ -45,6 +45,6 @@ export const command: Command = {
 	guildOnly: true,
 	args: 0,
 	memberPermission: [],
-	botPermission: [],
+	botPermission: ['SPEAK', 'CONNECT'],
 	callback: callback
 };

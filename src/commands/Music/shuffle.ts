@@ -8,7 +8,9 @@ const callback = async (msg: Message, _args: string[]) => {
 
 	if (!msg.member?.hasPermission('MANAGE_MESSAGES') && msg.member.voice.channel?.members.size !== 2) return msg.channel.send(`Only a moderator can do this.`);
 
-	msg.client.music.queue = msg.client.music.queue.sort(() => 0.5 - Math.random());
+	msg.client.music.queue = msg.client.music.queue
+		.slice(0, msg.client.music.currentSong + 1)
+		.concat(msg.client.music.queue.slice(msg.client.music.currentSong + 1).sort(() => 0.5 - Math.random()));
 
 	return msg.channel.send(`Successfully shuffled the queue!`);
 };
@@ -21,6 +23,6 @@ export const command: Command = {
 	guildOnly: true,
 	args: 0,
 	memberPermission: [],
-	botPermission: [],
+	botPermission: ['SPEAK', 'CONNECT'],
 	callback: callback
 };

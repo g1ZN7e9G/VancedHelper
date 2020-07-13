@@ -3,10 +3,7 @@ import { Document, Schema, model } from 'mongoose';
 export interface ReactionRoles extends Document {
 	channelID: string;
 	messageID: string;
-	reactionRoles: {
-		emojiID: string;
-		roleID: string;
-	}[];
+	reactionRoles: Array<Record<'emojiID' | 'roleID', string>>;
 }
 
 const ReactionRoleSchema = new Schema({

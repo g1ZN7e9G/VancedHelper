@@ -6,6 +6,8 @@ const callback = async (msg: Message, _args: string[]) => {
 	if (msg.member.voice.channel.id !== msg.client.music.voiceConnection?.channel.id)
 		return msg.channel.send(`You're not even in this vc smh ${msg.client.bruh}`);
 
+	if (msg.client.music.currentSong === 0) return msg.channel.send(`This is the first song in the queue. Cannot go back.`);
+
 	const res = await msg.client.music.back(msg.member.hasPermission('MANAGE_MESSAGES') || msg.member.voice.channel?.members.size === 2);
 	if (res === false) return msg.channel.send(`The queue is empty ${msg.client.bruh}`);
 	if (typeof res === 'string') return msg.channel.send(`Back request sent! ${res}`);
@@ -23,6 +25,6 @@ export const command: Command = {
 	guildOnly: true,
 	args: 0,
 	memberPermission: [],
-	botPermission: [],
+	botPermission: ['SPEAK', 'CONNECT'],
 	callback: callback
 };

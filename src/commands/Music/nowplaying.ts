@@ -6,15 +6,15 @@ const callback = async (msg: Message, _args: string[]) => {
 	if (!song || !msg.client.music.streamDispatcher) return msg.channel.send(`I am not playing any music ${msg.client.bruh}`);
 
 	const playDuration = msg.client.music.streamDispatcher.streamTime / 1000;
-	const howFar = Math.round((playDuration / parseInt(song.length_seconds)) * 20);
+	const howFar = Math.round((playDuration / parseInt(song.length)) * 20);
 
 	return msg.channel.send(
 		msg.client.music
 			.songEmbed(song)
 			.setDescription(
 				`\`${msg.client.music.secondsToTime(playDuration)}\` ${'-'.repeat(howFar)}🔵${'-'.repeat(20 - howFar)} \`${msg.client.music.secondsToTime(
-					song.length_seconds
-				)}\``
+					song.length
+				)}\`\n\nAdded by: ${song.addedBy.name}`
 			)
 	);
 };
@@ -27,6 +27,6 @@ export const command: Command = {
 	guildOnly: true,
 	args: 0,
 	memberPermission: [],
-	botPermission: [],
+	botPermission: ['SPEAK', 'CONNECT'],
 	callback: callback
 };

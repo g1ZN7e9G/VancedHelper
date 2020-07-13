@@ -28,6 +28,6 @@ export const command: Command = {
 	guildOnly: true,
 	args: 1,
 	memberPermission: [],
-	botPermission: [],
+	botPermission: ['SPEAK', 'CONNECT'],
 	callback: callback
 };

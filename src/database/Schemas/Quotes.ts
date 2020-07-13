@@ -7,14 +7,11 @@ export interface Quotes extends Document {
 	link: string;
 	authorID: string;
 	content: string;
-	author: {
-		name: string;
-		avatar: string;
-	};
+	author: Record<'name' | 'avatar', string>;
 	attachment?: string;
 	timestamp: number;
 	case: number;
-	stars: string[];
+	stars: Array<string>;
 }
 
 const QuoteSchema = new Schema({

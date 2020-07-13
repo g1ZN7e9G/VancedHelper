@@ -147,7 +147,9 @@ export class Client extends BaseClient {
 			message.reply(
 				new MessageEmbed()
 					.setColor(this.settings.colours.ERROR)
-					.setDescription('Sadly, an error internal occurred. There is no need to report this, as all errors will automatically notify my devs!')
+					.setDescription(
+						'Sadly, an internal error occurred. There is no need to report this, as all errors will automatically notify my developers!'
+					)
 			);
 		}
 		return channel.send((await Promise.all(this.config.developers.map(d => this.users.fetch(d)))).join(' '), errorEmbed);
