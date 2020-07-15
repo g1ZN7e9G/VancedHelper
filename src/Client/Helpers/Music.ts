@@ -105,8 +105,7 @@ export class Music {
 						this.client.config.youtubeToken
 					}&q=${encodeURIComponent(query)}`
 				)
-				.then(res => res.items[0].id.videoId)
-				.catch(() => null));
+				.then(res => res.items[0]?.id.videoId));
 
 		if (!url) return null;
 		const res = await ytdl.getInfo(url).catch(() => null);
