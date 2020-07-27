@@ -23,11 +23,6 @@ Date.prototype.formatTime = function () {
 	return `${this.getUTCHours().addZero()}:${this.getUTCMinutes().addZero()}:${this.getUTCSeconds().addZero()} UTC`;
 };
 
-Date.prototype.age = function () {
-	const age = Date.now() - this.getTime();
-	return msToHuman(age);
-};
-
 const msToHuman = (ms: number) => {
 	const seconds = Math.round(ms / 1000),
 		minutes = Math.round(ms / (1000 * 60)),
@@ -38,4 +33,9 @@ const msToHuman = (ms: number) => {
 	else if (minutes < 60) return minutes + ' minutes';
 	else if (hours < 24) return hours + ' hours';
 	else return days + ' days';
+};
+
+Date.prototype.age = function () {
+	const age = Date.now() - this.getTime();
+	return msToHuman(age);
 };

@@ -2,6 +2,15 @@ import { Command, Message } from '../../Client';
 import emojis from '../../constants/emojis';
 import { stripIndents } from 'common-tags';
 
+const stonkify = (p: string) => {
+	if (parseInt(p) >= 25) return `${emojis.relax} ${p}%`;
+	else if (parseInt(p) >= 5) return `${emojis.merchant} ${p}%`;
+	else if (Math.sign(parseInt(p)) === 1) return `${emojis.stonks} ${p}%`;
+	else if (parseInt(p) <= -25) return `${emojis.sad} ${p}%`;
+	else if (parseInt(p) <= -5) return `${emojis.feels} ${p}%`;
+	else return `${emojis.stinks} ${p}%`;
+};
+
 const callback = async (msg: Message, args: string[]) => {
 	const data = await msg.client.helpers.fetch(`https://coinlib.io/api/v1/coin?key=${msg.client.config.coinlibToken}&pref=EUR&symbol=BAT`, {
 		method: 'POST',
@@ -11,7 +20,6 @@ const callback = async (msg: Message, args: string[]) => {
 		}
 	});
 
-	console.log(data);
 	if (args.length && !!parseFloat(args[0])) return msg.channel.send((parseFloat(args[0]) * parseFloat(data.price)).toFixed(2) + ' EUR');
 
 	const output = msg.client
@@ -37,14 +45,6 @@ const callback = async (msg: Message, args: string[]) => {
 	return msg.channel.send(output);
 };
 
-const stonkify = (p: string) => {
-	if (parseInt(p) >= 25) return `${emojis.relax} ${p}%`;
-	else if (parseInt(p) >= 5) return `${emojis.merchant} ${p}%`;
-	else if (Math.sign(parseInt(p)) === 1) return `${emojis.stonks} ${p}%`;
-	else if (parseInt(p) <= -25) return `${emojis.sad} ${p}%`;
-	else if (parseInt(p) <= -5) return `${emojis.feels} ${p}%`;
-	else return `${emojis.stinks} ${p}%`;
-};
 export const command: Command = {
 	aliases: [],
 	description: 'Check how many stonks we made today',
