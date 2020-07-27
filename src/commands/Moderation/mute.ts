@@ -19,7 +19,15 @@ const callback = async (msg: Message, args: string[]) => {
 		await Promise.all(
 			msg.guild.channels.cache
 				.filter(c => !!c.permissionsFor(msg.guild!.me!)?.has('VIEW_CHANNEL'))
-				.map(c => c.updateOverwrite(role, { SEND_MESSAGES: false, ADD_REACTIONS: false, SPEAK: false }).catch(() => null))
+				.map(c =>
+					c
+						.updateOverwrite(role, {
+							SEND_MESSAGES: false,
+							ADD_REACTIONS: false,
+							SPEAK: false
+						})
+						.catch(() => null)
+				)
 		).catch(() => null);
 
 		settings.muteRole = role.id;
