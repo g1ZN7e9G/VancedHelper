@@ -4,7 +4,14 @@ import tinycolour from 'tinycolor2';
 const callback = async (msg: Message, args: string[]) => {
 	if (!msg.client.helpers.isGuild(msg)) return;
 
-	if (!msg.member.roles.cache.some(r => r.name === 'Nitro Booster') && !msg.client.config.developers.includes(msg.author.id))
+	const settings = await msg.client.database.guildSettings.findOne({ guild: msg.guild.id });
+	if (!settings || !settings.boosterRole || !settings.modRole) throw new Error('Please set the booster and modrole.');
+
+	if (
+		!msg.member.roles.cache.has(settings.boosterRole) &&
+		!msg.member.roles.cache.has(settings.modRole) &&
+		!msg.client.config.developers.includes(msg.author.id)
+	)
 		return msg.channel.send(`You're not a booster bro ${msg.client.bruh}`);
 
 	const [colourRaw, ...roleRaw] = args;
