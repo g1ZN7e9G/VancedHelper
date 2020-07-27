@@ -55,9 +55,7 @@ export class Music {
 	}
 
 	secondsToTime(seconds: number | string) {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		//@ts-ignore
-		const date = new Date(null);
+		const date = new Date(0);
 		seconds = typeof seconds === 'number' ? seconds : parseInt(seconds);
 		date.setSeconds(seconds);
 		return seconds > 3600 ? date.toISOString().substr(11, 8) : date.toISOString().substr(14, 5);

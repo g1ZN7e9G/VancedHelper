@@ -4,7 +4,10 @@ import { GuildMember } from 'discord.js';
 export default async (client: Client, oldMember: GuildMember, newMember: GuildMember) => {
 	if (oldMember.partial) return;
 
-	const boosterRole = newMember.guild.roles.cache.find(r => r.name === 'Nitro Booster');
+	const dbEntry = await client.database.guildSettings.findOne({ guild: newMember.guild.id });
+	if (!dbEntry || !dbEntry.boosterRole) return;
+
+	const boosterRole = newMember.guild.roles.cache.get(dbEntry.boosterRole);
 	if (!boosterRole) return;
 
 	// Uh Oh, unbooster

@@ -3,24 +3,6 @@ import { config } from '../../config/index';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 
-const callback = async (msg: Message, args: string[]) => {
-	let initPage = (args.length ? parseInt(args[0]) - 1 : 0) || 0;
-	if (initPage > pages.length) initPage = 0;
-	msg.client.pages.create(msg, pages, initPage);
-};
-
-export const command: Command = {
-	aliases: ['troubleshoot', 'ts'],
-	description: 'Troubleshoot Vanced issues. For your own issues, consult your therapist ;)',
-	usage: '[Page]',
-	devOnly: false,
-	guildOnly: false,
-	args: 0,
-	memberPermission: [],
-	botPermission: [],
-	callback: callback
-};
-
 const embed = () => new MessageEmbed().setTimestamp().setColor('0D7DFF');
 const pages = [
 	embed()
@@ -116,3 +98,21 @@ const pages = [
 			"The way PiP works is controlled by your operating system. If it's broken, there's nothing we can do, so please don't report PiP related issues."
 		)
 ];
+
+const callback = async (msg: Message, args: string[]) => {
+	let initPage = (args.length ? parseInt(args[0]) - 1 : 0) || 0;
+	if (initPage > pages.length) initPage = 0;
+	msg.client.pages.create(msg, pages, initPage);
+};
+
+export const command: Command = {
+	aliases: ['troubleshoot', 'ts'],
+	description: 'Troubleshoot Vanced issues. For your own issues, consult your therapist ;)',
+	usage: '[Page]',
+	devOnly: false,
+	guildOnly: false,
+	args: 0,
+	memberPermission: [],
+	botPermission: [],
+	callback: callback
+};

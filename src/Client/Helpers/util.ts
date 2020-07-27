@@ -31,6 +31,10 @@ export class Util {
 		});
 	}
 
+	async wait(seconds: number) {
+		return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+	}
+
 	async uploadHaste(text: string) {
 		const init: RequestInit = {
 				method: 'POST',

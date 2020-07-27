@@ -1,4 +1,4 @@
-import '../interfaces/Array';
+import '../struct/Array';
 
 export default {
 	success: '<:check:699715117473988748>',

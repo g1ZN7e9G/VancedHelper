@@ -1,5 +1,5 @@
 import { Command, Message } from '../../Client';
-import { VoiceChannel, TextChannel } from 'discord.js';
+import { VoiceChannel, TextChannel, User, GuildMember } from 'discord.js';
 import { join } from 'path';
 
 const callback = async (msg: Message, args: string[]) => {
@@ -33,9 +33,7 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!message.content) return msg.channel.send(`That's an empty message pal ${msg.client.bruh}`);
 
 	[...message.mentions.users, ...(message.mentions.members || [])].forEach(
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		u => (message.content = message.content.replace(new RegExp(`<@!?${u[0]}>`), `@` + (u[1].tag || u[1].user.tag)))
+		u => (message.content = message.content.replace(new RegExp(`<@!?${u[0]}>`), `@` + ((u[1] as User).tag || (u[1] as GuildMember).user.tag)))
 	);
 
 	const entry = await msg.client.database.quotes.findOne({ messageID: message.id });

@@ -1,10 +1,10 @@
 import { Client } from './Client';
 
 // Load extensions
-import './interfaces/Array';
-import './interfaces/String';
-import './interfaces/Date';
-import './interfaces/Number';
+import './struct/Array';
+import './struct/String';
+import './struct/Date';
+import './struct/Number';
 
 const client = new Client({
 	baseOptions: {
@@ -25,8 +25,6 @@ client.start();
 process.on('uncaughtException', client.handleError);
 process.on('unhandledRejection', err => {
 	if (!err) err = new Error('An Unhandled Promise Rejection occurred but it had no error!');
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	if (err.stack && err.name) client.handleError(err);
+	if ((err as Error).stack && (err as Error).name) client.handleError(err as Error);
 	else console.error(err);
 });

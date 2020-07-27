@@ -1,9 +1,5 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
-	return msg.channel.send(`🎱 *${responses.random()}, ${msg.author.username}.*`);
-};
-
 const responses = [
 	'It is certain',
 	'It is decidedly so',
@@ -26,6 +22,10 @@ const responses = [
 	'Outlook not so good',
 	'Very doubtful'
 ];
+
+const callback = async (msg: Message, _args: string[]) => {
+	return msg.channel.send(`🎱 *${responses.random()}, ${msg.author.username}.*`);
+};
 
 export const command: Command = {
 	aliases: ['8b', 'fortune'],
