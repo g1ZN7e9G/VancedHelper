@@ -36,6 +36,11 @@ const callback = async (msg: Message, args: string[]) => {
 			dbEntry.modRole = role.id;
 			m = msg.channel.send(`Successfully set the modrole to ${role.name}!`);
 			break;
+		case 'spammerrole':
+			role = await msg.client.helpers.getRole(msg, args, 1);
+			if (!role) return;
+			dbEntry.spammerRole = role.id;
+			m = msg.channel.send(`Successfully set the spammerrole to ${role.name}!`);
 		default:
 			return msg.channel.send(`${setting} is not a valid setting.`);
 	}
@@ -47,7 +52,7 @@ const callback = async (msg: Message, args: string[]) => {
 export const command: Command = {
 	aliases: [],
 	description: 'Change a setting',
-	usage: '<modlogchannel | musicchannel | boostrole | modrole> <Channel / Role>',
+	usage: '<modlogchannel | musicchannel | boostrole | modrole | spammerrole> <Channel / Role>',
 	devOnly: true,
 	guildOnly: true,
 	args: 2,
