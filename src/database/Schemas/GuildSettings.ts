@@ -6,6 +6,7 @@ export interface GuildSettings extends Document {
 	modLogChannel?: string;
 	boosterRole?: string;
 	muteRole?: string;
+	spammerRole?: string;
 	modRole?: string;
 }
 
@@ -15,6 +16,7 @@ const GuildSettingsSchema = new Schema<GuildSettings>({
 	modLogChannel: String,
 	boosterRole: String,
 	muteRole: String,
+	spammerRole: String,
 	modRole: String
 });
 
