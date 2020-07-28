@@ -41,6 +41,7 @@ const callback = async (msg: Message, args: string[]) => {
 			if (!role) return;
 			dbEntry.spammerRole = role.id;
 			m = msg.channel.send(`Successfully set the spammerrole to ${role.name}!`);
+			break;
 		default:
 			return msg.channel.send(`${setting} is not a valid setting.`);
 	}
