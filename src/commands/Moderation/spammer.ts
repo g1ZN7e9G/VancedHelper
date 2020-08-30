@@ -20,14 +20,14 @@ const callback = async (msg: Message, args: string[]) => {
 	let m;
 	if (target.roles.cache.has(settings.spammerRole)) {
 		const success = await target.roles.remove(settings.spammerRole).catch(() => false);
-		if (!success) return msg.channel.send(`Could not remove the spammer role from ${target.user.username}.`);
+		if (!success) return msg.channel.send(`Failed removing the spammer role from ${target.user.username}.`);
 		else m = msg.channel.send(`Successfully removed the spammer role from ${target.user.username}.`);
-		action = 'Gave Spammer Role';
+		action = 'Removed Spammer Role';
 	} else {
 		const success = await target.roles.add(settings.spammerRole).catch(() => false);
-		if (!success) return msg.channel.send(`Could not give the spammer role to ${target.user.username}.`);
-		else m = msg.channel.send(`Successfully gave the spammer role to ${target.user.username}.`);
-		action = 'Removed Spammer Role';
+		if (!success) return msg.channel.send(`Failed assigning the spammer role to ${target.user.username}.`);
+		else m = msg.channel.send(`Successfully assigned the spammer role to ${target.user.username}.`);
+		action = 'Added to Spammer Role';
 	}
 
 	const embed = msg.client
@@ -53,7 +53,7 @@ const callback = async (msg: Message, args: string[]) => {
 
 	channel.send(embed);
 
-	return await m;
+	return m;
 };
 
 export const command: Command = {

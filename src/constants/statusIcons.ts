@@ -3,5 +3,6 @@ export default {
 	idle: 'https://i.imgur.com/7mC8AWy.png',
 	dnd: 'https://i.imgur.com/EdvCkvZ.png',
 	offline: 'https://i.imgur.com/YQNx8dT.png',
+	invisible: 'https://i.imgur.com/YQNx8dT.png',
 	streaming: 'https://i.imgur.com/xutQKUO.png'
 };
