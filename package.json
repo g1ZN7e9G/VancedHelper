@@ -28,6 +28,7 @@
 	"dependencies": {
 		"@discordjs/opus": "^0.3.2",
 		"canvas": "^2.6.1",
+		"chrono-node": "^2.1.8",
 		"common-tags": "^1.8.0",
 		"discord.js": "^12.3.1",
 		"mongoose": "^5.9.19",

@@ -11,49 +11,23 @@ const callback = async (msg: Message, args: string[]) => {
 
 	if (!msg.member.roles.cache.has(settings.modRole)) return;
 
+	const parsedDuration = msg.client.helpers.parseTimeString(msg.content);
+	if (parsedDuration) parsedDuration.matches.forEach(m => args.splice(args.indexOf(m), 1));
+
 	const target = await msg.client.helpers.getMember(msg, args, 0);
 	if (!target) return;
 
-	const reason = args.splice(1).join(' ') || 'No reason provided!';
+	const reason = args.splice(1).join(' ');
 
-	let action = '';
-	let m;
-	if (target.roles.cache.has(settings.spammerRole)) {
-		const success = await target.roles.remove(settings.spammerRole).catch(() => false);
-		if (!success) return msg.channel.send(`Failed removing the spammer role from ${target.user.username}.`);
-		else m = msg.channel.send(`Successfully removed the spammer role from ${target.user.username}.`);
-		action = 'Removed Spammer Role';
-	} else {
-		const success = await target.roles.add(settings.spammerRole).catch(() => false);
-		if (!success) return msg.channel.send(`Failed assigning the spammer role to ${target.user.username}.`);
-		else m = msg.channel.send(`Successfully assigned the spammer role to ${target.user.username}.`);
-		action = 'Added to Spammer Role';
-	}
+	const role = msg.guild.roles.cache.get(settings.spammerRole);
+	if (!role) throw new Error('Spammer role not found!');
 
-	const embed = msg.client
-		.newEmbed('INFO')
-		.setTitle(action || 'Something went wrong.')
-		.addFields([
-			{
-				name: 'User',
-				value: `Mention: ${target}\nTag: ${target.user.tag}\nID: ${target.id}}`
-			},
-			{
-				name: 'Moderator',
-				value: `Mention: ${msg.author}\nTag: ${msg.author.tag}\nID: ${msg.author.id}}`
-			},
-			{
-				name: 'Reason',
-				value: reason
-			}
-		]);
+	const action = target.roles.cache.has(role.id) ? 'UNSPAM' : 'SPAM';
 
 	const channel = msg.guild.channels.cache.get(settings.modLogChannel);
 	if (!channel || !(channel instanceof TextChannel)) throw new Error(`Modlog channel unreachable or not a TextChannel.`);
 
-	channel.send(embed);
-
-	return m;
+	return msg.client.helpers.createInfraction(msg, channel, role, action, target, msg.author, reason, parsedDuration?.duration);
 };
 
 export const command: Command = {

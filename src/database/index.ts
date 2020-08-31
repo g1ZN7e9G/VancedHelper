@@ -4,6 +4,7 @@ import quotes from './Schemas/Quotes';
 import colourRoles from './Schemas/ColourRoles';
 import reactionRoles from './Schemas/ReactionRoles';
 import guildSettings from './Schemas/GuildSettings';
+import infractions from './Schemas/Infraction';
 
 mongoose.connect(config.mongoString, {
 	useCreateIndex: true,
@@ -21,5 +22,6 @@ export const database = {
 	quotes,
 	colourRoles,
 	reactionRoles,
-	guildSettings
+	guildSettings,
+	infractions
 };
