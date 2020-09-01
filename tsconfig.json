@@ -12,6 +12,7 @@
 		"outDir": "dist",
 		"strict": true,
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 		"moduleResolution": "Node",
 		"lib": ["ES2019"],
 		"module": "commonjs",

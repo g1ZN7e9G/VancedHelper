@@ -1,6 +1,6 @@
 import { Message, Client } from '..';
 import fetch, { RequestInfo, RequestInit } from 'node-fetch';
-import { PermissionString, GuildMember, Message as BaseMessage, GuildChannel, Role, User, Collection } from 'discord.js';
+import { PermissionString, GuildMember, Message as BaseMessage, GuildChannel, Role, User, Collection, TextChannel } from 'discord.js';
 import { GuildMessage } from '../Interfaces/Message';
 
 export class Util {
@@ -99,6 +99,120 @@ export class Util {
 			(executor.id !== target.id && executor.guild.ownerID === executor.id) ||
 			(target.guild.ownerID !== target.id && executor.roles.highest.position > target.roles.highest.position)
 		);
+	}
+
+	timeUnits = {
+		s: 1000,
+		m: 1000 * 60,
+		h: 1000 * 60 * 60,
+		d: 1000 * 60 * 60 * 24,
+		w: 1000 * 60 * 60 * 24 * 7
+	};
+
+	parseTimeString(str: string) {
+		const matches = str.match(/\d+[wdhms]/gi);
+		if (!matches || !matches.length) return null;
+
+		let duration = 0;
+
+		for (const match of matches) duration += parseInt(match.substring(0, match.length - 1)) * this.timeUnits[match.charAt(match.length - 1) as 's'];
+
+		return {
+			matches,
+			duration
+		};
+	}
+
+	async giveRole(msg: Message | null, member: GuildMember, role: Role, take = false) {
+		const success = member.roles[take ? 'remove' : 'add'](role).catch(() => false);
+		if (!success) {
+			msg?.channel.send('Sorry, something went wrong!');
+			return false;
+		}
+		return true;
+	}
+
+	async createInfraction(
+		msg: GuildMessage,
+		logChannel: TextChannel,
+		role: Role,
+		action: 'MUTE' | 'UNMUTE' | 'SPAM' | 'UNSPAM',
+		member: GuildMember,
+		moderator: User,
+		reason = 'No reason provided',
+		duration = 0
+	) {
+		const embed = this.client.newEmbed('INFO').addFields([
+			{
+				name: 'User',
+				value: `${member} - ${member.user.tag} (${member.id})}`
+			},
+			{
+				name: 'Moderator',
+				value: `${moderator} - ${moderator.tag} (${moderator.id}})`
+			},
+			{
+				name: 'Reason',
+				value: reason
+			}
+		]);
+		if (action === 'MUTE' || action === 'SPAM') {
+			if (!(await this.giveRole(msg, member, role))) return;
+			if (duration) {
+				this.client.database.infractions.create({ userID: member.id, guildID: msg.guild.id, infractionType: action, end: Date.now() + duration });
+				setTimeout(
+					() =>
+						this.createInfraction(
+							msg,
+							logChannel,
+							role,
+							action === 'MUTE' ? 'UNMUTE' : 'UNSPAM',
+							member,
+							this.client.user!,
+							'Punishment duration over!'
+						),
+					duration
+				);
+			}
+		} else {
+			if (!(await this.giveRole(msg, member, role, true))) return;
+			this.client.database.infractions.findOneAndDelete({ userID: member.id });
+		}
+
+		switch (action) {
+			case 'MUTE':
+				embed.setTitle(`Muted ${member.user.tag}`);
+				break;
+			case 'UNMUTE':
+				embed.setTitle(`Unmuted ${member.user.tag}`);
+				break;
+			case 'SPAM':
+				embed.setTitle(`${member.user.tag} is now a spammer`);
+				break;
+			case 'UNSPAM':
+				embed.setTitle(`${member.user.tag} is no longer a spammer`);
+				break;
+		}
+
+		if (reason !== 'Punishment duration over!') await msg.channel.send(embed.title);
+		await logChannel.send(embed);
+
+		switch (action) {
+			case 'MUTE':
+				embed.setTitle(`You have been muted!`);
+				break;
+			case 'UNMUTE':
+				embed.setTitle('You have been unmuted!');
+				break;
+			case 'SPAM':
+				embed.setTitle(`You have been given the spammer role!`);
+				break;
+			case 'UNSPAM':
+				embed.setTitle(`You have been removed from the spammer role!`);
+				break;
+		}
+
+		member.send(embed).catch(() => null);
 	}
 
 	async getUser(message: Message, args: string[], spot?: number) {
