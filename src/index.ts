@@ -22,9 +22,9 @@ const client = new Client({
 
 client.start();
 
-process.on('uncaughtException', client.handleError);
+process.on('uncaughtException', e => void client.handleError(e));
 process.on('unhandledRejection', err => {
 	if (!err) err = new Error('An Unhandled Promise Rejection occurred but it had no error!');
-	if ((err as Error).stack && (err as Error).name) client.handleError(err as Error);
+	if ((err as Error).stack && (err as Error).name) void client.handleError(err as Error);
 	else console.error(err);
 });

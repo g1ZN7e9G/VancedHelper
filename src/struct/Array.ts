@@ -1,3 +1,6 @@
+/* eslint-disable no-extend-native */
+/* eslint-disable func-names */
+
 interface Array<T> {
 	/**
 	 * Get n random elements from an array
@@ -10,7 +13,7 @@ interface Array<T> {
 }
 
 Array.prototype.random = function (n?: number) {
-	const res = this.sort(() => 0.5 - Math.random()).slice(0, n || 1);
+	const res = this.sort(() => 0.5 - Math.random()).slice(0, n ?? 1);
 	return n ? res : res[0];
 };
 

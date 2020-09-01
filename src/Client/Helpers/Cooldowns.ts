@@ -2,10 +2,11 @@ import { GuildMember, User, Collection } from 'discord.js';
 import { FullCommand } from '../';
 import { config } from '../../config';
 
-export class Cooldowns {
-	private static cooldowns: Collection<string, Collection<string, number>> = new Collection();
+export const Cooldowns = {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+	cooldowns: new Collection() as Collection<string, Collection<string, number>>,
 
-	static get(id: string | User | GuildMember, command: FullCommand) {
+	get(id: string | User | GuildMember, command: FullCommand) {
 		if (typeof id !== 'string') id = id.id;
 
 		if (config.developers.includes(id)) return false;
@@ -22,10 +23,11 @@ export class Cooldowns {
 		const expirationTime = userCooldown + cooldownAmount;
 
 		if (now < expirationTime) return (expirationTime - now) / 1000;
-		else return false;
-	}
 
-	static add(id: string | User | GuildMember, command: FullCommand) {
+		return false;
+	},
+
+	add(id: string | User | GuildMember, command: FullCommand) {
 		if (typeof id !== 'string') id = id.id;
 
 		if (config.developers.includes(id)) return;
@@ -36,4 +38,4 @@ export class Cooldowns {
 
 		timestamps.set(id, Date.now());
 	}
-}
+};

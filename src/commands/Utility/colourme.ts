@@ -18,21 +18,22 @@ const callback = async (msg: Message, args: string[]) => {
 
 	let colour: string | tinycolour.Instance = colourRaw ? tinycolour(colourRaw) : tinycolour.random();
 	if (!colour.isValid()) return msg.channel.send(`That's not a valid colour. Please try again!`);
-	else colour = colour.toHex() === '000000' ? '#000001' : colour.toHexString();
 
-	const roleName = (roleRaw.join(' ') || colour) + '-CC';
+	colour = colour.toHex() === '000000' ? '#000001' : colour.toHexString();
+
+	const roleName = `${roleRaw.join(' ') || colour}-CC`;
 
 	const existingRole = msg.guild.roles.cache.find(r => r.name.toLowerCase() === roleName.toLowerCase());
 
 	const dbEntry =
-		(await msg.client.database.colourRoles.findOne({ userID: msg.author.id })) ||
+		(await msg.client.database.colourRoles.findOne({ userID: msg.author.id })) ??
 		(await msg.client.database.colourRoles.create({ userID: msg.author.id, roleID: '', roleColour: '', roleName: '' }));
 
 	if (existingRole && existingRole.id !== dbEntry.roleID) return msg.channel.send(`Sorry, but that role name is already taken. Please use another one!`);
 	if (dbEntry.roleID) {
 		const role = msg.guild.roles.cache.get(dbEntry.roleID);
 		if (role) {
-			role.edit({ name: roleName, color: colour });
+			void role.edit({ name: roleName, color: colour });
 			return msg.channel.send('Successfully updated your colour role!');
 		}
 	}
@@ -48,9 +49,9 @@ const callback = async (msg: Message, args: string[]) => {
 	dbEntry.roleID = role.id;
 	dbEntry.roleColour = role.hexColor;
 	dbEntry.roleName = role.name;
-	dbEntry.save();
+	void dbEntry.save();
 
-	msg.member.roles.add(role);
+	void msg.member.roles.add(role);
 
 	return msg.channel.send(`Successfully created your role ${role.name} with the colour ${role.hexColor}!`);
 };

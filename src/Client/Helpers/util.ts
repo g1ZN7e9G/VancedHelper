@@ -4,19 +4,19 @@ import { PermissionString, GuildMember, Message as BaseMessage, GuildChannel, Ro
 import { GuildMessage } from '../Interfaces/Message';
 
 export class Util {
-	constructor(client: Client) {
+	private readonly client: Client;
+	public constructor(client: Client) {
 		this.client = client;
 	}
-	client: Client;
 
-	async fetch(requestInfo: RequestInfo, requestOptions?: RequestInit): Promise<any> {
+	public async fetch(requestInfo: RequestInfo, requestOptions?: RequestInit): Promise<any> {
 		return new Promise((resolve, reject) => {
 			fetch(requestInfo, requestOptions)
 				.then(async res => {
 					if (res.status > 299 || res.status < 200) reject(`${res.status} | ${res.statusText}`);
 
 					try {
-						const contentType = res.headers.get('content-type') || 'application/json';
+						const contentType = res.headers.get('content-type') ?? 'application/json';
 
 						let result;
 						if (contentType.includes('image')) result = await res.buffer();
@@ -31,77 +31,78 @@ export class Util {
 		});
 	}
 
-	async wait(seconds: number) {
+	public async wait(seconds: number) {
 		return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 	}
 
-	async uploadHaste(text: string) {
+	public async uploadHaste(text: string) {
 		const init: RequestInit = {
-				method: 'POST',
-				headers: { 'Content-Type': 'text/plain' },
-				body: text,
-				redirect: 'follow',
-				timeout: 3000
-			},
-			urls = ['https://hasteb.in/', 'https://hastebin.com/'];
+			method: 'POST',
+			headers: { 'Content-Type': 'text/plain' },
+			body: text,
+			redirect: 'follow',
+			timeout: 3000
+		};
+		const urls = ['https://hasteb.in/', 'https://hastebin.com/'];
 		let url: string | null = urls[0];
 
 		const res =
-			(await this.fetch(url + 'documents', init).catch(() => {
+			(await this.fetch(`${url}documents`, init).catch(() => {
 				url = urls[1];
 				return null;
 			})) ||
-			(await this.fetch(url + 'documents', init).catch(() => {
+			(await this.fetch(`${url}documents`, init).catch(() => {
 				url = null;
 				return null;
 			}));
 
-		return url && res && res.key ? url + res.key : 'Failed to upload to hastebin';
+		return url && res && res.key ? `${url}${res.key as string}` : 'Failed to upload to hastebin';
 	}
 
-	missingPermissions(identifier: Message | GuildChannel, permissions: PermissionString[], member?: GuildMember | 'self') {
+	public missingPermissions(identifier: Message | GuildChannel, permissions: PermissionString[], member?: GuildMember | 'self') {
 		const author = identifier instanceof BaseMessage ? identifier.member! : null;
 		if (identifier instanceof BaseMessage) {
 			if (identifier.channel instanceof GuildChannel) identifier = identifier.channel;
 			else return;
 		}
-		const targetMember = member === 'self' ? identifier.guild.me! : member || author || identifier.guild.me!;
-		const allPermissions = identifier.permissionsFor(targetMember) || targetMember.permissions;
-		const missing = permissions.filter(p => !allPermissions?.has(p));
+		const targetMember = member === 'self' ? identifier.guild.me! : member ?? author ?? identifier.guild.me!;
+		const allPermissions = identifier.permissionsFor(targetMember) ?? targetMember.permissions;
+		const missing = permissions.filter(p => !allPermissions.has(p));
 		return missing.length ? missing : undefined;
 	}
 
-	numToMonth(num: number) {
+	public numToMonth(num: number) {
 		return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][num];
 	}
 
-	isImageUrl(str: string) {
-		return this.client.constants.regex.links.test(str) && str.match(/.(png|jpe?g|gif|web[pm])(?:\?.*)?$/i) !== null;
-	}
-	msToHuman(ms: number) {
-		const seconds = Math.round(ms / 1000),
-			minutes = Math.round(ms / (1000 * 60)),
-			hours = Math.round(ms / (1000 * 60 * 60)),
-			days = Math.round(ms / (1000 * 60 * 60 * 24));
-
-		if (seconds < 60) return seconds + ' Seconds';
-		else if (minutes < 60) return minutes + ' Minutes';
-		else if (hours < 24) return hours + ' Hours';
-		else return days + ' Days';
+	public isImageUrl(str: string) {
+		return this.client.constants.regex.links.test(str) && Boolean(/.(png|jpe?g|gif|web[pm])(?:\?.*)?$/i.exec(str));
 	}
 
-	isGuild(msg: Message | BaseMessage): msg is GuildMessage {
-		return !!msg.guild;
+	public msToHuman(ms: number) {
+		const seconds = Math.round(ms / 1000);
+		const minutes = Math.round(ms / (1000 * 60));
+		const hours = Math.round(ms / (1000 * 60 * 60));
+		const days = Math.round(ms / (1000 * 60 * 60 * 24));
+
+		if (seconds < 60) return `${seconds} Seconds`;
+		else if (minutes < 60) return `${minutes} Minutes`;
+		else if (hours < 24) return `${hours} Hours`;
+		return `${days}  Days`;
 	}
 
-	isMemberHigher(executor: GuildMember, target: GuildMember) {
+	public isGuild(msg: Message | BaseMessage): msg is GuildMessage {
+		return Boolean(msg.guild);
+	}
+
+	public isMemberHigher(executor: GuildMember, target: GuildMember) {
 		return (
 			(executor.id !== target.id && executor.guild.ownerID === executor.id) ||
 			(target.guild.ownerID !== target.id && executor.roles.highest.position > target.roles.highest.position)
 		);
 	}
 
-	timeUnits = {
+	private readonly timeUnits = {
 		s: 1000,
 		m: 1000 * 60,
 		h: 1000 * 60 * 60,
@@ -109,13 +110,13 @@ export class Util {
 		w: 1000 * 60 * 60 * 24 * 7
 	};
 
-	parseTimeString(str: string) {
+	public parseTimeString(str: string) {
 		const matches = str.match(/\d+[wdhms]/gi);
 		if (!matches || !matches.length) return null;
 
 		let duration = 0;
 
-		for (const match of matches) duration += parseInt(match.substring(0, match.length - 1)) * this.timeUnits[match.charAt(match.length - 1) as 's'];
+		for (const match of matches) duration += parseInt(match.substring(0, match.length - 1), 10) * this.timeUnits[match.charAt(match.length - 1) as 's'];
 
 		return {
 			matches,
@@ -123,16 +124,16 @@ export class Util {
 		};
 	}
 
-	async giveRole(msg: Message | null, member: GuildMember, role: Role, take = false) {
-		const success = member.roles[take ? 'remove' : 'add'](role).catch(() => false);
+	public async giveRole(msg: Message | null, member: GuildMember, role: Role, take = false) {
+		const success = await member.roles[take ? 'remove' : 'add'](role).catch(() => false);
 		if (!success) {
-			msg?.channel.send('Sorry, something went wrong!');
+			void msg?.channel.send('Sorry, something went wrong!');
 			return false;
 		}
 		return true;
 	}
 
-	async createInfraction(
+	public async createInfraction(
 		msg: GuildMessage,
 		logChannel: TextChannel,
 		role: Role,
@@ -145,11 +146,11 @@ export class Util {
 		const embed = this.client.newEmbed('INFO').addFields([
 			{
 				name: 'User',
-				value: `${member} - ${member.user.tag} (${member.id})}`
+				value: `${member.toString()} - ${member.user.tag} (${member.id})}`
 			},
 			{
 				name: 'Moderator',
-				value: `${moderator} - ${moderator.tag} (${moderator.id}})`
+				value: `${moderator.toString()} - ${moderator.tag} (${moderator.id}})`
 			},
 			{
 				name: 'Reason',
@@ -159,10 +160,15 @@ export class Util {
 		if (action === 'MUTE' || action === 'SPAM') {
 			if (!(await this.giveRole(msg, member, role))) return;
 			if (duration) {
-				this.client.database.infractions.create({ userID: member.id, guildID: msg.guild.id, infractionType: action, end: Date.now() + duration });
+				void this.client.database.infractions.create({
+					userID: member.id,
+					guildID: msg.guild.id,
+					infractionType: action,
+					end: Date.now() + duration
+				});
 				setTimeout(
 					() =>
-						this.createInfraction(
+						void this.createInfraction(
 							msg,
 							logChannel,
 							role,
@@ -176,7 +182,7 @@ export class Util {
 			}
 		} else {
 			if (!(await this.giveRole(msg, member, role, true))) return;
-			this.client.database.infractions.findOneAndDelete({ userID: member.id });
+			void this.client.database.infractions.findOneAndDelete({ userID: member.id });
 		}
 
 		switch (action) {
@@ -215,7 +221,7 @@ export class Util {
 		member.send(embed).catch(() => null);
 	}
 
-	async getUser(message: Message, args: string[], spot?: number) {
+	public async getUser(message: Message, args: string[], spot?: number) {
 		if (message.guild) {
 			const member = await this.getMember(message, args);
 			return member ? member.user : void 0;
@@ -223,28 +229,28 @@ export class Util {
 
 		const input = spot ? args[spot].toLowerCase() : args.join(' ').toLowerCase();
 
-		const user = message.mentions.users?.first() || (await message.client.users.fetch(input).catch(() => null));
+		const user = message.mentions.users.first() ?? (await message.client.users.fetch(input).catch(() => null));
 		if (user) return user;
 
 		const userSearch = message.client.users.cache.filter(user => user.tag.toLowerCase().includes(input));
 
 		if (userSearch.size === 0) {
-			message.channel.send('You did not provide a valid user. Please run the command again and provide one.');
+			void message.channel.send('You did not provide a valid user. Please run the command again and provide one.');
 		} else if (userSearch.size === 1) {
 			return userSearch.first();
 		} else if (userSearch.size < 11) {
-			return await this.chooseOne(message, userSearch);
+			return this.chooseOne(message, userSearch);
 		} else {
-			message.channel.send(`I found multiple users matching your input: ${userSearch.size}`);
+			void message.channel.send(`I found multiple users matching your input: ${userSearch.size}`);
 		}
 	}
 
-	async getMember(message: Message, args: string[], spot?: number) {
+	public async getMember(message: Message, args: string[], spot?: number) {
 		if (!message.guild) throw new SyntaxError('getMember was used in a DmChannel.');
 
 		const input = spot || spot === 0 ? args[spot].toLowerCase() : args.join(' ').toLowerCase();
 
-		const member = message.mentions.members?.first() || (await message.guild.members.fetch(input).catch(() => null));
+		const member = message.mentions.members?.first() ?? (await message.guild.members.fetch(input).catch(() => null));
 		if (member) return member;
 
 		const memberSearch = message.guild.members.cache.filter(
@@ -252,38 +258,40 @@ export class Util {
 		);
 
 		if (memberSearch.size === 0) {
-			message.channel.send('You did not provide a valid member. Please run the command again and provide one.');
+			void message.channel.send('You did not provide a valid member. Please run the command again and provide one.');
 		} else if (memberSearch.size === 1) {
 			return memberSearch.first();
 		} else if (memberSearch.size < 11) {
-			return await this.chooseOne(message, memberSearch);
+			return this.chooseOne(message, memberSearch);
 		} else {
-			message.channel.send(`I found multiple users matching your input: ${memberSearch.size}`);
+			void message.channel.send(`I found multiple users matching your input: ${memberSearch.size}`);
 		}
 	}
 
-	async getRole(message: Message, args: string[], spot?: number) {
+	public async getRole(message: Message, args: string[], spot?: number) {
 		if (!message.guild) throw new SyntaxError('getRole was used in a DmChannel.');
 
 		const input = spot ? args[spot].toLowerCase() : args.join(' ').toLowerCase();
 
-		const role = message.mentions.roles?.first() || message.guild.roles.cache.get(input);
+		const role = message.mentions.roles.first() ?? message.guild.roles.cache.get(input);
 		if (role) return role;
 
 		const roleSearch = message.guild.roles.cache.filter(role => role.name.toLowerCase().includes(input));
 
 		if (roleSearch.size === 0) {
-			message.channel.send('You did not provide a valid role. Please run the command again and provide one.');
+			void message.channel.send('You did not provide a valid role. Please run the command again and provide one.');
 		} else if (roleSearch.size === 1) {
 			return roleSearch.first();
 		} else if (roleSearch.size < 11) {
-			return await this.chooseOne(message, roleSearch);
+			return this.chooseOne(message, roleSearch);
 		} else {
-			message.channel.send(`I found multiple roles matching your input: ${roleSearch.size}`);
+			void message.channel.send(`I found multiple roles matching your input: ${roleSearch.size}`);
 		}
 	}
 
-	getName = (thing: Role | User | GuildMember) => (thing instanceof Role ? thing.name : thing instanceof User ? thing.tag : thing.user.tag);
+	private getName(thing: Role | User | GuildMember) {
+		return thing instanceof Role ? thing.name : thing instanceof User ? thing.tag : thing.user.tag;
+	}
 
 	private chooseOne(message: Message, choices: Collection<string, Role>): Promise<Role | void>;
 	private chooseOne(message: Message, choices: Collection<string, User>): Promise<User | void>;
@@ -295,22 +303,22 @@ export class Util {
 
 		const prompt = new this.client.prompt(message);
 		const choice = await prompt.message(
-			'I found multiple targets. Please select one from below by typing only the number!' +
-				options
+			`I found multiple targets. Please select one from below by typing only the number!\n
+				${options
 					.map(o => `${o.index} | ${this.getName(o.choice)}`)
 					.join('\n')
-					.toCodeblock('css'),
+					.toCodeblock('css')}`,
 			options.map(o => o.index.toString()),
 			'That was not a valid option! Please try again.'
 		);
 		prompt.delete();
 
 		if (!choice) {
-			message.channel.send('I found multiple matches but the prompt to select one ran out. Please run the command again!');
+			void message.channel.send('I found multiple matches but the prompt to select one ran out. Please run the command again!');
 			return choice;
 		}
 
-		const result = options.find(o => o.index === parseInt(choice));
+		const result = options.find(o => o.index === parseInt(choice, 10));
 		if (!result) return;
 
 		return result.choice;

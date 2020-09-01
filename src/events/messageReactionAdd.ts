@@ -1,8 +1,8 @@
 import { Client } from '../Client';
 import { MessageReaction, User } from 'discord.js';
 
-export default async (client: Client, reaction: MessageReaction, user: User) => {
-	if (reaction.partial) reaction = (await reaction.fetch().catch(() => null)) as MessageReaction;
+export default async (client: Client, potentiallyUncachedReaction: MessageReaction, user: User) => {
+	const reaction = potentiallyUncachedReaction.partial ? await potentiallyUncachedReaction.fetch().catch(() => null) : potentiallyUncachedReaction;
 	if (!reaction) return;
 
 	client.pages.browse(reaction, user);
@@ -12,7 +12,7 @@ export default async (client: Client, reaction: MessageReaction, user: User) => 
 	const reactionRoleEntry = await client.database.reactionRoles.findOne({ messageID: reaction.message.id });
 	if (!reactionRoleEntry) return;
 
-	const emojiID = reaction.emoji.id || reaction.emoji.name;
+	const emojiID = reaction.emoji.id ?? reaction.emoji.name;
 
 	const reactionRole = reactionRoleEntry.reactionRoles.find(r => r.emojiID === emojiID);
 	if (!reactionRole) return;

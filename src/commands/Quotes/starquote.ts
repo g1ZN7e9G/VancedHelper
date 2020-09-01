@@ -11,17 +11,17 @@ const callback = async (msg: Message, args: string[]) => {
 			break;
 	}
 
-	const id = parseInt(arg);
+	const id = parseInt(arg, 10);
 	if (!id) return msg.channel.send(`That ain't a number chief ${msg.client.bruh}`);
 
-	const quote = (await msg.client.database.quotes.findOne({ case: id })) || (await msg.client.database.quotes.findOne({ messageID: arg }));
+	const quote = (await msg.client.database.quotes.findOne({ case: id })) ?? (await msg.client.database.quotes.findOne({ messageID: arg }));
 
 	if (!quote) return msg.channel.send(`That isn't a valid quote ${msg.client.bruh} Try adding it`);
 
-	if (quote.stars.indexOf(msg.author.id) >= 0) return msg.channel.send(`Bruh, you already starred this ${msg.client.bruh}`);
+	if (quote.stars.includes(msg.author.id)) return msg.channel.send(`Bruh, you already starred this ${msg.client.bruh}`);
 
 	quote.stars.push(msg.author.id);
-	quote.save();
+	void quote.save();
 
 	return msg.channel.send(`Successfully starred the quote #${quote.case}`);
 };

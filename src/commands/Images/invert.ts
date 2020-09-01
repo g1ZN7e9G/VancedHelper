@@ -2,12 +2,12 @@ import { Command, Message } from '../../Client';
 import Canvas from 'canvas';
 
 const callback = async (msg: Message, args: string[]) => {
-	let url = msg.attachments.first()?.url || (args.length && msg.client.helpers.isImageUrl(args.join(' ')) ? args.join(' ') : null);
+	let url = msg.attachments.first()?.url ?? (args.length && msg.client.helpers.isImageUrl(args.join(' ')) ? args.join(' ') : null);
 	const user = !url && args.length && args[0].toLowerCase() !== 'server' ? await msg.client.helpers.getUser(msg, args) : msg.author;
 	if (!user) return;
 
 	url =
-		url ||
+		url ??
 		(args[0]?.toLowerCase() === 'server' && msg.guild
 			? msg.guild.iconURL({ format: 'png', size: 512 })
 			: user.displayAvatarURL({ format: 'png', size: 512 }));

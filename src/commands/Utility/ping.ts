@@ -1,8 +1,8 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	const sentMsg = await msg.channel.send('Pinging...');
-	sentMsg.edit(`Pong! Took \`${sentMsg.createdTimestamp - (msg.editedTimestamp || msg.createdTimestamp)}ms\`.`).catch(() => null);
+	sentMsg.edit(`Pong! Took \`${sentMsg.createdTimestamp - (msg.editedTimestamp ?? msg.createdTimestamp)}ms\`.`).catch(() => null);
 	return sentMsg;
 };
 

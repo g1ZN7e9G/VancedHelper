@@ -3,12 +3,12 @@ import { Command, Message } from '../../Client';
 const callback = async (msg: Message, args: string[]) => {
 	const [messageID, emoji, ...roleResolvable] = args;
 
-	if (!messageID.match(msg.client.constants.regex.snowflake)) return msg.channel.send(`${messageID} is not a valid message ID!`);
+	if (!msg.client.constants.regex.snowflake.exec(messageID)) return msg.channel.send(`${messageID} is not a valid message ID!`);
 
 	let emojiID: string | undefined;
-	if (emoji.match(msg.client.constants.regex.emotes)) {
-		emojiID = emoji.match(/:(\d+)>/)?.[1];
-	} else if (emoji.match(msg.client.constants.regex.emotes)) {
+	if (msg.client.constants.regex.emotes.test(emoji)) {
+		emojiID = /:(\d+)>/.exec(emoji)?.[1];
+	} else if (msg.client.constants.regex.emojis.test(emoji)) {
 		emojiID = msg.client.emojis.cache.get(emoji)?.name;
 	} else {
 		return msg.channel.send(`${emoji} is not a valid emoji!`);
@@ -16,7 +16,7 @@ const callback = async (msg: Message, args: string[]) => {
 
 	if (!emojiID) return msg.channel.send(`${emoji} is not a valid emoji!`);
 
-	const channel = msg.mentions.channels.first() || msg.channel;
+	const channel = msg.mentions.channels.first() ?? msg.channel;
 	if (channel.id !== msg.channel.id) roleResolvable.pop();
 
 	const message = await channel.messages.fetch(messageID).catch(() => null);
@@ -26,13 +26,13 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!role) return;
 
 	const entry =
-		(await msg.client.database.reactionRoles.findOne({ messageID: message.id })) ||
+		(await msg.client.database.reactionRoles.findOne({ messageID: message.id })) ??
 		(await msg.client.database.reactionRoles.create({ messageID: message.id, channelID: channel.id, reactionRoles: [] }));
 
 	if (entry.reactionRoles.some(r => r.emojiID === emojiID)) return msg.channel.send(`That emoji is already used for another reaction role!`);
 
 	entry.reactionRoles.push({ emojiID: emojiID, roleID: role.id });
-	entry.save();
+	void entry.save();
 
 	if (msg.client.emojis.cache.has(emojiID)) message.react(emojiID).catch(() => null);
 

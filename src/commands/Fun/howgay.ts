@@ -2,7 +2,7 @@ import { Command, Message } from '../../Client';
 
 const callback = async (msg: Message, args: string[]) => {
 	const user =
-		msg.mentions.users.first()?.username || (await msg.client.users.fetch(args[0]).catch(() => null))?.username || args.join(' ') || msg.author.username;
+		msg.mentions.users.first()?.username ?? (await msg.client.users.fetch(args[0]).catch(() => null))?.username ?? (args.join(' ') || msg.author.username);
 
 	const percentage = Math.floor(Math.random() * 101);
 	const barAmount = Math.round(percentage / 10);

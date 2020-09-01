@@ -1,17 +1,17 @@
 import { Client, Message } from '..';
-import { TextChannel, DMChannel, NewsChannel, User, MessageEmbed, GuildEmoji, ReactionEmoji, MessageReaction } from 'discord.js';
+import { TextChannel, DMChannel, NewsChannel, User, MessageEmbed, GuildEmoji, ReactionEmoji } from 'discord.js';
 
 export class PromptManager {
-	private static prompts: Set<string> = new Set();
-	readonly client: Client;
-	readonly channel: TextChannel | NewsChannel | DMChannel;
-	readonly user: User;
-	trigger: Message;
-	msg?: Message;
-	embed: MessageEmbed;
+	private static readonly prompts: Set<string> = new Set();
+	private readonly client: Client;
+	private readonly channel: TextChannel | NewsChannel | DMChannel;
+	private readonly user: User;
+	private readonly trigger: Message;
+	private msg?: Message;
+	private readonly embed: MessageEmbed;
 
-	constructor(msg: Message) {
-		this.client = msg.client as Client;
+	public constructor(msg: Message) {
+		this.client = msg.client;
 		this.trigger = msg;
 		this.channel = msg.channel;
 		this.user = msg.author;
@@ -23,16 +23,18 @@ export class PromptManager {
 
 	private async sendQuestion(question: string) {
 		if (!this.msg) this.msg = (await this.channel.send(this.embed.setDescription(question))) as Message;
-		else this.msg.edit(this.embed.setDescription(question)).catch(() => null);
+
+		this.msg.edit(this.embed.setDescription(question)).catch(() => null);
 	}
 
 	/**
 	 * Delete the prompt
 	 */
-	delete() {
+	public delete() {
 		PromptManager.prompts.delete(this.user.id);
-		if (this.msg?.deletable) this.msg?.delete();
+		if (this.msg?.deletable) void this.msg.delete();
 	}
+
 	/**
 	 * Prompts for user input
 	 * @param question The Question to send.
@@ -41,7 +43,7 @@ export class PromptManager {
 	 * @param timeout The prompt timeout (in min)
 	 * @returns The user choice (string)
 	 */
-	async message(
+	public async message(
 		question: string,
 		options: string[] | RegExp,
 		error?: string,
@@ -49,11 +51,12 @@ export class PromptManager {
 		initial = true
 	): Promise<string | void> {
 		if (PromptManager.prompts.has(this.user.id)) {
-			this.trigger.channel.send('You already have another prompt open!');
+			void this.trigger.channel.send('You already have another prompt open!');
 			return;
-		} else PromptManager.prompts.add(this.user.id);
+		}
+		PromptManager.prompts.add(this.user.id);
 
-		if (initial) this.sendQuestion(question);
+		if (initial) void this.sendQuestion(question);
 
 		const input = (await this.channel.awaitMessages((msg: Message) => msg.author.id === this.user.id, { max: 1, time: 1000 * 60 * timeout })).first();
 
@@ -61,21 +64,23 @@ export class PromptManager {
 
 		if (!input) {
 			this.delete();
-			this.trigger.channel.send('The prompt timed out!');
+			void this.trigger.channel.send('The prompt timed out!');
 			return;
 		}
 
 		if (input.deletable) input.delete({ timeout: 1000 }).catch(() => null);
 
 		if ('quit'.startsWith(input.content.toLowerCase())) {
-			this.trigger.channel.send('Successfully cancelled the prompt!');
+			void this.trigger.channel.send('Successfully cancelled the prompt!');
 			return;
 		}
 
 		if (options instanceof RegExp && options.test(input.content)) return input.content;
-		else if (options instanceof Array && (!options.length || options.indexOf(input.content) !== -1)) return input.content;
+		else if (options instanceof Array && (!options.length || options.includes(input.content))) return input.content;
 
-		this.sendQuestion((error?.substitute({ VALUE: input.content }) || `\`${input.content}\` is not a valid choice! Please try again.`) + `\n\n${question}`);
+		void this.sendQuestion(
+			`${error?.substitute({ VALUE: input.content }) ?? `\`${input.content}\` is not a valid choice! Please try again.`}\n\n${question}`
+		);
 		return this.message(question, options, error, timeout, false);
 	}
 
@@ -87,7 +92,7 @@ export class PromptManager {
 	 * @param timeout The prompt timeout (in min)
 	 * @returns The user choice (emoji object)
 	 */
-	async reaction(
+	public async reaction(
 		question: string,
 		options: string[] | RegExp,
 		react?: boolean,
@@ -96,34 +101,36 @@ export class PromptManager {
 		initial = true
 	): Promise<GuildEmoji | ReactionEmoji | void> {
 		if (PromptManager.prompts.has(this.user.id)) {
-			this.trigger.channel.send('You already have another prompt open!');
+			void this.trigger.channel.send('You already have another prompt open!');
 			return;
-		} else PromptManager.prompts.add(this.user.id);
+		}
+		PromptManager.prompts.add(this.user.id);
 
 		if (initial) await this.sendQuestion(question);
 		if (react && options instanceof Array) await Promise.all(options.map(r => this.msg?.react(r)));
 
-		const input = (await this.msg!.awaitReactions((_r: MessageReaction, u: User) => u.id === this.user.id, { max: 1, time: 1000 * 60 * timeout })).first();
+		const input = (await this.msg!.awaitReactions((_, u: User) => u.id === this.user.id, { max: 1, time: 1000 * 60 * timeout })).first();
 
 		PromptManager.prompts.delete(this.user.id);
 
 		if (!input) {
 			this.delete();
-			this.trigger.channel.send('The prompt timed out!');
+			void this.trigger.channel.send('The prompt timed out!');
 			return;
 		}
 
 		if (options instanceof RegExp && options.test(input.emoji.name)) return input.emoji;
-		else if (options instanceof Array && (!options.length || options.indexOf(input.emoji.id || input.emoji.name) !== -1)) return input.emoji;
+		else if (options instanceof Array && (!options.length || options.includes(input.emoji.id ?? input.emoji.name))) return input.emoji;
 
-		this.sendQuestion((error || `That is not a valid choice! Please try again.`) + `\n\n${question}`);
+		void this.sendQuestion(`${error ?? `That is not a valid choice! Please try again.`}\n\n${question}`);
 		return this.reaction(question, options, react, error, timeout, false);
 	}
 
-	async chooseOne<T>(question: string, choices: Array<T>): Promise<T | void> {
+	public async chooseOne<T>(question: string, choices: Array<T>): Promise<T | void> {
 		const choice = await this.message(
 			question +
 				choices
+					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					.map((c, i) => `${i + 1} | ${c}`)
 					.join('\n')
 					.toCodeblock('css'),
@@ -133,7 +140,7 @@ export class PromptManager {
 
 		if (!choice) return;
 
-		const result = choices[parseInt(choice) - 1];
+		const result = choices[parseInt(choice, 10) - 1];
 		return result;
 	}
 }

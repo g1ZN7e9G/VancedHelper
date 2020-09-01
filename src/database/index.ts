@@ -6,7 +6,7 @@ import reactionRoles from './Schemas/ReactionRoles';
 import guildSettings from './Schemas/GuildSettings';
 import infractions from './Schemas/Infraction';
 
-mongoose.connect(config.mongoString, {
+void mongoose.connect(config.mongoString, {
 	useCreateIndex: true,
 	useNewUrlParser: true,
 	useFindAndModify: false,
