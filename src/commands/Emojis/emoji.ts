@@ -9,7 +9,9 @@ const callback = async (msg: Message, _args: string[]) => {
 
 	const urls = emojis.map(e => `<https://cdn.discordapp.com/emojis/${e.match(regex)?.[0]}.${e.startsWith('<a') ? 'gif' : 'png'}>`);
 
-	return msg.channel.send(urls.join('\n'));
+	const result = urls.length > 1 ? urls.join('\n') : urls[0].replace(/[<>]/g, '');
+
+	return msg.channel.send(result.length > 2000 ? `That's too many emojis lmao ${msg.client.bruh}` : result);
 };
 
 export const command: Command = {
