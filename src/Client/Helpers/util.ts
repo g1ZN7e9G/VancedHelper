@@ -160,25 +160,29 @@ export class Util {
 		if (action === 'MUTE' || action === 'SPAM') {
 			if (!(await this.giveRole(msg, member, role))) return;
 			if (duration) {
-				void this.client.database.infractions.create({
+				const entry = await this.client.database.infractions.create({
 					userID: member.id,
 					guildID: msg.guild.id,
 					infractionType: action,
 					end: Date.now() + duration
 				});
-				setTimeout(
-					() =>
-						void this.createInfraction(
-							msg,
-							logChannel,
-							role,
-							action === 'MUTE' ? 'UNMUTE' : 'UNSPAM',
-							member,
-							this.client.user!,
-							'Punishment duration over!'
-						),
-					duration
-				);
+				setTimeout(() => {
+					void this.client.database.infractions
+						.findById(entry.id)
+						.then(e =>
+							e
+								? void this.createInfraction(
+										msg,
+										logChannel,
+										role,
+										action === 'MUTE' ? 'UNMUTE' : 'UNSPAM',
+										member,
+										this.client.user!,
+										'Punishment duration over!'
+								  )
+								: void 0
+						);
+				}, duration);
 			}
 		} else {
 			if (!(await this.giveRole(msg, member, role, true))) return;

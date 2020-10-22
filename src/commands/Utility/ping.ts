@@ -2,7 +2,8 @@ import { Command, Message } from '../../Client';
 
 const callback = async (msg: Message) => {
 	const sentMsg = await msg.channel.send('Pinging...');
-	sentMsg.edit(`Pong! Took \`${sentMsg.createdTimestamp - (msg.editedTimestamp ?? msg.createdTimestamp)}ms\`.`).catch(() => null);
+	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+	sentMsg.edit(`Pong! Took \`${sentMsg.createdTimestamp - (msg.editedTimestamp || msg.createdTimestamp)}ms\`.`).catch(() => null);
 	return sentMsg;
 };
 

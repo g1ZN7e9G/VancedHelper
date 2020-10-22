@@ -27,7 +27,7 @@ export default async (client: Client) => {
 
 	const infractions = await client.database.infractions.find();
 	for (const infraction of infractions) {
-		const end = Date.now() - infraction.end;
+		const end = infraction.end - Date.now();
 		if (end < 0) {
 			void infraction.remove();
 			continue;
