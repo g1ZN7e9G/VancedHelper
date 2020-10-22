@@ -1,23 +1,16 @@
 import { Command, Message } from '../../Client';
+import { Song } from '../../Client/Interfaces/Song';
 
 const callback = async (msg: Message, args: string[]) => {
-	if (!msg.member?.voice?.channel) return msg.channel.send(`You are not in a voice channel ${msg.client.bruh}`);
+	if (!msg.member?.voice.channel) return msg.channel.send(`You are not in a voice channel ${msg.client.bruh}`);
 	if (!msg.client.music.playing) return msg.channel.send(`I'm not even playing anything ${msg.client.bruh}`);
 	if (msg.member.voice.channel.id !== msg.client.music.voiceConnection?.channel.id)
 		return msg.channel.send(`You're not even in this vc smh ${msg.client.bruh}`);
 
-	if (!args.length) {
-		const res = await msg.client.music.skip(msg.member.hasPermission('MANAGE_MESSAGES') || msg.member.voice.channel?.members.size === 2);
-		if (res === false) return msg.channel.send(`The queue is empty ${msg.client.bruh}`);
-		if (typeof res === 'string') return msg.channel.send(`Skip request sent! ${res}`);
-
-		const nowPlaying = msg.client.music.nowPlaying;
-		if (!nowPlaying) return msg.channel.send(`Successfully skipped!`);
-		return msg.channel.send(`Successfully skipped! Now playing \`${nowPlaying.title}\``);
-	} else {
-		const spot = parseInt(args[0]);
+	if (args.length) {
+		const spot = parseInt(args[0], 10);
 		if (!spot) return msg.channel.send(`That is not a valid number.`);
-		const song = msg.client.music.queue[spot - 1];
+		const song = msg.client.music.queue[spot - 1] as null | Song;
 		if (!song) return msg.channel.send(`That's not a valid track!`);
 		if (spot - 1 === msg.client.music.currentSong)
 			return msg.channel.send(`This song is currently playing. Please use this command without arguments to skip it.`);
@@ -28,6 +21,14 @@ const callback = async (msg: Message, args: string[]) => {
 		msg.client.music.queue.splice(spot - 1, 1);
 		return msg.channel.send(`Successfully removed \`${song.title}\``);
 	}
+
+	const res = await msg.client.music.skip(msg.author.id, msg.member.hasPermission('MANAGE_MESSAGES') || msg.member.voice.channel.members.size === 2);
+	if (res === false) return msg.channel.send(`The queue is empty ${msg.client.bruh}`);
+	if (typeof res === 'string') return msg.channel.send(`Skip request sent! ${res}`);
+
+	const nowPlaying = msg.client.music.nowPlaying;
+	if (!nowPlaying) return msg.channel.send(`Successfully skipped!`);
+	return msg.channel.send(`Successfully skipped! Now playing \`${nowPlaying.title}\``);
 };
 
 export const command: Command = {

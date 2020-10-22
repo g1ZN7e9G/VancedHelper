@@ -2,7 +2,7 @@ import { Command, Message } from '../../Client';
 import { stripIndents } from 'common-tags';
 import { config } from '../../config/index';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	const output = msg.client
 		.newEmbed('INFO')
 		.setThumbnail('https://i.imgur.com/mFkZnUB.png')

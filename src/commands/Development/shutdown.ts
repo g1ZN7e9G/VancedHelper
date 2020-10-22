@@ -1,6 +1,6 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	await msg.channel.send(`Okay, shutting down!`);
 
 	msg.client.destroy();

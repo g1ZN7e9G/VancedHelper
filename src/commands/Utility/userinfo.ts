@@ -9,36 +9,36 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!user) return;
 	const member = msg.guild?.member(user);
 
-	const activity = user.presence.activities.map(s => `${emojis[s.type]} ${s.name === 'Custom Status' ? s.state : s.name}`).join('\n');
+	const activity = user.presence.activities.map(s => `${emojis[s.type]} ${s.name === 'Custom Status' ? s.state! : s.name}`).join('\n');
 
 	const description = stripIndents`
 		${user.bot ? emojis.bot : emojis.user} ${user.username}
 		${emojis.hash} ${user.id}
 		${emojis.cake} ${user.createdAt.formatDate()}
 	`;
-	const memberDescription = !member
-		? ''
-		: stripIndents`
+	const memberDescription = member
+		? stripIndents`
 		${emojis.diamond} ${member.roles.highest}
 		${emojis.colour} ${
 				member.roles.cache
 					.filter(r => r.hexColor !== '#000000')
 					.sort((x, y) => x.position - y.position)
-					.last()?.hexColor || 'No Colour!'
+					.last()?.hexColor ?? 'No Colour!'
 		  }
 		${emojis.nitro} ${member.premiumSince ? `Since ${member.premiumSince.formatDate()}` : emojis.fail}
-	`;
+	`
+		: '';
 
 	const embed = client
 		.newEmbed('INFO')
 		.setAuthor(
-			`${member?.displayName || user.username}`,
+			`${member?.displayName ?? user.username}`,
 			user.presence.activities.some(p => p.type === 'STREAMING')
 				? client.constants.statusIcons.streaming
 				: client.constants.statusIcons[user.presence.status]
 		)
 		.setThumbnail(user.displayAvatarURL({ dynamic: true, size: 1024 }))
-		.setURL('https://discordapp.com/users/' + msg.author.id)
+		.setURL(`https://discordapp.com/users/${msg.author.id}`)
 		.setDescription(description + (activity ? `\n${activity}` : '') + (memberDescription ? `\n${memberDescription}` : ''));
 
 	if (member)

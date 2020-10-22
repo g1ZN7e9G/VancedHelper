@@ -10,5 +10,5 @@ export default async (client: Client, oldMsg: Message, newMsg: Message) => {
 	if (!quote) return;
 
 	quote.content = newMsg.content;
-	quote.save();
+	void quote.save();
 };

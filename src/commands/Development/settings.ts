@@ -6,9 +6,9 @@ const callback = async (msg: Message, args: string[]) => {
 	const [setting, target] = args.map(a => a.toLowerCase());
 
 	const dbEntry =
-		(await msg.client.database.guildSettings.findOne({ guild: msg.guild.id })) || (await msg.client.database.guildSettings.create({ guild: msg.guild.id }));
+		(await msg.client.database.guildSettings.findOne({ guild: msg.guild.id })) ?? (await msg.client.database.guildSettings.create({ guild: msg.guild.id }));
 
-	const channel = msg.mentions.channels.first()?.id || msg.guild.channels.cache.get(target.replace(/[^\d]/, ''))?.id;
+	const channel = msg.mentions.channels.first()?.id ?? msg.guild.channels.cache.get(target.replace(/[^\d]/, ''))?.id;
 	let role;
 	let m;
 	switch (setting) {
@@ -45,9 +45,9 @@ const callback = async (msg: Message, args: string[]) => {
 		default:
 			return msg.channel.send(`${setting} is not a valid setting.`);
 	}
-	dbEntry.save();
+	void dbEntry.save();
 
-	return await m;
+	return m;
 };
 
 export const command: Command = {

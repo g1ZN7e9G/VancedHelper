@@ -1,7 +1,7 @@
 import { Command, Message } from '../../Client';
 import { stripIndents } from 'common-tags';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	return msg.channel.send(
 		stripIndents`
 			⏱️ **__Uptime:__**

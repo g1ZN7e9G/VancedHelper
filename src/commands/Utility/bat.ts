@@ -3,12 +3,13 @@ import emojis from '../../constants/emojis';
 import { stripIndents } from 'common-tags';
 
 const stonkify = (p: string) => {
-	if (parseInt(p) >= 25) return `${emojis.relax} ${p}%`;
-	else if (parseInt(p) >= 5) return `${emojis.merchant} ${p}%`;
-	else if (Math.sign(parseInt(p)) === 1) return `${emojis.stonks} ${p}%`;
-	else if (parseInt(p) <= -25) return `${emojis.sad} ${p}%`;
-	else if (parseInt(p) <= -5) return `${emojis.feels} ${p}%`;
-	else return `${emojis.stinks} ${p}%`;
+	const i = parseInt(p, 10);
+	if (i >= 25) return `${emojis.relax} ${p}%`;
+	else if (i >= 5) return `${emojis.merchant} ${p}%`;
+	else if (Math.sign(i) === 1) return `${emojis.stonks} ${p}%`;
+	else if (i <= -25) return `${emojis.sad} ${p}%`;
+	else if (i <= -5) return `${emojis.feels} ${p}%`;
+	return `${emojis.stinks} ${p}%`;
 };
 
 const callback = async (msg: Message, args: string[]) => {
@@ -20,16 +21,16 @@ const callback = async (msg: Message, args: string[]) => {
 		}
 	});
 
-	if (args.length && !!parseFloat(args[0])) return msg.channel.send((parseFloat(args[0]) * parseFloat(data.price)).toFixed(2) + ' EUR');
+	if (args.length && Boolean(parseFloat(args[0]))) return msg.channel.send(`${(parseFloat(args[0]) * parseFloat(data.price)).toFixed(2)} EUR`);
 
 	const output = msg.client
 		.newEmbed('INFO')
-		.setTitle(`${data.name} (${data.symbol})`)
+		.setTitle(`${data.name as string} (${data.symbol as string})`)
 		.setFooter('Powered by coinlib.io')
 		.addFields([
 			{
 				name: 'EUR',
-				value: parseFloat(data.price).toFixed(2) + '€',
+				value: `${parseFloat(data.price).toFixed(5)}€`,
 				inline: true
 			},
 			{

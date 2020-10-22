@@ -1,6 +1,6 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	return msg.channel.send(`<https://github.com/YTVanced/VancedHelper>`);
 };
 

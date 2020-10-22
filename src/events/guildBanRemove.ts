@@ -17,20 +17,20 @@ export default async (client: Client, guild: Guild, user: User) => {
 		.addFields([
 			{
 				name: 'User',
-				value: `Mention: ${user}\nTag: ${user.tag}\nID: ${user.id}}`
+				value: `Mention: ${user.toString()}\nTag: ${user.tag}\nID: ${user.id}}`
 			},
 			{
 				name: 'Moderator',
-				value: log ? `Mention: ${log.executor}\nTag: ${log.executor.tag}\nID: ${log.executor.id}}` : 'No audit log entry found.'
+				value: log ? `Mention: ${log.executor.toString()}\nTag: ${log.executor.tag}\nID: ${log.executor.id}}` : 'No audit log entry found.'
 			},
 			{
 				name: 'Reason',
-				value: log ? log.reason || 'No reason provided.' : 'No audit log entry found.'
+				value: log ? log.reason ?? 'No reason provided.' : 'No audit log entry found.'
 			}
 		]);
 
 	const channel = guild.channels.cache.get(settings.modLogChannel);
 	if (!channel || !(channel instanceof TextChannel)) throw new Error(`Modlog channel <#${settings.modLogChannel}> unreachable.`);
 
-	channel.send(embed);
+	void channel.send(embed);
 };
