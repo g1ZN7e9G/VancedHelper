@@ -5,24 +5,25 @@ import { Song } from '../Interfaces';
 import { stripIndents } from 'common-tags';
 
 export class Music {
-	private client: Client;
-	queue: Song[] = [];
-	streamDispatcher?: StreamDispatcher = undefined;
-	voiceConnection?: VoiceConnection = undefined;
-	textChannel?: TextChannel = undefined;
-	leaveTimeout?: ReturnType<typeof setTimeout> = undefined;
-	paused = false;
-	currentSong = 0;
-	skips = 0;
-	prev = 0;
+	private readonly client: Client;
+	public queue: Song[] = [];
+	public streamDispatcher?: StreamDispatcher = undefined;
+	public voiceConnection?: VoiceConnection = undefined;
+	public textChannel?: TextChannel = undefined;
+	public leaveTimeout?: ReturnType<typeof setTimeout> = undefined;
+	public paused = false;
+	public currentSong = 0;
+	public skips: Set<string> = new Set();
+	public prev = 0;
 
-	constructor(client: Client) {
+	public constructor(client: Client) {
 		this.client = client;
 	}
 
 	private async play(song: Song, auto = false) {
 		try {
 			this.streamDispatcher = this.voiceConnection!.play(await ytdl(song.url), { type: 'opus' })
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises
 				.on(`finish`, async () => {
 					if (!this.paused) {
 						const res = await this.next(true);
@@ -32,36 +33,36 @@ export class Music {
 						}
 					}
 				})
-				.on('error', this.client.handleError);
+				.on('error', err => void this.client.handleError(err));
 		} catch {
-			this.textChannel?.send(`Something went wrong while playing ${song.title}.`);
+			void this.textChannel?.send(`Something went wrong while playing ${song.title}.`);
 			this.queue.splice(this.queue.indexOf(song), 1);
-			this.next(true);
+			void this.next(true);
 			return false;
 		}
 
-		if (auto) this.textChannel?.send(`Now playing \`${song.title}\``);
+		if (auto) void this.textChannel?.send(`Now playing \`${song.title}\``);
 
 		return true;
 	}
 
-	get playing() {
-		return !!this.voiceConnection && !!this.queue.length;
+	public get playing() {
+		return Boolean(this.voiceConnection) && Boolean(this.queue.length);
 	}
 
-	get nowPlaying() {
+	public get nowPlaying() {
 		if (!this.playing) return false;
 		return this.queue[this.currentSong];
 	}
 
-	secondsToTime(seconds: number | string) {
+	public secondsToTime(seconds: number | string) {
 		const date = new Date(0);
-		seconds = typeof seconds === 'number' ? seconds : parseInt(seconds);
+		seconds = typeof seconds === 'number' ? seconds : parseInt(seconds, 10);
 		date.setSeconds(seconds);
 		return seconds > 3600 ? date.toISOString().substr(11, 8) : date.toISOString().substr(14, 5);
 	}
 
-	songEmbed(song: Song) {
+	public songEmbed(song: Song) {
 		return this.client
 			.newEmbed(`INFO`)
 			.setImage(song.thumbnail)
@@ -72,20 +73,20 @@ export class Music {
 				stripIndents`
 					Duration: \`${this.secondsToTime(song.length)}\`
 					Playing in: \`${this.secondsToTime(
-						this.queue.slice(this.currentSong, this.queue.indexOf(song)).reduce((x, y) => x + parseInt(y.length), 0) -
-							(this.streamDispatcher?.streamTime || 0) / 1000
+						this.queue.slice(this.currentSong, this.queue.indexOf(song)).reduce((x, y) => x + parseInt(y.length, 10), 0) -
+							(this.streamDispatcher?.streamTime ?? 0) / 1000
 					)}\`
 					Spot in queue: ${this.queue.indexOf(song) + 1}
 					Added by: ${song.addedBy.name}`
 			);
 	}
 
-	async start(msg: Message) {
+	public async start(msg: Message) {
 		if (this.streamDispatcher) return 1;
-		if (!msg.member?.voice?.channel) return 2;
+		if (!msg.member?.voice.channel) return 2;
 		if (!this.queue.length) return 3;
 
-		const currentSong = this.queue[this.currentSong];
+		const currentSong = this.queue[this.currentSong] as Song | undefined;
 		if (!currentSong) return 4;
 
 		this.textChannel = msg.channel as TextChannel;
@@ -94,9 +95,9 @@ export class Music {
 		return this.play(currentSong);
 	}
 
-	async add(query: string, msg: Message) {
+	public async add(query: string, msg: Message) {
 		const url =
-			query.match(/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/)?.[0] ||
+			/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/.exec(query)?.[0] ??
 			(await this.client.helpers
 				.fetch(
 					`https://www.googleapis.com/youtube/v3/search?part=snippet&safeSearch=none&type=video&key=${
@@ -118,9 +119,9 @@ export class Music {
 			},
 			url: res.video_url,
 			length: res.length_seconds,
-			thumbnail: res.player_response.videoDetails.thumbnail.thumbnails.last()?.url,
+			thumbnail: res.player_response.videoDetails.thumbnail.thumbnails.last().url,
 			addedBy: {
-				name: msg.member?.displayName || msg.author.username,
+				name: msg.member?.displayName ?? msg.author.username,
 				id: msg.author.id
 			}
 		};
@@ -130,7 +131,7 @@ export class Music {
 		return song;
 	}
 
-	pause() {
+	public pause() {
 		if (!this.streamDispatcher) return false;
 
 		this.paused = true;
@@ -138,39 +139,44 @@ export class Music {
 		return this.streamDispatcher.pause();
 	}
 
-	resume() {
-		if (!this.streamDispatcher) return false;
+	public resume() {
+		if (!this.streamDispatcher || !this.paused) return false;
 
 		this.paused = false;
 
-		return this.streamDispatcher.resume();
+		this.streamDispatcher.resume();
+		return true;
 	}
 
-	clear() {
+	public clear() {
 		this.queue = [];
 		this.currentSong = 0;
 		this.streamDispatcher?.destroy();
 		this.streamDispatcher = undefined;
 	}
 
-	stop() {
+	public stop() {
 		this.clear();
 		this.voiceConnection?.disconnect();
 		this.voiceConnection = undefined;
 	}
 
-	skip(force: boolean) {
+	public skip(id: string, force: boolean) {
 		if (!this.voiceConnection) return false;
 
 		if (force) return this.next();
 
+		if (this.skips.has(id)) return false;
+
+		this.skips.add(id);
+
 		const neededSkips = Math.round(this.voiceConnection.channel.members.size / 2);
-		if (neededSkips > ++this.skips) return `${this.skips}/${neededSkips}`;
+		if (neededSkips > this.skips.size) return `${this.skips.size}/${neededSkips}`;
 
 		return this.next();
 	}
 
-	back(force: boolean) {
+	public back(force: boolean) {
 		if (!this.voiceConnection) return false;
 
 		if (force) return this.previous();
@@ -181,14 +187,14 @@ export class Music {
 		return this.previous();
 	}
 
-	async next(auto = false) {
+	public async next(auto = false) {
 		if (!this.voiceConnection) return;
 
-		this.skips = 0;
+		this.skips.clear();
 		this.prev = 0;
 
 		if (this.currentSong === this.queue.length + 1) return false;
-		const nextSong = this.queue[++this.currentSong];
+		const nextSong = this.queue[++this.currentSong] as Song | undefined;
 
 		this.streamDispatcher?.destroy();
 		if (!nextSong) {
@@ -199,14 +205,14 @@ export class Music {
 		return this.play(nextSong, auto);
 	}
 
-	async previous(auto = false) {
+	public async previous(auto = false) {
 		if (!this.voiceConnection) return;
 
-		this.skips = 0;
+		this.skips.clear();
 		this.prev = 0;
 
 		if (this.currentSong === 0) return false;
-		const prevSong = this.queue[--this.currentSong];
+		const prevSong = this.queue[--this.currentSong] as Song | undefined;
 		if (!prevSong) return false;
 
 		this.streamDispatcher?.destroy();

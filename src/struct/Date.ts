@@ -1,3 +1,6 @@
+/* eslint-disable no-extend-native */
+/* eslint-disable func-names */
+
 interface Date {
 	/**
 	 * Formats to Feb 30th 2020
@@ -24,15 +27,15 @@ Date.prototype.formatTime = function () {
 };
 
 const msToHuman = (ms: number) => {
-	const seconds = Math.round(ms / 1000),
-		minutes = Math.round(ms / (1000 * 60)),
-		hours = Math.round(ms / (1000 * 60 * 60)),
-		days = Math.round(ms / (1000 * 60 * 60 * 24));
+	const seconds = Math.round(ms / 1000);
+	const minutes = Math.round(ms / (1000 * 60));
+	const hours = Math.round(ms / (1000 * 60 * 60));
+	const days = Math.round(ms / (1000 * 60 * 60 * 24));
 
-	if (seconds < 60) return seconds + ' seconds';
-	else if (minutes < 60) return minutes + ' minutes';
-	else if (hours < 24) return hours + ' hours';
-	else return days + ' days';
+	if (seconds < 60) return `${seconds} seconds`;
+	else if (minutes < 60) return `${minutes} minutes`;
+	else if (hours < 24) return `${hours} hours`;
+	return `${days} days`;
 };
 
 Date.prototype.age = function () {

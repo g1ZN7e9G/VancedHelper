@@ -33,9 +33,9 @@ const pages = [
 ];
 
 const callback = async (msg: Message, args: string[]) => {
-	let initPage = (args.length ? parseInt(args[0]) - 1 : 0) || 0;
+	let initPage = (args.length ? parseInt(args[0], 10) - 1 : 0) || 0;
 	if (initPage > pages.length) initPage = 0;
-	msg.client.pages.create(msg, pages, initPage);
+	return msg.client.pages.create(msg, pages, initPage);
 };
 
 export const command: Command = {

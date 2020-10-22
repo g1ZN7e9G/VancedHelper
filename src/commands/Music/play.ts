@@ -4,10 +4,11 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!args.length) {
 		const res = msg.client.music.resume();
 		if (!res) return msg.channel.send(`The queue is empty`);
-		else return msg.channel.send(`Continuing playback!`);
+
+		return msg.channel.send(`Continuing playback!`);
 	}
 
-	if (!msg.member?.voice?.channel) return msg.channel.send(`You are not in a voice channel ${msg.client.bruh}`);
+	if (!msg.member?.voice.channel) return msg.channel.send(`You are not in a voice channel ${msg.client.bruh}`);
 	if (msg.client.music.voiceConnection && msg.member.voice.channel.id !== msg.client.music.voiceConnection.channel.id)
 		return msg.channel.send(`I am already playing in another voice chat ${msg.client.bruh}`);
 
@@ -32,9 +33,12 @@ const callback = async (msg: Message, args: string[]) => {
 				break;
 			case true:
 				return msg.channel.send(`Successfully added \`${song.title}\` to the queue!`, msg.client.music.songEmbed(song));
+			case false:
+				break;
 		}
 		return msg.channel.send(output);
-	} else return msg.channel.send(`Successfully added \`${song.title}\` to the queue!`, msg.client.music.songEmbed(song));
+	}
+	return msg.channel.send(`Successfully added \`${song.title}\` to the queue!`, msg.client.music.songEmbed(song));
 };
 
 export const command: Command = {

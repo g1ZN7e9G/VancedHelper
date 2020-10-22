@@ -1,3 +1,5 @@
+/* eslint-disable no-extend-native */
+/* eslint-disable func-names */
 interface String {
 	/**
 	 * Shorten a string
@@ -28,11 +30,11 @@ interface String {
 }
 
 String.prototype.shorten = function (length: number) {
-	return (this.length > length ? this.substring(0, length - 3) + '...' : this).toString();
+	return (this.length > length ? `${this.substring(0, length - 3)}...` : this).toString();
 };
 
 String.prototype.toCodeblock = function (language?: string) {
-	return '```' + (language || '') + '\n' + this + '```';
+	return `\`\`\`${language ?? ''}\n${this.toString()}\`\`\``;
 };
 
 String.prototype.toTitleCase = function () {
@@ -48,7 +50,7 @@ String.prototype.escapeMarkdown = function () {
 String.prototype.substitute = function (obj: Record<string, string>) {
 	let str = this.toString();
 	for (const prop in obj) {
-		str = str.replace(new RegExp('{' + prop + '}', 'g'), obj[prop]);
+		if (prop.toUpperCase() === prop) str = str.replace(new RegExp(`{${prop}}`, 'g'), obj[prop]);
 	}
 	return str;
 };

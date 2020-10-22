@@ -6,7 +6,7 @@ const callback = async (msg: Message, args: string[]) => {
 
 	const settings = await msg.client.database.guildSettings.findOne({ guild: msg.guild.id });
 	if (!settings || !settings.modRole) throw new Error(`Please specify a modrole.`);
-	if (!settings || !settings.spammerRole) throw new Error(`Please specify a spammer role.`);
+	if (!settings.spammerRole) throw new Error(`Please specify a spammer role.`);
 	if (!settings.modLogChannel) throw new Error(`Please specify a modlog channel.`);
 
 	if (!msg.member.roles.cache.has(settings.modRole)) return;

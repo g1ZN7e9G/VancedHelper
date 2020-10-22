@@ -1,7 +1,7 @@
 import { Command, Message } from '../../Client';
 import { stripIndents } from 'common-tags';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	const g = msg.guild;
 	if (!g) return;
 
@@ -16,11 +16,11 @@ const callback = async (msg: Message, _args: string[]) => {
 		.setTitle(g.name)
 		.setDescription(
 			stripIndents`
-            ${emojis.crown} ${g.owner || (await msg.client.users.fetch(g.ownerID))}
+            ${emojis.crown} ${g.owner ?? (await msg.client.users.fetch(g.ownerID))}
             ${emojis.hash} ${g.id}
             ${emojis.globe} ${g.region}
             ${emojis.cake} ${g.createdAt.formatDate()}
-            ${emojis.speech} ${g.description || '-'}
+            ${emojis.speech} ${g.description ?? '-'}
             ${emojis.users} ${g.memberCount}
             ${emojis.smiley} ${g.emojis.cache.size}
             ${emojis.nitro} ${g.premiumSubscriptionCount} (Level ${g.premiumTier})

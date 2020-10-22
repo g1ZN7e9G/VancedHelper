@@ -18,9 +18,9 @@ const callback = async (msg: Message, args: string[]) => {
 		return msg.client
 			.newEmbed('BASIC')
 			.setTimestamp(quote.timestamp || undefined)
-			.setThumbnail(user?.displayAvatarURL({ dynamic: true }) || quote.author.avatar)
+			.setThumbnail(user?.displayAvatarURL({ dynamic: true }) ?? quote.author.avatar)
 			.setImage(quote.attachment!)
-			.setTitle(user?.tag || quote.author.name)
+			.setTitle(user?.tag ?? quote.author.name)
 			.setDescription(
 				`${quote.content}\n\n[Jump to message](${quote.link})\n\n${msg.client.constants.emojis.star} ${quote.stars.length} | ID: ${quote.case}`
 			);

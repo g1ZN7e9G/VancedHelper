@@ -1,6 +1,6 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	const output = msg.client
 		.newEmbed('INFO')
 		.setThumbnail('https://cdn.discordapp.com/avatars/658352336787472386/7a77a973f56971532016ebc055f9c381.png')
@@ -8,7 +8,7 @@ const callback = async (msg: Message, _args: string[]) => {
 		.addFields([
 			{
 				name: 'Version',
-				value: process.env.VERSION || 'unknown'
+				value: process.env.VERSION ?? 'unknown'
 			},
 			{
 				name: 'Commit',
@@ -18,7 +18,7 @@ const callback = async (msg: Message, _args: string[]) => {
 			},
 			{
 				name: 'Commit message',
-				value: process.env.COMMIT_MESSAGE || 'unknown'
+				value: process.env.COMMIT_MESSAGE ?? 'unknown'
 			}
 		]);
 

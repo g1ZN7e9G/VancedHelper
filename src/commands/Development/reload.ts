@@ -1,7 +1,7 @@
 import { Command, Message } from '../../Client';
 import { Collection } from 'discord.js';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	msg.client.commands = new Collection();
 	msg.client.removeAllListeners();
 

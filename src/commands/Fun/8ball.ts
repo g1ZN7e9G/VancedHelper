@@ -23,7 +23,7 @@ const responses = [
 	'Very doubtful'
 ];
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	return msg.channel.send(`🎱 *${responses.random()}, ${msg.author.username}.*`);
 };
 

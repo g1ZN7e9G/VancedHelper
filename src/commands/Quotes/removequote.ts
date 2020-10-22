@@ -5,16 +5,16 @@ const callback = async (msg: Message, args: string[]) => {
 
 	if (!args.length) return msg.channel.send(`Provide a quote or message ID ${msg.client.bruh}`);
 
-	const id = parseInt(args[0]);
+	const id = parseInt(args[0], 10);
 	if (!id) return msg.channel.send(`That's not a valid number bro ${msg.client.bruh}`);
 
-	const quote = (await msg.client.database.quotes.findOne({ case: id })) || (await msg.client.database.quotes.findOne({ messageID: args[0] }));
+	const quote = (await msg.client.database.quotes.findOne({ case: id })) ?? (await msg.client.database.quotes.findOne({ messageID: args[0] }));
 
 	if (!quote) return msg.channel.send(`That ain't a valid quote, chief ${msg.client.bruh}`);
 
 	if (!msg.member.permissions.has('MANAGE_MESSAGES')) return msg.channel.send(`Only a Moderator can do this ${msg.client.bruh}`);
 
-	quote.remove();
+	void quote.remove();
 
 	return msg.channel.send(`Successfully deleted the quote ${quote.case}`);
 };

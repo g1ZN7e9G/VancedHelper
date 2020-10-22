@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-dynamic-delete */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { Client as BaseClient, Collection, MessageEmbed, TextChannel } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
@@ -10,27 +13,27 @@ import constants from '../constants';
 export * from './Interfaces';
 
 export class Client extends BaseClient {
-	private _on = this.on;
-	private _emit = this.emit;
-	on = <K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void): this => this._on(event, listener);
-	emit = <K extends keyof ClientEvents>(event: K, ...args: ClientEvents[K]): boolean => this._emit(event, ...args);
+	private readonly _on = this.on;
+	private readonly _emit = this.emit;
+	public on = <K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void): this => this._on(event, listener);
+	public emit = <K extends keyof ClientEvents>(event: K, ...args: ClientEvents[K]): boolean => this._emit(event, ...args);
 
-	commands: Collection<string, FullCommand> = new Collection();
-	activeCommands: Set<string> = new Set();
-	music = new Music(this);
-	pages = Pagination;
-	prompt = PromptManager;
-	cooldowns = Cooldowns;
-	helpers = new Util(this);
-	config = config;
-	constants = constants;
-	database = database;
-	paths = {
+	public commands: Collection<string, FullCommand> = new Collection();
+	public activeCommands: Set<string> = new Set();
+	public music = new Music(this);
+	public pages = Pagination;
+	public prompt = PromptManager;
+	public cooldowns = Cooldowns;
+	public helpers = new Util(this);
+	public config = config;
+	public constants = constants;
+	public database = database;
+	public paths = {
 		listeners: join(__dirname, '../events'),
 		commands: join(__dirname, '../commands')
 	};
 
-	settings = {
+	public settings = {
 		debug: false,
 		flushTime: 1000 * 60 * 30,
 		promptTimeout: 3, // In minutes
@@ -42,29 +45,29 @@ export class Client extends BaseClient {
 		}
 	};
 
-	constructor(options?: ClientOptions) {
+	public constructor(options?: ClientOptions) {
 		super(options?.baseOptions);
 		this.settings = { ...this.settings, ...options };
 	}
 
-	async start() {
+	public start() {
 		this.initCommands();
 		this.initListeners();
-		this.login(this.config.token);
+		void this.login(this.config.token);
 	}
 
 	/**
 	 * Get a random emote in the case of a bruh moment
 	 */
-	get bruh() {
+	public get bruh() {
 		return this.constants.emojis.bruh.random();
 	}
 
-	newEmbed(type?: 'INFO' | 'ERROR' | 'BASIC') {
+	public newEmbed(type?: 'INFO' | 'ERROR' | 'BASIC') {
 		return new MessageEmbed().setColor(type ? this.settings.colours[type] : 'RANDOM');
 	}
 
-	initCommands() {
+	public initCommands() {
 		let amount = 0;
 		readdirSync(this.paths.commands).forEach(dir => {
 			readdirSync(join(this.paths.commands, dir)).forEach(file => {
@@ -95,7 +98,7 @@ export class Client extends BaseClient {
 		console.log(`Loaded ${amount} commands!`);
 	}
 
-	initListeners() {
+	public initListeners() {
 		let amount = 0;
 		readdirSync(this.paths.listeners).forEach(file => {
 			const path = join(this.paths.listeners, file);
@@ -105,14 +108,15 @@ export class Client extends BaseClient {
 			delete require.cache[path];
 			amount++;
 		});
-		this.on('error', this.handleError);
+		this.on('error', err => void this.handleError(err));
 		console.log(`Loaded ${amount} listeners!`);
 	}
 
-	getCommand(commandName: string) {
-		return this.commands.get(commandName) || this.commands.find(cmd => cmd.aliases.includes(commandName));
+	public getCommand(commandName: string) {
+		return this.commands.get(commandName) ?? this.commands.find(cmd => cmd.aliases.includes(commandName));
 	}
-	getChannel(channelType: 'info' | 'errors' | 'boosters' | 'testers') {
+
+	public getChannel(channelType: 'info' | 'errors' | 'boosters' | 'testers') {
 		const channel = this.channels.cache.get(this.config.channels[channelType]);
 		if (!channel || !(channel instanceof TextChannel)) {
 			console.log(`Invalid ${channelType}-channel provided or not reachable.`);
@@ -121,11 +125,11 @@ export class Client extends BaseClient {
 		return channel;
 	}
 
-	getDevelopers() {
+	public getDevelopers() {
 		return Promise.all(this.config.developers.map(d => this.users.fetch(d)));
 	}
 
-	handleError = async (err: Error, message?: Message) => {
+	public handleError = async (err: Error, message?: Message) => {
 		console.error(err);
 
 		const channel = this.getChannel('errors');
@@ -133,7 +137,7 @@ export class Client extends BaseClient {
 		const errorEmbed = new MessageEmbed()
 			.setColor(this.settings.colours.ERROR)
 			.setTitle(err.name)
-			.setDescription((err.stack || 'No Error.').shorten(2000).toCodeblock());
+			.setDescription((err.stack ?? 'No Error.').shorten(2000).toCodeblock());
 		if (message) {
 			errorEmbed.addFields([
 				{ name: 'Message', value: (message.content || 'Empty message').shorten(1024) },
@@ -144,7 +148,7 @@ export class Client extends BaseClient {
                 Author: ${message.author.tag} (${message.author.id})`
 				}
 			]);
-			message.reply(
+			void message.reply(
 				new MessageEmbed()
 					.setColor(this.settings.colours.ERROR)
 					.setDescription(
