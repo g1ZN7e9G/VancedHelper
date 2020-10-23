@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable no-extend-native */
 /* eslint-disable func-names */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 const ordinal = require('ordinal');
 

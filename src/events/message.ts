@@ -10,6 +10,7 @@ export default async (client: Client, potentiallyUncachedMessage: Message) => {
 	const msg = potentiallyUncachedMessage.partial
 		? await (potentiallyUncachedMessage.fetch() as Promise<Message>).catch(() => null)
 		: potentiallyUncachedMessage;
+
 	if (!msg) return;
 
 	// Make sure I have access to channel

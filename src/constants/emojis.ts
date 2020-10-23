@@ -25,6 +25,7 @@ export default {
 	LISTENING: '🎧',
 	WATCHING: '🍿',
 	STREAMING: '🎬',
+	COMPETING: '🏆',
 	CUSTOM_STATUS: '💬',
 	crown: '👑',
 	globe: '🌐',

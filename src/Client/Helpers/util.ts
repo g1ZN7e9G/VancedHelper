@@ -204,7 +204,7 @@ export class Util {
 				break;
 		}
 
-		if (reason !== 'Punishment duration over!') await msg.channel.send(embed.title);
+		if (reason !== 'Punishment duration over!') await msg.channel.send(embed.title!);
 		await logChannel.send(embed);
 
 		switch (action) {
