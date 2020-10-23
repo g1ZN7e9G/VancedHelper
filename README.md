@@ -2,3 +2,4 @@
 
 Discord Bot written in NodeJS for the [Vanced Discord Server](https://discord.gg/v2REwvu)
 
+ 
