@@ -1,5 +1,7 @@
 /* eslint-disable no-extend-native */
 /* eslint-disable func-names */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface String {
 	/**
 	 * Shorten a string
