@@ -9,7 +9,7 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!user) return;
 	const member = msg.guild?.member(user);
 
-	const activity = user.presence.activities.map(s => `${emojis[s.type]} ${s.name === 'Custom Status' ? s.state! : s.name}`).join('\n');
+	const activity = user.presence.activities.map(s => `${emojis[s.type]} ${s.name === 'Custom Status' ? s.state : s.name}`).join('\n');
 
 	const description = stripIndents`
 		${user.bot ? emojis.bot : emojis.user} ${user.username}
