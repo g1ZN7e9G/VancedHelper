@@ -143,6 +143,8 @@ export class Util {
 		reason = 'No reason provided',
 		duration = 0
 	) {
+		reason || (reason = 'No reason provided');
+
 		const embed = this.client.newEmbed('INFO').addFields([
 			{
 				name: 'User',
