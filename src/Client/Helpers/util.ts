@@ -125,7 +125,7 @@ export class Util {
 	}
 
 	public async giveRole(msg: Message | null, member: GuildMember, role: Role, take = false) {
-		const success = await member.roles[take ? 'remove' : 'add'](role).catch(() => false);
+		const success = await member.roles[take ? 'remove' : 'add'](role).catch(() => null);
 		if (!success) {
 			void msg?.channel.send('Sorry, something went wrong!');
 			return false;
@@ -159,6 +159,7 @@ export class Util {
 				value: reason
 			}
 		]);
+
 		if (action === 'MUTE' || action === 'SPAM') {
 			if (!(await this.giveRole(msg, member, role))) return;
 			if (duration) {
@@ -168,6 +169,7 @@ export class Util {
 					infractionType: action,
 					end: Date.now() + duration
 				});
+
 				setTimeout(() => {
 					void this.client.database.infractions
 						.findById(entry.id)
@@ -188,7 +190,8 @@ export class Util {
 			}
 		} else {
 			if (!(await this.giveRole(msg, member, role, true))) return;
-			void this.client.database.infractions.findOneAndDelete({ userID: member.id });
+			const entry = await this.client.database.infractions.findOneAndRemove({ userID: member.id, guildID: msg.guild.id });
+			void entry?.remove();
 		}
 
 		switch (action) {
