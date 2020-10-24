@@ -18,6 +18,7 @@ const callback = async (msg: Message, args: string[]) => {
 	if (!target) return;
 
 	const reason = args.splice(1).join(' ');
+	if (!reason) return msg.channel.send(`Please provide a reason.`);
 
 	const role = msg.guild.roles.cache.get(settings.spammerRole);
 	if (!role) throw new Error('Spammer role not found!');
@@ -33,10 +34,10 @@ const callback = async (msg: Message, args: string[]) => {
 export const command: Command = {
 	aliases: [],
 	description: 'Makes the target unable to talk in non-spammy channels.',
-	usage: '<User Resolvable> [Reason]',
+	usage: '<User Resolvable> <Reason>',
 	devOnly: false,
 	guildOnly: true,
-	args: 1,
+	args: 2,
 	memberPermission: [],
 	botPermission: [],
 	callback: callback
