@@ -1,13 +1,14 @@
 import { Command, Message } from '../../Client';
 
 const callback = async (msg: Message) => {
-	const regex = /\d{17,19}/;
+	const emoteMatcher = msg.client.constants.regex.emotes;
 
-	const emojis = msg.client.constants.regex.emotes.exec(msg.content);
-
-	if (!emojis || !emojis.length) return msg.channel.send('You did not provide any valid emojis!');
-
-	const urls = emojis.map(e => `<https://cdn.discordapp.com/emojis/${regex.exec(e)![0]}.${e.startsWith('<a') ? 'gif' : 'png'}>`);
+	const urls = [];
+	let match;
+	while ((match = emoteMatcher.exec(msg.content))) {
+		const emote = match[0];
+		urls.push(`<https://cdn.discordapp.com/emojis/${msg.client.constants.regex.snowflake.exec(emote)![0]}.${emote.startsWith('<a') ? 'gif' : 'png'}>`);
+	}
 
 	const result = urls.length > 1 ? urls.join('\n') : urls[0].replace(/[<>]/g, '');
 
