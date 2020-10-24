@@ -190,7 +190,7 @@ export class Util {
 			}
 		} else {
 			if (!(await this.giveRole(msg, member, role, true))) return;
-			const entry = await this.client.database.infractions.findOneAndRemove({ userID: member.id, guildID: msg.guild.id });
+			const entry = await this.client.database.infractions.findOne({ userID: member.id, guildID: msg.guild.id });
 			void entry?.remove();
 		}
 
