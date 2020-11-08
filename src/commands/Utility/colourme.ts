@@ -22,6 +22,7 @@ const callback = async (msg: Message, args: string[]) => {
 	colour = colour.toHex() === '000000' ? '#000001' : colour.toHexString();
 
 	const roleName = `${roleRaw.join(' ') || colour}-CC`;
+	if (roleName.length > 100) return msg.channel.send('That name is waaaaay too long!');
 
 	const existingRole = msg.guild.roles.cache.find(r => r.name.toLowerCase() === roleName.toLowerCase());
 
