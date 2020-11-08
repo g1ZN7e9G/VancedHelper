@@ -10,9 +10,11 @@ const callback = async (msg: Message) => {
 		urls.push(`<https://cdn.discordapp.com/emojis/${msg.client.constants.regex.snowflake.exec(emote)![0]}.${emote.startsWith('<a') ? 'gif' : 'png'}>`);
 	}
 
+	if (!urls.length) return msg.channel.send('You did not provide any valid emotes.');
+
 	const result = urls.length > 1 ? urls.join('\n') : urls[0].replace(/[<>]/g, '');
 
-	return msg.channel.send(result.length > 2000 ? `That's too many emojis lmao ${msg.client.bruh}` : result);
+	return msg.channel.send(result.length > 2000 ? `That's too many emotes lmao ${msg.client.bruh}` : result);
 };
 
 export const command: Command = {

@@ -96,6 +96,8 @@ export class Util {
 	}
 
 	public isMemberHigher(executor: GuildMember, target: GuildMember) {
+		if (executor.guild.id !== target.guild.id) throw new Error('These members are not from the same guild');
+
 		return (
 			(executor.id !== target.id && executor.guild.ownerID === executor.id) ||
 			(target.guild.ownerID !== target.id && executor.roles.highest.position > target.roles.highest.position)

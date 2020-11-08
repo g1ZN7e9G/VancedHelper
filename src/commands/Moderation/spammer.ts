@@ -17,6 +17,9 @@ const callback = async (msg: Message, args: string[]) => {
 	const target = await msg.client.helpers.getMember(msg, args, 0);
 	if (!target) return;
 
+	if (!msg.client.helpers.isMemberHigher(msg.member, target))
+		return msg.channel.send('You are not permitted to do this since you are not higher in the hierarchy than this member.');
+
 	const reason = args.splice(1).join(' ');
 	if (!reason) return msg.channel.send(`Please provide a reason.`);
 
