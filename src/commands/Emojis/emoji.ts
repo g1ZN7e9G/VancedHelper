@@ -1,15 +1,20 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
-	const regex = /\d{17,19}/;
+const callback = async (msg: Message) => {
+	const emoteMatcher = msg.client.constants.regex.emotes;
 
-	const emojis = msg.content.match(msg.client.constants.regex.emotes);
+	const urls = [];
+	let match;
+	while ((match = emoteMatcher.exec(msg.content))) {
+		const emote = match[0];
+		urls.push(`<https://cdn.discordapp.com/emojis/${msg.client.constants.regex.snowflake.exec(emote)![0]}.${emote.startsWith('<a') ? 'gif' : 'png'}>`);
+	}
 
-	if (!emojis || !emojis.length) return msg.channel.send('You did not provide any valid emojis!');
+	if (!urls.length) return msg.channel.send('You did not provide any valid emotes.');
 
-	const urls = emojis.map(e => `<https://cdn.discordapp.com/emojis/${e.match(regex)?.[0]}.${e.startsWith('<a') ? 'gif' : 'png'}>`);
+	const result = urls.length > 1 ? urls.join('\n') : urls[0].replace(/[<>]/g, '');
 
-	return msg.channel.send(urls.join('\n'));
+	return msg.channel.send(result.length > 2000 ? `That's too many emotes lmao ${msg.client.bruh}` : result);
 };
 
 export const command: Command = {

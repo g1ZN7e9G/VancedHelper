@@ -2,18 +2,15 @@
 	"name": "vanced-helper",
 	"version": "2.0.0",
 	"description": "",
-	"author": "Mattis6666",
+	"author": "VenNeptury",
 	"license": "AGPL-3.0",
 	"main": "dist/index.js",
-	"engines": {
-		"node": "13.6.0"
-	},
 	"eslintIgnore": [
 		"dist",
 		".vscode"
 	],
 	"scripts": {
-		"start": "npm run clean & npm run build && export NODE_ENV=production && node .",
+		"start": "npm run build && export NODE_ENV=production && node .",
 		"dev": "npm run build && export NODE_ENV=development && node .",
 		"prod": "npm run clean & npm run build && export NODE_ENV=production && node .",
 		"test": "tsc -p tsconfig.test.json && npm run lint",
@@ -31,30 +28,43 @@
 	"dependencies": {
 		"@discordjs/opus": "^0.3.2",
 		"canvas": "^2.6.1",
+		"chrono-node": "^2.1.8",
 		"common-tags": "^1.8.0",
-		"discord.js": "^12.0.2",
-		"mongoose": "^5.9.19",
-		"node-fetch": "^2.6.0",
+		"discord.js": "^12.4.0",
+		"mongoose": "^5.10.9",
+		"node-fetch": "^2.6.1",
 		"ordinal": "^1.0.3",
 		"sodium": "^3.0.2",
-		"tinycolor2": "^1.4.1",
-		"ytdl-core-discord": "^1.2.1"
+		"tinycolor2": "^1.4.2",
+		"ytdl-core-discord": "^1.2.4"
 	},
 	"devDependencies": {
 		"@types/common-tags": "^1.8.0",
-		"@types/mongoose": "^5.7.27",
-		"@types/node": "^14.0.13",
+		"@types/mongoose": "^5.7.36",
+		"@types/node": "^14.14.2",
 		"@types/node-fetch": "^2.5.7",
 		"@types/tinycolor2": "^1.4.2",
-		"@types/ws": "^7.2.5",
-		"@typescript-eslint/eslint-plugin": "^3.3.0",
-		"@typescript-eslint/parser": "^3.3.0",
-		"eslint": "^7.3.0",
-		"eslint-config-prettier": "^6.11.0",
+		"@types/ws": "^7.2.7",
+		"@typescript-eslint/eslint-plugin": "^4.5.0",
+		"@typescript-eslint/parser": "^4.5.0",
+		"eslint": "^7.11.0",
+		"eslint-config-marine": "^7.2.0",
+		"eslint-config-prettier": "^6.14.0",
 		"eslint-plugin-prettier": "^3.1.4",
-		"husky": "^4.2.5",
+		"husky": "^4.3.0",
 		"precise-commits": "^1.0.2",
-		"prettier": "^2.0.5",
-		"typescript": "^3.9.5"
+		"prettier": "^2.1.2",
+		"typescript": "^4.0.3"
+	},
+	"eslintConfig": {
+		"extends": [
+			"marine/node",
+			"prettier/@typescript-eslint",
+			"plugin:prettier/recommended"
+		],
+		"rules": {
+			"@typescript-eslint/naming-convention": "off",
+			"@typescript-eslint/no-unnecessary-condition": "off"
+		}
 	}
 }

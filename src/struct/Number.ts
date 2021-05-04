@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable no-extend-native */
+/* eslint-disable func-names */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const ordinal = require('ordinal');
 
 interface Number {
@@ -16,5 +22,5 @@ Number.prototype.toOrdinal = function () {
 };
 
 Number.prototype.addZero = function () {
-	return this < 10 ? '0' + this : this.toString();
+	return this < 10 ? `0${this.toString()}` : this.toString();
 };

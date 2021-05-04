@@ -1,4 +1,4 @@
-import '../interfaces/Array';
+import '../struct/Array';
 
 export default {
 	success: '<:check:699715117473988748>',
@@ -25,6 +25,7 @@ export default {
 	LISTENING: '🎧',
 	WATCHING: '🍿',
 	STREAMING: '🎬',
+	COMPETING: '🏆',
 	CUSTOM_STATUS: '💬',
 	crown: '👑',
 	globe: '🌐',

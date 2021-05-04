@@ -3,24 +3,6 @@ import { config } from '../../config/index';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 
-const callback = async (msg: Message, args: string[]) => {
-	let initPage = (args.length ? parseInt(args[0]) - 1 : 0) || 0;
-	if (initPage > pages.length) initPage = 0;
-	msg.client.pages.create(msg, pages, initPage);
-};
-
-export const command: Command = {
-	aliases: ['troubleshoot', 'ts'],
-	description: 'Troubleshoot Vanced issues. For your own issues, consult your therapist ;)',
-	usage: '[Page]',
-	devOnly: false,
-	guildOnly: false,
-	args: 0,
-	memberPermission: [],
-	botPermission: [],
-	callback: callback
-};
-
 const embed = () => new MessageEmbed().setTimestamp().setColor('0D7DFF');
 const pages = [
 	embed()
@@ -31,15 +13,6 @@ const pages = [
 			 :one: Enable Developer options (\`Settings > About Phone (or something similar) > Tap Build Number 7 times\`) and enter the developer settings menu
 			 :two: Scroll down until you see \`Turn on MiUI optimization\`
 			 :three: Disable it`
-		),
-
-	embed()
-		.setTitle('Old devices')
-		.setDescription(
-			stripIndents`
-				If you have an old device, it might be using the arm (32bit) kernel architecture instead of arm64 (64bit)
-				If you get the error \`This app is incompatible with your device\`, this is the case.
-				Download the legacy version instead and try again.`
 		),
 
 	embed()
@@ -71,9 +44,11 @@ const pages = [
 		),
 
 	embed()
-		.setTitle('Vanced broken after password change')
+		.setTitle('No connection/Vanced broken after password change')
 		.setDescription(
-			'Go to `Device Settings > Account`, select the account with the <:oldgacc:679434987560370188> logo and remove it. Then simply add it back via Vanced.'
+			stripIndents`
+			Go to \`Device Settings > Accounts\`, select the account with the <:vancedmicrog:739533000609628191> (or <:oldgacc:679434987560370188>) logo and remove it. Then simply add it back via Vanced.
+			If the account isnt there then simply reinstall Vanced MicroG via the manager`
 		),
 
 	embed()
@@ -99,15 +74,11 @@ const pages = [
 		),
 
 	embed()
-		.setThumbnail('https://i.imgur.com/TXiSaeI.png')
-		.setTitle('Home Ads')
+		.setTitle('YouTube Vanced is draining more battery than stock YouTube')
 		.setDescription(
 			stripIndents`
-				You might be getting ads on your home feed.
-				No, these aren't placed there by the Vanced Devs to make a quick buck. Youtube somehow detects that Vanced blocks ads and thus gives you extra ads which are based on your region.
-				This will be fixed in the next release!
-
-				|| Tip: To get this update early, become a tester or boost the server ||`
+				This might be caused by the current method used to hide home ads, to fix go to \`Vanced Settings > Ad settings > And enable home ads\`
+				A better method to hide home ads might be available in a future update`
 		),
 
 	embed()
@@ -116,3 +87,21 @@ const pages = [
 			"The way PiP works is controlled by your operating system. If it's broken, there's nothing we can do, so please don't report PiP related issues."
 		)
 ];
+
+const callback = async (msg: Message, args: string[]) => {
+	let initPage = (args.length ? parseInt(args[0], 10) - 1 : 0) || 0;
+	if (initPage > pages.length) initPage = 0;
+	return msg.client.pages.create(msg, pages, initPage);
+};
+
+export const command: Command = {
+	aliases: ['troubleshoot', 'ts'],
+	description: 'Troubleshoot Vanced issues. For your own issues, consult your therapist ;).',
+	usage: '[Page]',
+	devOnly: false,
+	guildOnly: false,
+	args: 0,
+	memberPermission: [],
+	botPermission: [],
+	callback: callback
+};

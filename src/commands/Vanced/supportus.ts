@@ -2,7 +2,7 @@ import { Command, Message } from '../../Client';
 import { stripIndents } from 'common-tags';
 import { config } from '../../config/index';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	const output = msg.client
 		.newEmbed('INFO')
 		.setThumbnail('https://i.imgur.com/mFkZnUB.png')
@@ -20,8 +20,12 @@ const callback = async (msg: Message, _args: string[]) => {
 					- Custom role (and colour)`
 			},
 			{
+				name: 'Adguard Referral Link',
+				value: 'If you want a system-wide adblocker for your unrooted/rooted phone and or pc and mac, [get adguard here](https://vancedapp.com/adguard).'
+			},
+			{
 				name: 'Brave Referral Link',
-				value: 'If you are planning to download Brave Browser, [do it via our referral link](https://vanced.app/brave).'
+				value: 'If you are planning to download Brave Browser, [do it via our referral link](https://vancedapp.com/brave).'
 			},
 			{
 				name: 'Do not ask unnecessary questions',

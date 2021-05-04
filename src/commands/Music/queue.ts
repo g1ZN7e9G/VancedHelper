@@ -1,6 +1,6 @@
 import { Command, Message } from '../../Client';
 
-const callback = async (msg: Message, _args: string[]) => {
+const callback = async (msg: Message) => {
 	const q = msg.client.music.queue;
 	if (!q.length) return msg.channel.send(`I am not playing any music ${msg.client.bruh}`);
 
@@ -17,7 +17,7 @@ const callback = async (msg: Message, _args: string[]) => {
 			.setTitle('Queue')
 			.addFields(output)
 			.setFooter(
-				output.length ? 'Play duration: ' + msg.client.music.secondsToTime(q.reduce((x, y) => x + parseInt(y.length), 0)) : 'The queue is empty!'
+				output.length ? `Play duration: ${msg.client.music.secondsToTime(q.reduce((x, y) => x + parseInt(y.length, 10), 0))}` : 'The queue is empty!'
 			)
 	);
 };

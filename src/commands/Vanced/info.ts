@@ -1,40 +1,9 @@
 import { Command, Message } from '../../Client';
 import { MessageEmbed } from 'discord.js';
-import { config } from '../../config';
 import { stripIndents } from 'common-tags';
-
-const callback = async (msg: Message, args: string[]) => {
-	let initPage = (args.length ? parseInt(args[0]) - 1 : 0) || 0;
-	if (initPage > pages.length) initPage = 0;
-	msg.client.pages.create(msg, pages, initPage);
-};
-
-export const command: Command = {
-	aliases: [],
-	description: '',
-	usage: '[Page]',
-	devOnly: false,
-	guildOnly: false,
-	args: 0,
-	memberPermission: [],
-	botPermission: [],
-	callback: callback
-};
 
 const embed = () => new MessageEmbed().setTimestamp().setColor('0D7DFF');
 const pages = [
-	embed()
-		.setTitle('Why is my Vanced file named apks?')
-		.setDescription(
-			`Google now uses the new apks format, which is essentially just a zip of multiple apks. This has many benefits. It is technically possible to convert a split apk to a normal apk, but not worth the effort. Thus, Vanced adopted this format.`
-		),
-	embed()
-		.addField('Youtube Vanced', '15.05.54')
-		.addField('Vanced Microg', '0.2.6.17455-dirty')
-		.setTitle('Latest Versions')
-		.setDescription(
-			`These are the latest versions as of June 2020. Please make sure your Vanced is up to date. For download links, type ${config.defaultPrefix}download.`
-		),
 	embed()
 		.setThumbnail('https://i.imgur.com/NYmMUq5.png')
 		.setTitle('Downloading Videos')
@@ -62,3 +31,21 @@ const pages = [
 				"There's nothing Vanced can do about this and this is **not a bug**."
 		)
 ];
+
+const callback = async (msg: Message, args: string[]) => {
+	let initPage = (args.length ? parseInt(args[0], 10) - 1 : 0) || 0;
+	if (initPage > pages.length) initPage = 0;
+	return msg.client.pages.create(msg, pages, initPage);
+};
+
+export const command: Command = {
+	aliases: [],
+	description: '',
+	usage: '[Page]',
+	devOnly: false,
+	guildOnly: false,
+	args: 0,
+	memberPermission: [],
+	botPermission: [],
+	callback: callback
+};

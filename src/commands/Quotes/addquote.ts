@@ -3,11 +3,12 @@ import { VoiceChannel, TextChannel } from 'discord.js';
 import { join } from 'path';
 
 const callback = async (msg: Message, args: string[]) => {
-	let messageID, channelID;
+	let messageID;
+	let channelID;
 
 	// Allow message links or #channel messageID
 	if (args.length === 1) {
-		[, channelID, messageID] = msg.content.match(/https:\/\/discord(?:app)?.com\/channels\/\d+\/(\d+)\/(\d+)/) || [];
+		[, channelID, messageID] = /https:\/\/discord(?:app)?.com\/channels\/\d+\/(\d+)\/(\d+)/.exec(msg.content) ?? [];
 	} else {
 		channelID = args[0]?.match(msg.client.constants.regex.snowflake)?.[0];
 		messageID = args[1]?.match(msg.client.constants.regex.snowflake)?.[0];
@@ -31,12 +32,6 @@ const callback = async (msg: Message, args: string[]) => {
 		);
 
 	if (!message.content) return msg.channel.send(`That's an empty message pal ${msg.client.bruh}`);
-
-	[...message.mentions.users, ...(message.mentions.members || [])].forEach(
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		u => (message.content = message.content.replace(new RegExp(`<@!?${u[0]}>`), `@` + (u[1].tag || u[1].user.tag)))
-	);
 
 	const entry = await msg.client.database.quotes.findOne({ messageID: message.id });
 	if (entry) return msg.channel.send(`Pog, that quote is already added ${msg.client.constants.emojis.stonks}`);

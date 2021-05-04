@@ -3,24 +3,6 @@ import { Message } from '../../Client/Interfaces/Message';
 import { Command } from '../../Client/Interfaces/Command';
 import { stripIndents } from 'common-tags';
 
-const callback = async (msg: Message, args: string[]) => {
-	let initPage = (args.length ? parseInt(args[0]) - 1 : 0) || 0;
-	if (initPage > pages.length) initPage = 0;
-	msg.client.pages.create(msg, pages, initPage);
-};
-
-export const command: Command = {
-	aliases: ['bugs', 'bug'],
-	description: 'Report Vanced bugs. For broken toasters and such, consult your local Indian tech guru ;P',
-	usage: '[Page]',
-	devOnly: false,
-	guildOnly: false,
-	args: 0,
-	memberPermission: [],
-	botPermission: [],
-	callback: callback
-};
-
 const embed = () => new MessageEmbed().setTimestamp().setColor('0D7DFF');
 const pages = [
 	embed()
@@ -80,3 +62,21 @@ const pages = [
 			'This guide will show you how to report Theme based bugs.\nIn order to report bugs, you will need [Developer Assistant](https://play.google.com/store/apps/details?id=com.appsisle.developerassistant)'
 		)
 ];
+
+const callback = async (msg: Message, args: string[]) => {
+	let initPage = (args.length ? parseInt(args[0], 10) - 1 : 0) || 0;
+	if (initPage > pages.length) initPage = 0;
+	return msg.client.pages.create(msg, pages, initPage);
+};
+
+export const command: Command = {
+	aliases: ['bugs', 'bug'],
+	description: 'Report Vanced bugs. For broken toasters and such, consult your local Indian tech guru ;P',
+	usage: '[Page]',
+	devOnly: false,
+	guildOnly: false,
+	args: 0,
+	memberPermission: [],
+	botPermission: [],
+	callback: callback
+};

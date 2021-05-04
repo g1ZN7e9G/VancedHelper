@@ -12,8 +12,9 @@
 		"outDir": "dist",
 		"strict": true,
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 		"moduleResolution": "Node",
-		"lib": ["ES2019"],
+		"lib": ["ESNext", "ES2020"],
 		"module": "commonjs",
 		"target": "ES2019"
 	},

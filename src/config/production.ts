@@ -6,7 +6,7 @@ const config: Config = {
 	coinlibToken: process.env.COINLIB_TOKEN!,
 	youtubeToken: process.env.YOUTUBE_TOKEN!,
 	defaultPrefix: '-',
-	developers: ['265560538937819137', '256143257472335872', '202115709231300617'],
+	developers: ['343383572805058560', '256143257472335872', '202115709231300617'],
 	channels: {
 		info: '658781799580827648',
 		errors: '663451700329185320',
